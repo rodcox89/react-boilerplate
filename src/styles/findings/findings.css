@@ -1,0 +1,10 @@
+#net-blocks-form {margin:20px;}
+#net-blocks tbody tr input[type="text"] {display:none;}
+#net-blocks tbody tr.shown span {display:none;}
+#net-blocks tbody tr.shown input[type="text"] {display:block;}
+#net-blocks tbody tr .button.is-loading {opacity:0.2;}
+#net-blocks tbody tr td table tr:hover {background:#FFF;}
+
+.data-value{
+  width: 20pt;
+}
