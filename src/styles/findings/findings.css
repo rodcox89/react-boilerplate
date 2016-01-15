@@ -5,6 +5,9 @@
 #net-blocks tbody tr .button.is-loading {opacity:0.2;}
 #net-blocks tbody tr td table tr:hover {background:#FFF;}
 
+#mytable {width:100%; table-layout:fixed;}
+table.dataTable tbody td {word-wrap:break-word; vertical-align:top;}
+
 .data-value{
   width: 20pt;
 }
