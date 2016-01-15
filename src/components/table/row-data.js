@@ -3,7 +3,9 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import SoftwarePatchingRowDataSyles from './row-data.css'
 import TextField from 'material-ui/lib/text-field';
 import SelectField from 'material-ui/lib/DropDownMenu';
+import Checkbox from 'material-ui/lib/checkbox';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 const items = [
   <option key={1} id='info' value={'info'} label="Info" primaryText="Info"/>,
@@ -35,6 +37,7 @@ const Row = React.createClass({
       analyst_status: '',
       analyst_confidence: '',
       analyst_comments: '',
+      analyst_include: '',
       host_name: '',
       domain_name: '',
 
@@ -58,6 +61,8 @@ const Row = React.createClass({
       host_name : this.props.finding.host_name,
       domain_name : this.props.finding.domain_name,
       analyst_comments : this.props.finding.analyst_comments,
+      analyst_include : this.props.finding.analyst_include,
+      checked: true,
       temp : {
         analyst_comments: this.props.finding.analyst_comments,
         analyst_confidence: this.props.finding.analyst_confidence,
@@ -123,9 +128,32 @@ const Row = React.createClass({
     console.log(this.state.analyst_status);
 
    },
+  handleExclude(e){
+    console.log(e);
+    console.log(e.target.checked);
+    this.finding.props.finding.analyst_include = e.target.checked
+    console.log(this.finding.props.finding.analyst_include);
+
+   },
+
+   delete(e){
+     e.preventDefault();
+     let f = this.props
+     let f1 = this.props.finding
+     console.log(f);
+     console.log(f1);
+     
+     this.props.delete(f)
+
+   },
 
 
   render: function () {
+    let isChecked;
+    if(this.state.analyst_include === 'true') {isChecked = false}
+    else {
+      isChecked = true
+    }
     var el
     if (this.state.isInput){
       el = <tr>
@@ -146,6 +174,12 @@ const Row = React.createClass({
              </td>
             <td><textarea name="analyst_comments" id="analyst_comments" value={this.state.analyst_comments} onChange={this.onChange}/></td>
             <td><RaisedButton onClick={this.onSave} label="Save" /></td>
+            <td>
+            <RaisedButton onClick={this.delete} label="Delete"/>
+            <Checkbox
+                onCheck={this.handleExclude}
+                defaultChecked={isChecked}/>
+            </td>
           </tr>
     }
     else {
@@ -159,6 +193,9 @@ const Row = React.createClass({
               <td>{this.state.analyst_confidence}</td>
               <td>{ this.state.analyst_comments}</td>
               <td><RaisedButton onClick={this.onEdit} label="Edit"/></td>
+              <td>
+                              <RaisedButton onClick={this.delete} label="Delete"/>
+             </td>
 
 
           </tr>

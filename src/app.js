@@ -59,6 +59,7 @@ ReactDOM.render((
       <Route path='analyses' component={Analyses}/>
       <Route path='dns_security' component={DnsSecurity}/>
       <Route path='web_app_security' component={WebAppSecurity}/>
+      <Route path='threat_intell' component={WebAppSecurity}/>
     </Route>
   </Router>),
 document.getElementById('content'));
