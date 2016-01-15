@@ -13,7 +13,7 @@ import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import RaisedButton from 'material-ui/lib/raised-button';
-
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 let Analyses = React.createClass({
 getInitialState: function(){
@@ -22,10 +22,16 @@ getInitialState: function(){
     fixedHeader: true,
     analyses: {
       analysis: [],
+
     },
   };
 },
+componentWillMount() {
+console.log('will mount');
+
+},
 componentDidMount() {
+  console.log('did mount');
   console.log('component mounted');
   $.ajax({
     url: 'http://0.0.0.0:5000/v1/analyses',
@@ -35,6 +41,7 @@ componentDidMount() {
       let analyses_props = this.state.analyses;
       analyses_props['analysis'] = data.analyses
       this.setState({analyses: analyses_props}, () => {console.log('RWAGH', this.state.analyses)});
+
     },
     error: (err) => {
       console.log('api error')
@@ -45,10 +52,12 @@ onClick: function(x) {
 console.log('clicked')
 localStorage.analysis_id = this.state.analyses.analysis[x].analysis_id
   localStorage.unique_key = this.state.analyses.analysis[x].unique_key
+  console.log(localstorage.analysis_id);
 },
 
 render(){
   const tableElements = this.state.analyses.analysis.map((analysis, x) => {
+    console.log(analysis['analysis_id']);
     return(
 
       <TableRow key={x}>
@@ -59,11 +68,12 @@ render(){
           <TableRowColumn><Link to="/web_encryption" onClick={this.onClick.bind(this, x)}  ><RaisedButton  label="Web Encryption" default={true} /></Link></TableRowColumn>
           <TableRowColumn><Link to="/threat_intell" onClick={this.onClick.bind(this, x)}  ><RaisedButton  label="Threat Intell" default={true} /></Link></TableRowColumn>
           <TableRowColumn><Link to="/defensibility" onClick={this.onClick.bind(this, x)}  ><RaisedButton  label="Defensibility" default={true} /></Link></TableRowColumn>
-          <TableRowColumn><Link to="/dns_security" onClick={this.onClick.bind(this, x)}  ><RaisedButton  label="DNS" default={true} /></Link></TableRowColumn>
+          <TableRowColumn><RaisedButton  label="DNS" default={true} disabled={false}><Link to="/dns_security" onClick={this.onClick.bind(this, x)}  ></Link></RaisedButton></TableRowColumn>
       </TableRow>
     )
   }, this);
   return(
+    <div>
     <Table
       height={this.state.height}
       fixedHeader={this.state.fixedHeader}
@@ -93,7 +103,7 @@ render(){
         </TableRow>
       </TableFooter>
     </Table>
-
+</div>
   )}
 
 });

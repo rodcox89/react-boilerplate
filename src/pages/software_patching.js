@@ -16,6 +16,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import Css from 'styles/findings/findings.css';
 import TableData from './../components/table/table-data'
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 
 
@@ -28,10 +29,13 @@ let SoftwarePatching = React.createClass({
 
     }
   },
+  componentWillMount() {
+    console.log('componentWillMount');
+  },
   componentDidMount() {
     console.log('didMount');
     $.ajax({
-      url: 'http://0.0.0.0:5000/v1/findings/software_patching/2231',
+      url: 'http://0.0.0.0:5000/v1/findings/software_patching/'+localStorage.analysis_id,
       success: (data) => {
         console.log('success');
         console.log(data);
@@ -58,7 +62,17 @@ let SoftwarePatching = React.createClass({
       // });
 
     },
+    deleteFinding: function(finding){
+      console.log('delete');
+      console.log(finding.index);
+      console.log(finding);
+      var slicedState = this.state.findings.slice();
+      findings[finding.index] = finding.finding;
+      let findings = this.state.findings
+      slicedState.splice(finding.index,1)
+      this.setState({findings: slicedState})
 
+    },
     herpDerp: function(e){
       console.log('holy eff balls it worked');
     },
@@ -69,7 +83,7 @@ let SoftwarePatching = React.createClass({
     return (
       <form id="net-blocks-form" action="" method="POST">
       <div className="table-responsive">
-        <table className="table table=bordered" id="mytable" >
+        <table className="table table-bordered" id="mytable" >
           <thead>
             <tr className="success">
               <td>Security Criteria</td>
@@ -82,12 +96,12 @@ let SoftwarePatching = React.createClass({
               <td>Confidence</td>
               <td>Comments</td>
               <td>Action</td>
+              <td>Remove</td>
             </tr>
           </thead>
-            <TableData findings={this.state.findings}/>
+            <TableData findings={this.state.findings} deleteFinding={this.deleteFinding}/>
         </table>
       </div>
-      <input type="submit" value="submit" className="submit_button"/>
       </form>
     )
   }

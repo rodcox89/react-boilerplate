@@ -1,5 +1,5 @@
 import React from 'react'
-import Row from './row-data'
+import Finding from './row-data'
 
 let TableData = React.createClass({
   getDefaultProps() {
@@ -7,10 +7,13 @@ let TableData = React.createClass({
     findings: [],
   }
 },
+deleteFinding(finding) {
+  this.props.deleteFinding(finding)
+},
 render() {
   const rows = this.props.findings.map((finding, i) => {
     return(
-      <Row finding={finding} key={i} />
+      <Finding finding={finding} key={i} delete={this.deleteFinding} index={i} />
     )
   })
 return(
