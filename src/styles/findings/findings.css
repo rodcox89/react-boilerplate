@@ -6,8 +6,10 @@
 #net-blocks tbody tr td table tr:hover {background:#FFF;}
 
 #mytable {width:100%; table-layout:fixed;}
-table.dataTable tbody td {word-wrap:break-word; vertical-align:top;}
+table.dataTable tbody td {word-wrap:break-word; vertical-align:top; border-bottom:1px solid #F8F8F8;}
+.table-responsive .loading {display:none;}
 
-.data-value{
-  width: 20pt;
-}
+.table-responsive.is-loading {position:relative;}
+.table-responsive.is-loading .loading {position:absolute; top:20px; left:50%; font-weight:bold; font-size:18px; display:block;}
+.table-responsive.is-loading #mytable {opacity:0.1;}
+.table-responsive.is-loading .submit_button {opacity:0.1;}

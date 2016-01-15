@@ -131,7 +131,6 @@ const Row = React.createClass({
       el = <tr>
         <td >{this.props.finding.security_criteria}</td>
             <td>{this.props.finding.analyst_display_name_long}/> </td>
-            <td>{this.props.finding.analyst_data_description}/> </td>
             <td>{this.props.finding.analyst_data_value}/></td>
             <td>{this.props.finding.host_name} </td>
             <td>{this.props.finding.ip_addr}</td>
@@ -153,7 +152,6 @@ const Row = React.createClass({
       el = <tr>
               <td>{this.state.security_criteria}</td>
               <td>{this.state.analyst_display_name_long}</td>
-              <td>{this.state.analyst_data_description}</td>
               <td>{this.state.analyst_data_value}</td>
               <td>{this.state.host_name}</td>
               <td>{this.state.ip_addr}</td>

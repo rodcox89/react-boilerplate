@@ -39,7 +39,21 @@ let SoftwarePatching = React.createClass({
         this.setState({findings: data.findings})
         $('#mytable').DataTable({
           paging: false,
+          "initComplete": function() {
+            $('.table-responsive').removeClass('is-loading');
+          },
           autoWidth: false,
+          "columns": [
+            { "width": "7%" },
+            { "width": "7%" },
+            { "width": "27%" },
+            { "width": "10%" },
+            { "width": "6%" },
+            { "width": "4%" },
+            { "width": "5%" },
+            { "width": "10%" },
+            { "width": "5%" },
+          ]
         })
       }})
     },
@@ -68,13 +82,15 @@ let SoftwarePatching = React.createClass({
 
     return (
       <form id="net-blocks-form" action="" method="POST">
-      <div className="table-responsive">
+      <div className="table-responsive is-loading">
+        <div className="loading">
+          Loading...
+        </div>
         <table className="table table=bordered" id="mytable" >
           <thead>
             <tr className="success">
               <td>Security Criteria</td>
               <td>Name Long</td>
-              <td>Data Description</td>
               <td className="data-value">Data Value</td>
               <td>Host</td>
               <td>IP</td>
