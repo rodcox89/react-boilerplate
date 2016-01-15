@@ -39,7 +39,7 @@ let SoftwarePatching = React.createClass({
         this.setState({findings: data.findings})
         $('#mytable').DataTable({
           paging: false,
-          autoWidth: true,
+          autoWidth: false,
         })
       }})
     },
