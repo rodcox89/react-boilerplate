@@ -31,6 +31,7 @@ import ThreatIntell from 'pages/threat_intell'
 import Defensibility from 'pages/defensibility'
 import SanityCheck from 'pages/sanity_check'
 import EditNetblocks from 'pages/edit_netblocks'
+import EditDomains from 'pages/edit_domains'
 import NewToe from 'pages/new_toe'
 
 const App = React.createClass({
@@ -104,6 +105,7 @@ ReactDOM.render((
       <Route path='defensibility' component={Defensibility}/>
       <Route path='sanity_check' component={SanityCheck}/>
       <Route path='edit_netblocks' component={EditNetblocks}/>
+      <Route path='edit_domains' component={EditDomains}/>
       <Route path='new_toe' component={NewToe}/>
     </Route>
   </Router>),

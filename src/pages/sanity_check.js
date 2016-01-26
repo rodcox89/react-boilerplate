@@ -125,6 +125,7 @@ render(){
     let searchTerm = this.state.search_term;
     let includeResult = this.state.search_term.length === 0 ? true: false;
     let netblocks_button
+		let domains_button
     let proceed_analysis
     if (!includeResult) {
       analysis.analyst_edit_analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
@@ -138,6 +139,8 @@ render(){
           netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
 
+		domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Domains" disabled={false} secondary={true}></RaisedButton></Link>
+
 
     return(
       <TableRow key={x}>
@@ -146,7 +149,7 @@ render(){
           <TableRowColumn>{analysis.analysis_scan_completed_ts_utc_str}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_id}</TableRowColumn>
           <TableRowColumn></TableRowColumn>
-          <TableRowColumn colSpan="2">{netblocks_button}</TableRowColumn>
+          <TableRowColumn colSpan="2">{netblocks_button} {domains_button}</TableRowColumn>
           <TableRowColumn></TableRowColumn>
       </TableRow>
     )
@@ -191,7 +194,7 @@ render(){
         </table>
     </Card>
     :null  }
-    { !this.has_results ?
+    { !this.state.has_results ?
       <div className="container">
         <p className="error-text">Sorry! There are no netblocks to be tested</p>
       </div>
