@@ -1,0 +1,12 @@
+@import './colors';
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+}
+
+.error-text{
+  color: $lightRed;
+}

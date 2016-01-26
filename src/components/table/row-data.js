@@ -139,10 +139,11 @@ const Row = React.createClass({
    delete(e){
      e.preventDefault();
      let f = this.props
+     
      let f1 = this.props.finding
      console.log(f);
      console.log(f1);
-     
+
      this.props.delete(f)
 
    },
