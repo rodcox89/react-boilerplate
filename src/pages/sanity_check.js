@@ -138,8 +138,15 @@ render(){
         else {
           netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
+        if(analysis.analysis_state_domains_review_completed === 'false') {
+          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Domains" disabled={false} secondary={true}></RaisedButton></Link>
+        }
+        else {
+          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Netblocks" disabled={true} secondary={true}></RaisedButton></Link>
+        }
 
-		domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Domains" disabled={false} secondary={true}></RaisedButton></Link>
+
+
 
 
     return(

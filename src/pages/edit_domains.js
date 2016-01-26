@@ -94,7 +94,7 @@ let EditDomains = React.createClass({
     handleApproval(e){
       console.log('approved');
       $.ajax({
-        url: 'http://0.0.0.0:5000/v1/netblocks/edit_netblock_completed/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+        url: 'http://0.0.0.0:5000/v1/completed/domains/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           console.log(data)
           }
