@@ -14,11 +14,27 @@ body{
 .card-container {
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
+  justify-content:center;
   width: 100%;
-  align-items: baseline;
-  margin-left: 7%;
-  margin-bottom: 8%;
+  align-items: center;
+}
+.card-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.inline-radios{
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+.inline_radio2 {
+  justify-content: flex-start;
+  margin-left: 2em;
+}
+.radio{
+
 }
 .horizontal-container {
   display: flex;
@@ -30,11 +46,11 @@ body{
 }
 
 .Floating-Label-Input{
-  width: 80%;
   justify-content: center;
   align-items:center;
   margin-top: 20px;
   margin-bottom: 20px;
+  flex: .8;
 }
 
 .test{
@@ -45,12 +61,6 @@ body{
   margin-bottom: 20px;
 }
 
-.card-container .input{
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 50px;
-
-}
 
 #mui-id-2{
   box-shadow: none !important;

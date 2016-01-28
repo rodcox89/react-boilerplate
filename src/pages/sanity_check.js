@@ -59,7 +59,8 @@ componentDidMount() {
         analyses_props['analysis'] = data.analyses
         this.setState({
           analyses: analyses_props,
-          loaded: true
+          loaded: true,
+          has_results: true,
         }, () => {console.log('RWAGH', this.state.analyses)});
 
       }
@@ -132,17 +133,17 @@ render(){
     }
       // if (includeResult && analysis.state_netblocks_review_completed != 'true') {
     if (includeResult & analysis.analysis_state_netblocks_review_completed != 'true') {
-        if(analysis.analysis_state_netblocks_review_completed === 'false') {
-          netblocks_button = <RaisedButton  label="Inspect Netblocks" disabled={true} default={true}></RaisedButton>
+        if(analysis.analysis_state_netblocks_review_completed === 'true') {
+          netblocks_button = <RaisedButton  label="Netblocks" disabled={true} default={true}></RaisedButton>
         }
         else {
-          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
+          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
-        if(analysis.analysis_state_domains_review_completed === 'false') {
-          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Domains" disabled={false} secondary={true}></RaisedButton></Link>
+        if(analysis.analysis_state_domains_review_completed === 'true') {
+          domains_button = <RaisedButton  label="Domains" disabled={true} secondary={true}></RaisedButton>
         }
         else {
-          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Inspect Netblocks" disabled={true} secondary={true}></RaisedButton></Link>
+          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" disabled={false} secondary={true}></RaisedButton></Link>
         }
 
 

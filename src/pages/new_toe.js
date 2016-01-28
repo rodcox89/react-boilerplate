@@ -15,22 +15,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import Css from './../styles/pages/new_toe.scss'
 injectTapEventPlugin();
-var industryMenuItems = <div>
-                          <MenuItem value={'Accomodation and Food Service'} primaryText="Accommodation and Food Service"/>
-                          <MenuItem value={'services_producing'} primaryText="Arts, Entertainment, and Recreation"/>
-                          <MenuItem value={'services_producing'} primaryText="Business Support"/>
-                          <MenuItem value={'services_producing'} primaryText="Content Creation and Mass Communication"/>
-                          <MenuItem value={'services_producing'} primaryText="Education"/>
-                          <MenuItem value={'services_producing'} primaryText="Finance and Insurance"/>
-                          <MenuItem value={'services_producing'} primaryText="Government and Defense"/>
-                          <MenuItem value={'services_producing'} primaryText="Human Health"/>
-                          <MenuItem value={'services_producing'} primaryText="Information Technology"/>
-                          <MenuItem value={'services_producing'} primaryText="Real Estate"/>
-                          <MenuItem value={'services_producing'} primaryText="Retail Trade (B2B)"/>
-                          <MenuItem value={'services_producing'} primaryText="Transportation and Storage"/>
-                          <MenuItem value={'services_producing'} primaryText="Wholesale Trade (B2B)"/>
-                          <MenuItem value={'services_producing'} primaryText="Vehicles"/>
-                      </div>
 var inputStyle = {
   outline: 'none !important',
   border: 'none',
@@ -78,31 +62,8 @@ let NewToe = React.createClass({
     }
   },
    handleIndustrialSegmentChange(event, index, value){
-     console.log(event);
-     console.log(index);
-     console.log(value);
-     if(value === 'services_producing'){
-       industryMenuItems = <div>
-                              <MenuItem value={'Accomodation and Food Service'} primaryText="Accommodation and Food Service"/>
-                              <MenuItem value={'services_producing'} primaryText="Arts, Entertainment, and Recreation"/>
-                              <MenuItem value={'services_producing'} primaryText="Business Support"/>
-                              <MenuItem value={'services_producing'} primaryText="Content Creation and Mass Communication"/>
-                              <MenuItem value={'services_producing'} primaryText="Education"/>
-                              <MenuItem value={'services_producing'} primaryText="Finance and Insurance"/>
-                              <MenuItem value={'services_producing'} primaryText="Government and Defense"/>
-                              <MenuItem value={'services_producing'} primaryText="Human Health"/>
-                              <MenuItem value={'services_producing'} primaryText="Information Technology"/>
-                              <MenuItem value={'services_producing'} primaryText="Real Estate"/>
-                              <MenuItem value={'services_producing'} primaryText="Retail Trade (B2B)"/>
-                              <MenuItem value={'services_producing'} primaryText="Transportation and Storage"/>
-                              <MenuItem value={'services_producing'} primaryText="Wholesale Trade (B2B)"/>
-                              <MenuItem value={'services_producing'} primaryText="Vehicles"/>
-                          </div>
-     }
-
-
      this.setState({
-       industrialSegment:value,
+       industrialSegment:index,
        industry: 'Accomodation and Food Service'
      })
      console.log(this.state.industrialSegment);
@@ -115,24 +76,65 @@ let NewToe = React.createClass({
   handlePartofCompanyChange(e, cb){this.setState({partOfCompanyValue: e.target.value}, () => cb())},
   handleVendorChange(e, cb) { this.setState({vendorName: e.target.value}, () => cb()) },
   render: function(){
+    let industryMenuItems
+    if(this.state.industrialSegment === 'services'){
+      console.log('ser');
+      console.log(this.state.industrialSegment);
+      industryMenuItems = <div>
+                             <MenuItem value={'Accomodation and Food Service'} primaryText="Accommodation and Food Service"/>
+                             <MenuItem value={'services_producing'} primaryText="Arts, Entertainment, and Recreation"/>
+                             <MenuItem value={'services_producing'} primaryText="Business Support"/>
+                             <MenuItem value={'services_producing'} primaryText="Content Creation and Mass Communication"/>
+                             <MenuItem value={'services_producing'} primaryText="Education"/>
+                             <MenuItem value={'services_producing'} primaryText="Finance and Insurance"/>
+                             <MenuItem value={'services_producing'} primaryText="Government and Defense"/>
+                             <MenuItem value={'services_producing'} primaryText="Human Health"/>
+                             <MenuItem value={'services_producing'} primaryText="Information Technology"/>
+                             <MenuItem value={'services_producing'} primaryText="Real Estate"/>
+                             <MenuItem value={'services_producing'} primaryText="Retail Trade (B2B)"/>
+                             <MenuItem value={'services_producing'} primaryText="Transportation and Storage"/>
+                             <MenuItem value={'services_producing'} primaryText="Wholesale Trade (B2B)"/>
+                             <MenuItem value={'services_producing'} primaryText="Vehicles"/>
+                         </div>
+    }
+    else if (this.state.industrialSegment === 'saas') {
+        console.log('saas');
+        console.log(this.state.industrialSegment);
+    }
+    else{
+        console.log('goods');
+        console.log(this.state.industrialSegment);
+      industryMenuItems = <div>
+                             <MenuItem value={'Accomodation and Food Service'} primaryText="test"/>
+                         </div>
+    }
     return (
       <div>
       <Card className="card">
         <CardTitle title="Add a New Vendor"></CardTitle>
         <div className="card-container">
-          <FloatingLabelInput label="Vendor Name" value={this.state.vendorName} placeholder="Vendor Name" onChange={this.handleVendorChange} isDisabled={false}></FloatingLabelInput>
-        <RadioButtonGroup className="input" name="part_or_entire" label="What part of the company will you be scanning" onChange={this.partOfCompanySelection} defaultSelected="entire">
-            <RadioButton
-              value="entire"
-              label="Assess Entire Company"
-              style={{marginBottom:16}} />
-            <RadioButton
-              value="part"
-              label="Assess Part of Company"
-              style={{marginBottom:16}}/>
-            </RadioButtonGroup>
-            <FloatingLabelInput className="test" value={this.state.partOfCompanyValue} label="Division" color={this.state.partOfCompanyFieldColor} placeholder="If scanning part of company, put the name of the division here" isDisabled={this.state.part_of_company_bool} onChange={this.handlePartofCompanyChange}></FloatingLabelInput>
-          <RadioButtonGroup className="input" name="once_or_recurring" label="Frequency" onChange={this.scanFrequencySelection} defaultSelected={this.state.scanFrequency}>
+          <div className="card-row">
+            <FloatingLabelInput label="Vendor Name" value={this.state.vendorName} placeholder="Vendor Name" onChange={this.handleVendorChange} isDisabled={false}></FloatingLabelInput>
+          </div>
+          <div className="card-row inline_radio2">
+            <RadioButtonGroup className="inline-radios" name="part_or_entire" label="What part of the company will you be scanning" onChange={this.partOfCompanySelection} defaultSelected="entire">
+                    <RadioButton
+                      className="radio"
+                      value="entire"
+                      label="Assess Entire Company"
+                      style={{marginBottom:16}} />
+                    <RadioButton
+                      className="radio"
+                      value="part"
+                      label="Assess Part of Company"
+                      style={{marginBottom:16}}/>
+              </RadioButtonGroup>
+            </div>
+            <div className="card-row">
+              <FloatingLabelInput className="test" value={this.state.partOfCompanyValue} label="Division" color={this.state.partOfCompanyFieldColor} placeholder="If scanning part of company, put the name of the division here" isDisabled={this.state.part_of_company_bool} onChange={this.handlePartofCompanyChange}></FloatingLabelInput>
+            </div>
+            <div className="card-row inline_radio2">
+          <RadioButtonGroup className="inline-radios" name="once_or_recurring" label="Frequency" onChange={this.scanFrequencySelection} defaultSelected={this.state.scanFrequency}>
             <RadioButton
               value="one_time"
               label="One-time"
@@ -142,19 +144,33 @@ let NewToe = React.createClass({
               label="Recurring"
               style={{marginBottom:16}}/>
             </RadioButtonGroup>
+            </div>
         </div>
       </Card>
       <Card className="card">
         <CardTitle title="Vendor Demographics"></CardTitle>
-        <div className="horizontal-container">
-          <SelectField value={this.state.industrialSegment} onChange={this.handleIndustrialSegmentChange}>
-            <MenuItem value={'services_producing'} primaryText="Services Producing"/>
-            <MenuItem value={'goods_producing'} primaryText="Goods Producing"/>
-          </SelectField>
-          <SelectField value={this.state.industrialSegment} onChange={this.handleIndustryChange}>
-          <MenuItem value={'services_producing'} primaryText="Services Producing"/>
-          <MenuItem value={'goods_producing'} primaryText="Goods Producing"/>
-          </SelectField>
+        <div className="card-container">
+          <div className="card-row inline_radio2">
+              <RadioButtonGroup className="inline-radios" name="goods_or_services" label="What Industry" onChange={this.handleIndustrialSegmentChange} defaultSelected="saas">
+                <RadioButton
+                  value="saas"
+                  label="SaaS"
+                  style={{marginBottom:16,marginTop:16}}/>
+                <RadioButton
+                  value="goods"
+                  label="Goods Producing"
+                  style={{marginBottom:16,marginTop:16,width:"80%"}}/>
+                <RadioButton
+                  value="services"
+                  label="Services Producing"
+                  style={{marginBottom:16,marginTop:16}}/>
+                </RadioButtonGroup>
+            </div>
+            <div className="card-row inline_radio2">
+              <SelectField value={this.state.industrialSegment} onChange={this.handleIndustryChange}>
+                { industryMenuItems }
+              </SelectField>
+            </div>
         </div>
       </Card>
       </div>
@@ -166,3 +182,8 @@ module.exports = NewToe;
 //
  // var goods = ["", "Agriculture, Forestry, and Fishing", "Construction", "Utilities", "Manufacturing", "Mining and Quarrying"];
 //   var services = ["", "Accommodation and Food Service", "Arts, Entertainment, and Recreation", "Business Support", "Content Creation and Mass Communication", "Education", "Finance and Insurance", "Government and Defense", "Human Health", "Information Technology", "Real Estate", "Retail Trade (B2B)", "Transportation and Storage", "Wholesale Trade (B2B)", "Vehicles"];
+
+          // <SelectField value={this.state.industrialSegment} onChange={this.handleIndustrialSegmentChange}>
+          //   <MenuItem value={'services_producing'} primaryText="Services Producing"/>
+          //   <MenuItem value={'goods_producing'} primaryText="Goods Producing"/>
+          // </SelectField>
