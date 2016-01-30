@@ -12,6 +12,7 @@ import DnsSecurity from 'pages/dns_security'
 import FingerprintIcon from 'material-ui/lib/svg-icons/action/fingerprint'
 import HourglassIcon from 'material-ui/lib/svg-icons/action/hourglass-empty'
 import IconAddCircle from 'material-ui/lib/svg-icons/content/add-circle-outline'
+import IconAirlineSeatReclineExtra from 'material-ui/lib/svg-icons/notification/airline-seat-recline-extra'
 import IconButton from 'material-ui/lib/icon-button';
 import LeftNav from 'material-ui/lib/left-nav'
 import List from 'material-ui/lib/lists/list';
@@ -32,7 +33,8 @@ import Defensibility from 'pages/defensibility'
 import SanityCheck from 'pages/sanity_check'
 import EditNetblocks from 'pages/edit_netblocks'
 import EditDomains from 'pages/edit_domains'
-import NewToe from 'pages/new_toe'
+import AddEditToe from 'pages/add_edit_toe'
+import ManageToes from 'pages/manage_toes'
 
 const App = React.createClass({
 
@@ -84,7 +86,7 @@ const App = React.createClass({
             <Divider/>
             <ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
             <Divider/>
-            <ListItem containerElement={<Link to="/new_toe" />} linkButton={true} primaryText="New TOE" rightIcon={<IconAddCircle/>}></ListItem>
+            <ListItem containerElement={<Link to="/manage_toes" />} linkButton={true} primaryText="Manage TOEs" rightIcon={<IconAirlineSeatReclineExtra/>}></ListItem>
           </List>
          </LeftNav>
         {this.props.children}
@@ -106,7 +108,8 @@ ReactDOM.render((
       <Route path='sanity_check' component={SanityCheck}/>
       <Route path='edit_netblocks' component={EditNetblocks}/>
       <Route path='edit_domains' component={EditDomains}/>
-      <Route path='new_toe' component={NewToe}/>
+      <Route path='manage_toes' component={ManageToes}/>
+      <Route path='add_edit_toe' component={AddEditToe}/>
     </Route>
   </Router>),
 document.getElementById('content'));

@@ -50,4 +50,8 @@
       &:focus, &:active { border-bottom: 2px solid $disabledGrey }
     }
   }
+
 }
+
+.Floating-Label-Input.active label {opacity:0.3; top:5px;}
+.Floating-Label-Input label {opacity:0; top:5px;}
