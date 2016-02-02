@@ -3,6 +3,7 @@ import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import DebounceInput from 'react-debounce-input'
 
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
@@ -17,6 +18,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 import ContentRemoveCircle from 'material-ui/lib/svg-icons/content/remove-circle';
+import ContentAddCircle from 'material-ui/lib/svg-icons/content/add-circle';
 
 import FloatingLabelInput from './../components/form_elements/floating_label_input/floating_label_input'
 import TextField from 'material-ui/lib/text-field';
@@ -59,9 +61,15 @@ let AddEditToe = React.createClass({
 			formalName: '',
 			industryName: '',
 			seedHostnames: [{"name":"Cooper"},{"name":"Claire"},{"name":"Carolyn"},{"name":"Kirsten"},{"name":"Lyons"},{"name":"Ferrell"},{"name":"Allen"}],
-
 			addingSeedHostname: false,
 			tempAddSeedHostname: 'tempHostname',
+			netblockIntell: [{"registrant_org":"SHOPABOUT","country":"MACRONAUT","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"SUPREMIA","country":"PROTODYNE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"ZILIDIUM","country":"ZOLAR","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"KINETICUT","country":"LIMAGE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"SKINSERVE","country":"MARVANE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"REALYSIS","country":"SOLAREN","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"}],
+			addingNetblockIntell: false,
+			tempRegistrantOrg: '',
+			tempCountry: '',
+			tempCidr: '',
+			tempStartIp: '',
+			tempEndIp: '',
 		}
 		/*
 		return {
@@ -79,17 +87,70 @@ let AddEditToe = React.createClass({
 	handleShortNameChange(e, cb) { this.setState({shortName: e.target.value}, () => cb()) },
 	handleFormalNameChange(e, cb) { this.setState({formalName: e.target.value}, () => cb()) },
 	handleTempAddSeedHostname(e, cb) { this.setState({tempAddSeedHostname: e.target.value}, () => cb()) },
+	handleTempRegistrantOrg(e) { this.setState({tempRegistrantOrg: e.target.value}) },
+	handleTempCountry(e) { this.setState({tempCountry: e.target.value}) },
+	handleTempCidr(e) { this.setState({tempCidr: e.target.value}) },
+	handleTempStartIp(e) { this.setState({tempStartIp: e.target.value}) },
+	handleTempEndIp(e) { this.setState({tempEndIp: e.target.value}) },
 
 	refreshDomainIntell(e){
 		console.log('WE WANT TO REFRESH DOMAIN INTELL');
 	},
 
+	showAddNetblockIntell(e){
+		this.setState({
+			addingNetblockIntell:true
+		});
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
+	},
+
 	addNetblockIntell(e){
-		console.log('WE WANT TO ADD NETBLOCK INTELL');
+
+		if(this.state.tempRegistrantOrg.length > 0
+			&& this.state.tempCountry.length > 0
+			&& this.state.tempCidr.length > 0
+			&& this.state.tempStartIp.length > 0
+			&& this.state.tempEndIp.length > 0){
+
+			let newRecord = {
+				"registrant_org":this.state.tempRegistrantOrg,
+				"country":this.state.tempCountry,
+				"cidr":this.state.tempCidr,
+				"start_ip":this.state.tempStartIp,
+				"end_ip":this.state.tempEndIp
+			}
+
+			let temp = this.state.netblockIntell;
+			temp.unshift(newRecord);
+
+			this.setState({
+				netblockIntell: temp
+			});
+
+		}
+
+		this.setState({
+			tempRegistrantOrg: '',
+			tempCountry: '',
+			tempCidr: '',
+			tempStartIp: '',
+			tempEndIp: '',
+			addingNetblockIntell: false
+		});
+
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
 	removeNetblockIntell(e){
-		console.log('REMOVE NETBLOCK INTELL');
+		let temp = this.state.netblockIntell;
+
+		temp.splice(e, 1);
+
+		this.setState({
+			netblockIntell: temp
+		});
+
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
 	showAddSeedHostname(e){
@@ -97,12 +158,12 @@ let AddEditToe = React.createClass({
 			tempAddSeedHostname: '',
 			addingSeedHostname:true
 		});
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
 	addSeedHostnames(e){
 
 		if(this.state.tempAddSeedHostname.length > 0){
-
 			let temp = this.state.seedHostnames;
 			temp.unshift({'name':this.state.tempAddSeedHostname});
 
@@ -114,7 +175,7 @@ let AddEditToe = React.createClass({
 		this.setState({
 			addingSeedHostname:false
 		});
-
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
 	removeSeedHostnames(e){
@@ -125,54 +186,9 @@ let AddEditToe = React.createClass({
 		this.setState({
 			seedHostnames: temp
 		});
-
+		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
-
-
-
-
-
-
-	partOfCompanySelection(e){
-		console.log('radio switched');
-		if (e.target.value === 'entire') {
-			console.log('was entire');
-			this.setState({
-				entire_company: true,
-				part_of_company_bool: true,
-				partOfCompanyFieldColor: 'grey',
-				partOfCompanyValue: ''
-			})
-		}
-		else {
-			console.log('part');
-			this.setState({
-				entire_company: false,
-				part_of_company_bool: false,
-				partOfCompanyFieldColor: 'green',
-			})
-		}
-	},
-	scanFrequencySelection(e){
-		if(e.target.value === 'one_time'){
-			this.setState({})
-		}
-	},
-	 handleIndustrialSegmentChange(event, index, value){
-		 this.setState({
-			 industrialSegment:index,
-			 industry: 'Accomodation and Food Service'
-		 })
-		 console.log(this.state.industrialSegment);
-		//	this.setState({industrialSegment}),
-
-	 } ,
-	handleIndustryChange(event, index, value){
-		this.setState({industry:value})
-	},
-	handlePartofCompanyChange(e, cb){this.setState({partOfCompanyValue: e.target.value}, () => cb())},
-	handleVendorChange(e, cb) { this.setState({vendorName: e.target.value}, () => cb()) },
 	render: function(){
 
 		const seedHostnamesRow = this.state.seedHostnames.map((seedHostname, x) => {
@@ -180,6 +196,19 @@ let AddEditToe = React.createClass({
 				<TableRow key={x}>
 					<TableRowColumn>{seedHostname.name}</TableRowColumn>
 					<TableRowColumn><ContentRemoveCircle onClick={this.removeSeedHostnames.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
+				</TableRow>
+			)
+		}, this);
+
+		const netblockIntellRow = this.state.netblockIntell.map((netblockIntell, x) => {
+			return(
+				<TableRow key={x}>
+					<TableRowColumn>{netblockIntell.registrant_org}</TableRowColumn>
+					<TableRowColumn>{netblockIntell.country}</TableRowColumn>
+					<TableRowColumn>{netblockIntell.cidr}</TableRowColumn>
+					<TableRowColumn>{netblockIntell.start_ip}</TableRowColumn>
+					<TableRowColumn>{netblockIntell.end_ip}</TableRowColumn>
+					<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
 				</TableRow>
 			)
 		}, this);
@@ -238,7 +267,7 @@ let AddEditToe = React.createClass({
 			</Card>
 			<Card className="card">
 				<CardTitle title="Netblock Intell">
-					<FloatingActionButton onClick={this.addNetblockIntell} style={{fontSize:'16px', position:'absolute', top:'8px', right:'0'}} mini={true}>
+					<FloatingActionButton onClick={this.showAddNetblockIntell} style={{fontSize:'16px', position:'absolute', top:'8px', right:'0'}} mini={true}>
 						<ContentAdd />
 					</FloatingActionButton>
 				</CardTitle>
@@ -251,42 +280,21 @@ let AddEditToe = React.createClass({
 								<TableHeaderColumn>CIDR</TableHeaderColumn>
 								<TableHeaderColumn>Start IP</TableHeaderColumn>
 								<TableHeaderColumn>End IP</TableHeaderColumn>
-								<TableHeaderColumn style={{width:'70px'}}>&nbsp;</TableHeaderColumn>
+								<TableHeaderColumn>&nbsp;</TableHeaderColumn>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							<TableRow>
-								<TableRowColumn>asdffd</TableRowColumn>
-								<TableRowColumn>John Smith</TableRowColumn>
-								<TableRowColumn>10.0.0.1/24</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
-							</TableRow>
-							<TableRow>
-								<TableRowColumn>asdffd</TableRowColumn>
-								<TableRowColumn>John Smith</TableRowColumn>
-								<TableRowColumn>10.0.0.1/24</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
-							</TableRow>
-							<TableRow>
-								<TableRowColumn>asdffd</TableRowColumn>
-								<TableRowColumn>John Smith</TableRowColumn>
-								<TableRowColumn>10.0.0.1/24</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
-							</TableRow>
-							<TableRow>
-								<TableRowColumn>asdffd</TableRowColumn>
-								<TableRowColumn>John Smith</TableRowColumn>
-								<TableRowColumn>10.0.0.1/24</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn>10.0.0.1</TableRowColumn>
-								<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
-							</TableRow>
+							{ this.state.addingNetblockIntell ?
+								<TableRow>
+									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="registrant_org" id="registrant_org" placeholder="Registrant Org" style={{fontSize:'12px'}} onChange={this.handleTempRegistrantOrg} value={this.state.tempRegistrantOrg} /></TableRowColumn>
+									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="country" id="country" placeholder="Country" style={{fontSize:'12px'}} onChange={this.handleTempCountry} value={this.state.tempCountry} /></TableRowColumn>
+									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="cidr" id="cidr" placeholder="CIDR" style={{fontSize:'12px'}} onChange={this.handleTempCidr} value={this.state.tempCidr} /></TableRowColumn>
+									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="start_ip" id="start_ip" placeholder="Start IP" style={{fontSize:'12px'}} onChange={this.handleTempStartIp} value={this.state.tempStartIp} /></TableRowColumn>
+									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="end_ip" id="end_ip" placeholder="End IP" style={{fontSize:'12px'}} onChange={this.handleTempEndIp} value={this.state.tempEndIp} /></TableRowColumn>
+									<TableRowColumn><ContentAddCircle className="add-circle" style={{fill:'#689f38'}} onClick={this.addNetblockIntell} /></TableRowColumn>
+								</TableRow>
+						  :null}
+							{netblockIntellRow}
 						</TableBody>
 					</Table>
 				</CardText>
