@@ -232,17 +232,21 @@ let AddEditToe = React.createClass({
 				url: 'http://localhost:5000/v1/toe',
 				type: 'PUT',
 				dataType: 'json',
-				data: {
-					//"date_created": this.state.dateCreated,
-					"date_created": "2016-02-02 15:02:20.942993",
-					"formal_name": this.state.formalName,
-					"industry": this.state.industryName,
-					"seed_hostnames": this.state.seedHostnames,
-					"short_name": this.state.shortName,
-					"toe_id": this.state.toe_id,
-					"toe_netblocks": this.state.netblockIntell
+				headers: {
+					'Content-Type':'application/json',
+					//'Access-Control-Request-Headers':'null'
 				},
-				//data: JSON.stringify(formattedPutObject),
+				// data: {
+				// 	//"date_created": this.state.dateCreated,
+				// 	"date_created": "2016-02-02 15:02:20.942993",
+				// 	"formal_name": this.state.formalName,
+				// 	"industry": this.state.industryName,
+				// 	"seed_hostnames": this.state.seedHostnames,
+				// 	"short_name": this.state.shortName,
+				// 	"toe_id": this.state.toe_id,
+				// 	"toe_netblocks": this.state.netblockIntell
+				// },
+				data: JSON.stringify(formattedPutObject),
 				success: (data) => {
 					console.log(data);
 				}
@@ -251,12 +255,12 @@ let AddEditToe = React.createClass({
 			console.log('NEWTOE');
 			let formattedPutObject = {
 				//"date_created": this.state.dateCreated,
-				"date_created": "2016-02-02 15:02:20.942993",
+				//"date_created": "2016-02-02 15:02:20.942993",
 				"formal_name": this.state.formalName,
 				"industry": this.state.industryName,
 				"seed_hostnames": this.state.seedHostnames,
 				"short_name": this.state.shortName,
-				"toe_id": this.state.toe_id,
+				//"toe_id": this.state.toe_id,
 				"toe_netblocks": this.state.netblockIntell
 			}
 			console.log(formattedPutObject);
@@ -264,17 +268,21 @@ let AddEditToe = React.createClass({
 				url: 'http://localhost:5000/v1/toe',
 				type: 'POST',
 				dataType: 'json',
-				data: {
-					//"date_created": this.state.dateCreated,
-					//"date_created": "2016-02-02 15:02:20.942993",
-					"formal_name": this.state.formalName,
-					"industry": this.state.industryName,
-					"seed_hostnames": this.state.seedHostnames,
-					"short_name": this.state.shortName,
-					//"toe_id": this.state.toe_id,
-					"toe_netblocks": this.state.netblockIntell
+				headers: {
+					'Content-Type':'application/json',
+					//'Access-Control-Request-Headers':'null'
 				},
-				//data: JSON.stringify(formattedPutObject),
+				// data: {
+				// 	//"date_created": this.state.dateCreated,
+				// 	//"date_created": "2016-02-02 15:02:20.942993",
+				// 	"formal_name": this.state.formalName,
+				// 	"industry": this.state.industryName,
+				// 	"seed_hostnames": this.state.seedHostnames,
+				// 	"short_name": this.state.shortName,
+				// 	//"toe_id": this.state.toe_id,
+				// 	"toe_netblocks": this.state.netblockIntell
+				// },
+				data: JSON.stringify(formattedPutObject),
 				success: (data) => {
 					console.log(data);
 				}
