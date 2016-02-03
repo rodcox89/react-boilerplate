@@ -256,11 +256,14 @@ let AddEditToe = React.createClass({
 			let formattedPutObject = {
 				//"date_created": this.state.dateCreated,
 				//"date_created": "2016-02-02 15:02:20.942993",
+				//"date_created": '',
 				"formal_name": this.state.formalName,
 				"industry": this.state.industryName,
-				"seed_hostnames": this.state.seedHostnames,
+				//"seed_hostnames": this.state.seedHostnames,
+				"seed_hostnames": [],
 				"short_name": this.state.shortName,
 				//"toe_id": this.state.toe_id,
+				//"toe_id": '',
 				"toe_netblocks": this.state.netblockIntell
 			}
 			console.log(formattedPutObject);
@@ -268,9 +271,10 @@ let AddEditToe = React.createClass({
 				url: 'http://localhost:5000/v1/toe',
 				type: 'POST',
 				dataType: 'json',
+				jsonp: false,
 				headers: {
 					'Content-Type':'application/json',
-					//'Access-Control-Request-Headers':'null'
+					//'Access-Control-Request-Headers':'http://localhost:8080'
 				},
 				// data: {
 				// 	//"date_created": this.state.dateCreated,
