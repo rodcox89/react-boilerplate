@@ -43,6 +43,9 @@ const companiesAssignedButtonStyles = {margin:'8px'}
 const companiesAssignedPaperStyles = {display:'inline-block', margin:'8px', padding:'8px'}
 
 
+let toeId = '';
+
+
 injectTapEventPlugin();
 var inputStyle = {
 	outline: 'none !important',
@@ -54,16 +57,20 @@ var inputStyle = {
 }
 let AddEditToe = React.createClass({
 	getInitialState: function() {
+
+		if(typeof this.props.params.toeId != 'undefined'){
+			toeId = this.props.params.toeId;
+		}
+
 		return {
 			toe_id: '',
-			unique_key: '',
-			shortName: 'asdfasdf',
+			shortName: '',
 			formalName: '',
 			industryName: '',
-			seedHostnames: [{"name":"Cooper"},{"name":"Claire"},{"name":"Carolyn"},{"name":"Kirsten"},{"name":"Lyons"},{"name":"Ferrell"},{"name":"Allen"}],
+			seedHostnames: [],
 			addingSeedHostname: false,
-			tempAddSeedHostname: 'tempHostname',
-			netblockIntell: [{"registrant_org":"SHOPABOUT","country":"MACRONAUT","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"SUPREMIA","country":"PROTODYNE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"ZILIDIUM","country":"ZOLAR","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"KINETICUT","country":"LIMAGE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"SKINSERVE","country":"MARVANE","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"},{"registrant_org":"REALYSIS","country":"SOLAREN","cidr":"10.0.0.1/24","start_ip":"10.0.0.1","end_ip":"10.0.0.1"}],
+			tempAddSeedHostname: '',
+			netblockIntell: [],
 			addingNetblockIntell: false,
 			tempRegistrantOrg: '',
 			tempCountry: '',
@@ -71,21 +78,35 @@ let AddEditToe = React.createClass({
 			tempStartIp: '',
 			tempEndIp: '',
 		}
-		/*
-		return {
-			vendorName: '',
-			entire_company: '',
-			part_of_company_bool: true,
-			partOfCompanyValue: '',
-			partOfCompanyFieldColor: 'grey',
-			scanFrequency: 'one_time',
-			industrialSegment: 'services_producing',
-			industry: 'Accomodation and Food Service'
+	},
+	componentDidMount() {
+		console.log(toeId);
+		if(toeId.length > 0){
+			$.ajax({
+				url: 'http://localhost:5000/v1/toe/'+toeId,
+				type: 'GET',
+				dataType: 'json',
+				success: (data) => {
+					data = data[0];
+					console.log(data);
+					this.setState({
+						dateCreated: data.date_created,
+						toe_id: data.toe_id,
+						shortName: data.short_name,
+						formalName: data.formal_name,
+						industryName: data.industry,
+						seedHostnames: data.seed_hostnames,
+						netblockIntell: data.toe_netblocks
+					});
+					$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
+					console.log(data);
+				}
+			});
 		}
-		*/
 	},
 	handleShortNameChange(e, cb) { this.setState({shortName: e.target.value}, () => cb()) },
 	handleFormalNameChange(e, cb) { this.setState({formalName: e.target.value}, () => cb()) },
+	handleIndustryNameChange(e, cb) { this.setState({industryName: e.target.value}, () => cb()) },
 	handleTempAddSeedHostname(e, cb) { this.setState({tempAddSeedHostname: e.target.value}, () => cb()) },
 	handleTempRegistrantOrg(e) { this.setState({tempRegistrantOrg: e.target.value}) },
 	handleTempCountry(e) { this.setState({tempCountry: e.target.value}) },
@@ -165,7 +186,7 @@ let AddEditToe = React.createClass({
 
 		if(this.state.tempAddSeedHostname.length > 0){
 			let temp = this.state.seedHostnames;
-			temp.unshift({'name':this.state.tempAddSeedHostname});
+			temp.unshift([this.state.tempAddSeedHostname]);
 
 			this.setState({
 				seedHostnames: temp
@@ -189,12 +210,85 @@ let AddEditToe = React.createClass({
 		$('tbody, tfoot, thead').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
+	addUpdateToe(){
+		console.log('update dem toes');
+
+		// check if new or updated TOE
+		if(toeId.length > 0){
+			//console.log(this.state.dateCreated);
+			// updating existing TOE
+			let formattedPutObject = {
+				//"date_created": this.state.dateCreated,
+				"date_created": "2016-02-02 15:02:20.942993",
+				"formal_name": this.state.formalName,
+				"industry": this.state.industryName,
+				"seed_hostnames": this.state.seedHostnames,
+				"short_name": this.state.shortName,
+				"toe_id": this.state.toe_id,
+				"toe_netblocks": this.state.netblockIntell
+			}
+			console.log(formattedPutObject);
+			$.ajax({
+				url: 'http://localhost:5000/v1/toe',
+				type: 'PUT',
+				dataType: 'json',
+				data: {
+					//"date_created": this.state.dateCreated,
+					"date_created": "2016-02-02 15:02:20.942993",
+					"formal_name": this.state.formalName,
+					"industry": this.state.industryName,
+					"seed_hostnames": this.state.seedHostnames,
+					"short_name": this.state.shortName,
+					"toe_id": this.state.toe_id,
+					"toe_netblocks": this.state.netblockIntell
+				},
+				//data: JSON.stringify(formattedPutObject),
+				success: (data) => {
+					console.log(data);
+				}
+			});
+		}else{
+			console.log('NEWTOE');
+			let formattedPutObject = {
+				//"date_created": this.state.dateCreated,
+				"date_created": "2016-02-02 15:02:20.942993",
+				"formal_name": this.state.formalName,
+				"industry": this.state.industryName,
+				"seed_hostnames": this.state.seedHostnames,
+				"short_name": this.state.shortName,
+				"toe_id": this.state.toe_id,
+				"toe_netblocks": this.state.netblockIntell
+			}
+			console.log(formattedPutObject);
+			$.ajax({
+				url: 'http://localhost:5000/v1/toe',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					//"date_created": this.state.dateCreated,
+					//"date_created": "2016-02-02 15:02:20.942993",
+					"formal_name": this.state.formalName,
+					"industry": this.state.industryName,
+					"seed_hostnames": this.state.seedHostnames,
+					"short_name": this.state.shortName,
+					//"toe_id": this.state.toe_id,
+					"toe_netblocks": this.state.netblockIntell
+				},
+				//data: JSON.stringify(formattedPutObject),
+				success: (data) => {
+					console.log(data);
+				}
+			});
+		}
+		// redirect to manage toes page??
+	},
+
 	render: function(){
 
 		const seedHostnamesRow = this.state.seedHostnames.map((seedHostname, x) => {
 			return(
 				<TableRow key={x}>
-					<TableRowColumn>{seedHostname.name}</TableRowColumn>
+					<TableRowColumn>{seedHostname}</TableRowColumn>
 					<TableRowColumn><ContentRemoveCircle onClick={this.removeSeedHostnames.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
 				</TableRow>
 			)
@@ -205,35 +299,27 @@ let AddEditToe = React.createClass({
 				<TableRow key={x}>
 					<TableRowColumn>{netblockIntell.registrant_org}</TableRowColumn>
 					<TableRowColumn>{netblockIntell.country}</TableRowColumn>
-					<TableRowColumn>{netblockIntell.cidr}</TableRowColumn>
+					<TableRowColumn style={{textOverflow:'string'}}>{netblockIntell.cidr}</TableRowColumn>
 					<TableRowColumn>{netblockIntell.start_ip}</TableRowColumn>
 					<TableRowColumn>{netblockIntell.end_ip}</TableRowColumn>
-					<TableRowColumn><ContentRemoveCircle onClick={this.removeNetblockIntell.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
+					<TableRowColumn style={{width:"90px"}}><ContentRemoveCircle onClick={this.removeNetblockIntell.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
 				</TableRow>
 			)
 		}, this);
 
 		return (
-			<div style={{marginBottom:'80px'}}>
+			<div style={{marginBottom:'200px'}}>
 			<Card className="card">
 				<CardTitle title={"Manage TOE: " + this.state.shortName}></CardTitle>
 				<CardText>
+					<div>Created on <strong>{this.state.dateCreated}</strong></div>
 					<FloatingLabelInput label="Short Name" value={this.state.shortName} wrapperClassName={((this.state.shortName.length > 0) ? 'active' : '')} onChange={this.handleShortNameChange} placeholder="Short Name" isDisabled={false} />
 					<FloatingLabelInput label="Formal Name" value={this.state.formalName} wrapperClassName={((this.state.formalName.length > 0) ? 'active' : '')} onChange={this.handleFormalNameChange} placeholder="Formal Name" isDisabled={false} />
 					<FloatingLabelInput label="Industry Name" value={this.state.industryName} wrapperClassName={((this.state.industryName.length > 0) ? 'active' : '')} onChange={this.handleIndustryNameChange} placeholder="Industry Name" isDisabled={false} />
 					<br/><br/>
 					<div style={{margin:"8px", fontWeight:'bold'}}>Companies Assigned to this TOE</div>
 					<div>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
-						<Paper style={companiesAssignedPaperStyles} zDepth={1}>asdf</Paper>
+						<Paper style={companiesAssignedPaperStyles} zDepth={1}>COMPANIES ASSIGNED LOGIC HAS NOT BEEN DONE</Paper>
 					</div>
 				</CardText>
 			</Card>
@@ -367,18 +453,12 @@ let AddEditToe = React.createClass({
 
 				</CardText>
 			</Card>
-			<RaisedButton label="Add/Update TOE" style={{position:'fixed', bottom:'20px', right:'20px'}} secondary={true}></RaisedButton>
+			<div style={{position:'fixed', bottom:'20px', right:'0', width:'200px', background:'#fff', border:'1px solid #E0E0E0', borderRight:'none', padding:'20px'}}>
+				<p style={{fontSize:'13px'}}><strong>Note:</strong> Changes will only be applied if you click this button.</p>
+				<RaisedButton label="Add/Update TOE" secondary={true} onClick={this.addUpdateToe}></RaisedButton>
+			</div>
 			</div>
 		)
 	}
 })
 module.exports = AddEditToe;
-
-//
- // var goods = ["", "Agriculture, Forestry, and Fishing", "Construction", "Utilities", "Manufacturing", "Mining and Quarrying"];
-//	 var services = ["", "Accommodation and Food Service", "Arts, Entertainment, and Recreation", "Business Support", "Content Creation and Mass Communication", "Education", "Finance and Insurance", "Government and Defense", "Human Health", "Information Technology", "Real Estate", "Retail Trade (B2B)", "Transportation and Storage", "Wholesale Trade (B2B)", "Vehicles"];
-
-					// <SelectField value={this.state.industrialSegment} onChange={this.handleIndustrialSegmentChange}>
-					//	 <MenuItem value={'services_producing'} primaryText="Services Producing"/>
-					//	 <MenuItem value={'goods_producing'} primaryText="Goods Producing"/>
-					// </SelectField>

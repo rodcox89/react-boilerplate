@@ -110,6 +110,7 @@ ReactDOM.render((
       <Route path='edit_domains' component={EditDomains}/>
       <Route path='manage_toes' component={ManageToes}/>
       <Route path='add_edit_toe' component={AddEditToe}/>
+      <Route path='add_edit_toe/:toeId' component={AddEditToe}/>
     </Route>
   </Router>),
 document.getElementById('content'));
