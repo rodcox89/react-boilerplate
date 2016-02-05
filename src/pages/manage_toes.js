@@ -54,7 +54,6 @@ componentDidMount() {
 				has_results: true,
 				toes: data
 			});
-			console.log(data);
 		},
 		error: (err) => {
 			console.log('api error')
@@ -102,7 +101,7 @@ sort_by(field, reverse, primer) {
 handleSearch(e){
 	console.log(e);
 	this.setState({search_term: e.target.value})
-	// console.log(this.state.search_term);
+	console.log(this.state.search_term);
 },
 
 runScan(){
@@ -112,12 +111,27 @@ runScan(){
 render(){
 
 	const tableElements = this.state.toes.map((toe, x) => {
-		return(
+
+		let searchTerm = this.state.search_term;
+		let includeResult = this.state.search_term.length === 0 ? true: false;
+		let tempContent = '';
+
+		if (!includeResult) {
+			toe.formal_name.includes(searchTerm) ? includeResult = true : false
+		}
+
+		if(includeResult){
+			tempContent =
 			<TableRow key={x}>
 					<TableRowColumn>{toe.formal_name}</TableRowColumn>
-					<TableRowColumn>NEEDDATE</TableRowColumn>
+					<TableRowColumn>NEED-EDIT-DATE</TableRowColumn>
+					<TableRowColumn>NEED-SCAN-DATE</TableRowColumn>
 					<TableRowColumn><Link to={"/add_edit_toe/"+toe.toe_id}><RaisedButton label="Edit" secondary={true}></RaisedButton></Link> &nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp; <RaisedButton onClick={this.runScan} label="Scan" secondary={true}></RaisedButton></TableRowColumn>
 			</TableRow>
+		}
+
+		return(
+			tempContent
 		)
 	}, this);
 	return(
@@ -134,10 +148,11 @@ render(){
 				<thead>
 				<tr className="success">
 				<TableHeaderColumn><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-				<TableHeaderColumn colSpan="2" style={{textAlign: 'right' }}><Link to="/add_edit_toe"><RaisedButton	label="Add Toe" secondary={true}></RaisedButton></Link></TableHeaderColumn>
+				<TableHeaderColumn colSpan="3" style={{textAlign: 'right' }}><Link to="/add_edit_toe"><RaisedButton label="Add Toe" secondary={true}></RaisedButton></Link></TableHeaderColumn>
 				</tr>
 					<tr className="success">
 					<TableHeaderColumn onClick={this.handleSort.bind(null, 'formal_name')}>Name <i className="fa fa-sort"></i></TableHeaderColumn>
+					<TableHeaderColumn>Last Edit Date <i className="fa fa-sort"></i></TableHeaderColumn>
 					<TableHeaderColumn>Last Scan Date <i className="fa fa-sort"></i></TableHeaderColumn>
 						<TableHeaderColumn>&nbsp;</TableHeaderColumn>
 					</tr>
