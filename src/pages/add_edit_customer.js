@@ -68,28 +68,14 @@ let AddEditToe = React.createClass({
 			shortName: '',
 			formalName: '',
 			industryName: '',
-			addingSubsidiary: false,
-			tempSubsidiaryName: '',
-			tempSubsidiaryDomains: '',
-			subsidiaries: [],
-			regulatoryRequirements: '',
-			regulatoryRequirementsRating: '',
-			securityCertifications: '',
-			securityCertificationsRating: '',
-			customerBase: '',
-			customerBaseRating: '',
-			dataLossEvents: [],
-			addingDataLoss: false,
+			rootDomain: '',
+			dataLoss: [],
+			addingdataLoss: false,
 			tempEventDateValid: true,
 			tempEventDateStyle: {fontSize:'12px'},
 			tempEventDate: '',
 			tempShortDesc: '',
-			tempLongDesc: '',
 			tempResource: '',
-
-			rootDomain: '',
-
-
 			seedHostnames: [],
 			addingSeedHostname: false,
 			tempAddSeedHostname: '',
@@ -113,7 +99,8 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					console.log(data);
+					data = data[0];
+					//console.log(data);
 					this.setState({
 						dateCreated: data.date_created,
 						toe_id: data.toe_id,
@@ -121,24 +108,12 @@ let AddEditToe = React.createClass({
 						formalName: data.formal_name,
 						industryName: data.industry,
 						rootDomain: data.root_domain,
-						subsidiaries: data.toe_subsidiaries,
-						regulatoryRequirements: data.governance_regulatory_requirements,
-						regulatoryRequirementsRating: data.governance_regulatory_requirements_rating,
-						securityCertifications: data.governance_security_certifications,
-						securityCertificationsRating: data.governance_security_certifications_rating,
-						customerBase: data.governance_customer_base,
-						customerBaseRating: data.governance_customer_base_rating,
-						dataLossEvents: data.data_loss_events,
 						seedHostnames: data.seed_hostnames,
 						netblockIntell: data.toe_netblocks
 					});
-					this.setGovernanceRatingColor('regulatory_requirements_rating', this.state.regulatoryRequirementsRating);
-					this.setGovernanceRatingColor('security_certifications_rating', this.state.securityCertificationsRating);
-					this.setGovernanceRatingColor('customer_base_rating', this.state.customerBaseRating);
 					$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
 				}
 			});
-
 		}
 	},
 	handleShortNameChange(e, cb) { this.setState({shortName: e.target.value}, () => cb()) },
@@ -148,49 +123,10 @@ let AddEditToe = React.createClass({
 	handleTempShortDesc(e) { this.setState({tempShortDesc: e.target.value}) },
 	handleTempLongDesc(e) { this.setState({tempLongDesc: e.target.value}) },
 	handleTempResource(e) { this.setState({tempResource: e.target.value}) },
-	handleTempSubsidiaryName(e) { this.setState({tempSubsidiaryName: e.target.value}) },
-	handleTempSubsidiaryDomains(e) { this.setState({tempSubsidiaryDomains: e.target.value}) },
-	handleRegulatoryRequirements(e) {this.setState({regulatoryRequirements: e.target.value}) },
-	handleSecurityCertifications(e) {this.setState({securityCertifications: e.target.value}) },
-	handleCustomerBase(e) {this.setState({customerBase: e.target.value}) },
 	handleTempAddSeedHostname(e, cb) { this.setState({tempAddSeedHostname: e.target.value}, () => cb()) },
 	handleTempRegistrantOrg(e) { this.setState({tempRegistrantOrg: e.target.value}) },
 	handleTempCountry(e) { this.setState({tempCountry: e.target.value}) },
 	handleTempCidr(e) { this.setState({tempCidr: e.target.value}) },
-
-	handleRegulatoryRequirementsRating(ratingId, e) {
-		this.setState({regulatoryRequirementsRating: e.target.value});
-		this.setGovernanceRatingColor(ratingId, e.target.value);
-	},
-
-	handleSecurityCertificationsRating(ratingId, e) {
-		this.setState({securityCertificationsRating: e.target.value});
-		this.setGovernanceRatingColor(ratingId, e.target.value);
-	},
-
-	handleCustomerBaseRating(ratingId, e) {
-		this.setState({customerBaseRating: e.target.value});
-		this.setGovernanceRatingColor(ratingId, e.target.value);
-	},
-
-	setGovernanceRatingColor(ratingId, rating){
-		if(rating >= 8){
-			$('#'+ratingId).css('fill', '#6bbf47');
-			return
-		}
-		if(rating == 7 || rating == 6){
-			$('#'+ratingId).css('fill', '#70a9d6');
-			return
-		}
-		if(rating == 5 || rating == 4){
-			$('#'+ratingId).css('fill', '#f5c304');
-			return
-		}
-		if(rating <= 3){
-			$('#'+ratingId).css('fill', '#e53535');
-			return
-		}
-	},
 
 	handleTempEventDate(e) {
 
@@ -257,60 +193,6 @@ let AddEditToe = React.createClass({
 		}
 	},
 
-	showAddSubsidiary(){
-		this.setState({
-			addingSubsidiary:true
-		});
-		$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
-	},
-
-	removeSubsidiary(e){
-		let temp = this.state.subsidiaries;
-
-		temp.splice(e, 1);
-
-		this.setState({
-			subsidiaries: temp
-		});
-
-		$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
-	},
-
-	addSubsidiary(){
-
-		if(this.state.tempSubsidiaryName.length > 0
-			&& this.state.tempSubsidiaryDomains.length > 0){
-
-			let newRecord = {
-				subsidiary_name: this.state.tempSubsidiaryName,
-				subsidiary_domains: []
-			}
-
-			// convert temp domains string into array
-			newRecord.subsidiary_domains = this.state.tempSubsidiaryDomains.split(',');
-
-			for (var i = 0; i < newRecord.subsidiary_domains.length; i++) {
-				newRecord.subsidiary_domains[i] = newRecord.subsidiary_domains[i].trim();
-			}
-
-			let temp = this.state.subsidiaries;
-			temp.unshift(newRecord);
-
-			this.setState({
-				subsidiaries: temp,
-				tempSubsidiaryName: '',
-				tempSubsidiaryDomains: '',
-				addingSubsidiary: false
-			});
-			$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
-		}
-
-		this.setState({
-			addingSeedHostname:false
-		});
-		$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
-	},
-
 	refreshDomainIntell(e){
 		console.log('WE WANT TO REFRESH DOMAIN INTELL');
 	},
@@ -323,39 +205,7 @@ let AddEditToe = React.createClass({
 	},
 
 	addDataLoss(){
-		if(this.state.tempEventDate.length > 0
-			&& this.state.tempEventDateValid
-			&& this.state.tempShortDesc.length > 0
-			&& this.state.tempLongDesc.length > 0
-			&& this.state.tempResource.length > 0){
-
-			let newRecord = {
-				"data_loss_event_date":this.state.tempEventDate,
-				"data_loss_event_long_desc":this.state.tempLongDesc,
-				"data_loss_event_short_desc":this.state.tempShortDesc,
-				"data_loss_event_source_url":this.state.tempResource,
-			}
-
-			let temp = this.state.dataLossEvents;
-			temp.unshift(newRecord);
-
-			this.setState({
-				dataLossEvents: temp
-			});
-
-			this.setState({
-				tempEventDate: '',
-				tempShortDesc: '',
-				tempLongDesc: '',
-				tempResource: '',
-				addingDataLoss: false
-			});
-
-			$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
-
-		}else{
-			alert('Please make sure all data loss event fields are populated.');
-		}
+		console.log('add data loss');
 	},
 
 	removeDataLoss(e){
@@ -427,18 +277,8 @@ let AddEditToe = React.createClass({
 	},
 
 	NetblockIntellStartEndIpValidation(){
-
-		let startIp = this.state.tempStartIp.split('.')
-		let startIpNum = parseInt(startIp[0]) * 16777216 + parseInt(startIp[1]) * 65536 + parseInt(startIp[2]) * 256 + parseInt(startIp[3])
-
-		let endIp = this.state.tempEndIp.split('.')
-		let endIpNum = parseInt(endIp[0]) * 16777216 + parseInt(endIp[1]) * 65536 + parseInt(endIp[2]) * 256 + parseInt(endIp[3])
-
-		if(startIp < endIp){
-			return true;
-		}
-
-		return false;
+		console.log('RUN START AND END CHECK FROM KELLY');
+		return true;
 	},
 
 	removeNetblockIntell(e){
@@ -495,25 +335,16 @@ let AddEditToe = React.createClass({
 		if(toeId.length > 0){
 			// updating existing TOE
 			let formattedPutObject = {
-				//"date_created": this.state.dateCreated,
-				"toe_id": this.state.toe_id,
-				"short_name": this.state.shortName,
+				"date_created": "2016-02-02 15:02:20.942993",
 				"formal_name": this.state.formalName,
 				"industry": this.state.industryName,
-				"toe_subsidiaries": this.state.subsidiaries,
-				"governance_regulatory_requirements": this.state.regulatoryRequirements,
-				"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
-				"governance_security_certifications": this.state.securityCertifications,
-				"governance_security_certifications_rating": this.state.securityCertificationsRating,
-				"governance_customer_base": this.state.customerBase,
-				"governance_customer_base_rating": this.state.customerBaseRating,
-				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
+				"short_name": this.state.shortName,
+				"toe_id": this.state.toe_id,
 				"toe_netblocks": this.state.netblockIntell
 			}
-			console.log('EXISTING TOE');
-			console.log(formattedPutObject);
-			console.log('----------------');
+			// console.log('EXISTING TOE');
+			// console.log(formattedPutObject);
 			$.ajax({
 				url: 'http://localhost:5000/v1/toe',
 				type: 'PUT',
@@ -523,28 +354,17 @@ let AddEditToe = React.createClass({
 				},
 				data: JSON.stringify(formattedPutObject),
 				success: (data) => {
-					console.log(data);
-					console.log('---------------------------');
-					//window.location.href= "/#/manage_toes";
+					//console.log(data);
+					window.location.href= "/#/manage_toes";
 				}
 			});
 		}else{
 			// NEW TOE CALL
 			let formattedPostObject = {
-				//"date_created": this.state.dateCreated,
-				"toe_id": this.state.toe_id,
-				"short_name": this.state.shortName,
 				"formal_name": this.state.formalName,
 				"industry": this.state.industryName,
-				"toe_subsidiaries": this.state.subsidiaries,
-				"governance_regulatory_requirements": this.state.regulatoryRequirements,
-				"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
-				"governance_security_certifications": this.state.securityCertifications,
-				"governance_security_certifications_rating": this.state.securityCertificationsRating,
-				"governance_customer_base": this.state.customerBase,
-				"governance_customer_base_rating": this.state.customerBaseRating,
-				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
+				"short_name": this.state.shortName,
 				"toe_netblocks": this.state.netblockIntell
 			}
 			$.ajax({
@@ -567,23 +387,13 @@ let AddEditToe = React.createClass({
 
 	render: function(){
 
-		const subsidiaryRow = this.state.subsidiaries.map((subsidiary, x) => {
+		const dataLossRow = this.state.dataLoss.map((dataLoss, x) => {
 			return(
 				<TableRow key={x}>
-					<TableRowColumn>{subsidiary.subsidiary_name}</TableRowColumn>
-					<TableRowColumn style={{whiteSpace:'normal'}}>{subsidiary.subsidiary_domains.join(', ')}</TableRowColumn>
-					<TableRowColumn style={{width:"90px"}}><ContentRemoveCircle onClick={this.removeSubsidiary.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
-				</TableRow>
-			)
-		}, this);
-
-		const dataLossRow = this.state.dataLossEvents.map((dataLossEvent, x) => {
-			return(
-				<TableRow key={x}>
-					<TableRowColumn style={{whiteSpace:'normal'}}>{dataLossEvent.data_loss_event_date}</TableRowColumn>
-					<TableRowColumn style={{whiteSpace:'normal'}}>{dataLossEvent.data_loss_event_short_desc}</TableRowColumn>
-					<TableRowColumn style={{whiteSpace:'normal'}}>{dataLossEvent.data_loss_event_long_desc}</TableRowColumn>
-					<TableRowColumn style={{whiteSpace:'normal'}}>{dataLossEvent.data_loss_event_source_url}</TableRowColumn>
+					<TableRowColumn>{dataLoss.event_date}</TableRowColumn>
+					<TableRowColumn>{dataLoss.short_desc}</TableRowColumn>
+					<TableRowColumn>{dataLoss.long_desc}</TableRowColumn>
+					<TableRowColumn>{dataLoss.resource}</TableRowColumn>
 					<TableRowColumn style={{width:"90px"}}><ContentRemoveCircle onClick={this.removeDataLoss.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
 				</TableRow>
 			)
@@ -616,9 +426,7 @@ let AddEditToe = React.createClass({
 			<Card className="card">
 				<CardTitle title={"Manage TOE: " + this.state.shortName}></CardTitle>
 				<CardText>
-					{ this.state.dateCreated ?
-						<div>Created on <strong>{this.state.dateCreated}</strong></div>
-					:null}
+					<div>Created on <strong>{this.state.dateCreated}</strong></div>
 					<FloatingLabelInput label="Short Name" value={this.state.shortName} wrapperClassName={((this.state.shortName.length > 0) ? 'active' : '')} onChange={this.handleShortNameChange} placeholder="Short Name" isDisabled={false} />
 					<FloatingLabelInput label="Formal Name" value={this.state.formalName} wrapperClassName={((this.state.formalName.length > 0) ? 'active' : '')} onChange={this.handleFormalNameChange} placeholder="Formal Name" isDisabled={false} />
 					<FloatingLabelInput label="Industry Name" value={this.state.industryName} wrapperClassName={((this.state.industryName.length > 0) ? 'active' : '')} onChange={this.handleIndustryNameChange} placeholder="Industry Name" isDisabled={false} />
@@ -629,38 +437,6 @@ let AddEditToe = React.createClass({
 					</div>
 				</CardText>
 			</Card>
-
-			{/* Subsidiaries block */}
-			<Card className="card">
-				<CardTitle title={"Subsidiaries"}>
-					<FloatingActionButton onClick={this.showAddSubsidiary} style={{fontSize:'16px', position:'absolute', top:'8px', right:'0'}} mini={true}>
-						<ContentAdd />
-					</FloatingActionButton>
-				</CardTitle>
-				<CardText>
-					<Table fixedHeader={true}>
-						<TableHeader>
-							<TableRow>
-								<TableHeaderColumn>Subsidiary</TableHeaderColumn>
-								<TableHeaderColumn>Domains</TableHeaderColumn>
-								<TableHeaderColumn style={{width:"90px"}}>&nbsp;</TableHeaderColumn>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{ this.state.addingSubsidiary ?
-								<TableRow>
-									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="subsidiary_name" id="subsidiary_name" placeholder="Subsidiary Name" style={{fontSize:'12px'}} onChange={this.handleTempSubsidiaryName} value={this.state.tempSubsidiaryName} /></TableRowColumn>
-									<TableRowColumn><textarea type="text" name="subsidiary_domains" id="subsidiary_domains" placeholder="Comma seperated list of domains" style={{fontSize:'12px'}} onChange={this.handleTempSubsidiaryDomains} value={this.state.tempSubsidiaryDomains}></textarea></TableRowColumn>
-									<TableRowColumn style={{width:"90px"}}><ContentAddCircle className="add-circle" style={{fill:'#689f38'}} onClick={this.addSubsidiary} /></TableRowColumn>
-								</TableRow>
-							:null}
-							{subsidiaryRow}
-						</TableBody>
-					</Table>
-				</CardText>
-			</Card>
-
-			{/* Governance block */}
 			<Card className="card">
 				<CardTitle title={"Governance"}></CardTitle>
 				<CardText>
@@ -668,11 +444,11 @@ let AddEditToe = React.createClass({
 						<div className="clearfix">
 							<div style={{float:'left',width:'85%'}}>
 								<label style={{display:'block'}} htmlFor="regulatory_requirements"><strong>Regulatory Requirements</strong></label>
-								<textarea type="text" name="regulatory_requirements" id="regulatory_requirements" placeholder="Regulatory Requirements" style={{display:'block',fontSize:'12px'}} onChange={this.handleRegulatoryRequirements} value={this.state.regulatoryRequirements}></textarea>
+								<textarea type="text" name="regulatory_requirements" id="regulatory_requirements" placeholder="Regulatory Requirements" style={{display:'block',fontSize:'12px'}} onChange={this.handleTempRegulatoryRequirements} value={this.state.tempRegulatoryRequirements}></textarea>
 							</div>
 							<div style={{float:'right',width:'10%'}}>
 								<label style={{display:'block'}} htmlFor="regulatory_requirements">Rating</label>
-								<select style={{width:'50%',float:'left',fontSize:'12px'}} onChange={this.handleRegulatoryRequirementsRating.bind(this, 'regulatory_requirements_rating')} value={this.state.regulatoryRequirementsRating}>
+								<select style={{width:'50%',float:'left',fontSize:'12px'}}>
 									<option value="10">10</option>
 									<option value="9">9</option>
 									<option value="8">8</option>
@@ -684,19 +460,19 @@ let AddEditToe = React.createClass({
 									<option value="2">2</option>
 									<option value="1">1</option>
 								</select>
-								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 id="regulatory_requirements_rating" style={{fill:'#8d8c8c'}} /></div>
+								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 style={{fill:'#68C13E'}} /></div>
 							</div>
 						</div>
 					</div>
 					<div className="clearfix" style={{marginBottom:'20px'}}>
 						<div className="clearfix">
 							<div style={{float:'left',width:'85%'}}>
-								<label style={{display:'block'}} htmlFor="security_certifications"><strong>Security Certifications</strong></label>
-								<textarea type="text" name="security_certifications" id="security_certifications" placeholder="Security Certifications" style={{display:'block',fontSize:'12px'}} onChange={this.handleSecurityCertifications} value={this.state.securityCertifications}></textarea>
+								<label style={{display:'block'}} htmlFor="regulatory_requirements"><strong>Regulatory Requirements</strong></label>
+								<textarea type="text" name="regulatory_requirements" id="regulatory_requirements" placeholder="Regulatory Requirements" style={{display:'block',fontSize:'12px'}} onChange={this.handleTempRegulatoryRequirements} value={this.state.tempRegulatoryRequirements}></textarea>
 							</div>
 							<div style={{float:'right',width:'10%'}}>
-								<label style={{display:'block'}} htmlFor="security_certifications">Rating</label>
-								<select style={{width:'50%',float:'left',fontSize:'12px'}} onChange={this.handleSecurityCertificationsRating.bind(this, 'security_certifications_rating')} value={this.state.securityCertificationsRating}>
+								<label style={{display:'block'}} htmlFor="regulatory_requirements">Rating</label>
+								<select style={{width:'50%',float:'left',fontSize:'12px'}}>
 									<option value="10">10</option>
 									<option value="9">9</option>
 									<option value="8">8</option>
@@ -708,19 +484,19 @@ let AddEditToe = React.createClass({
 									<option value="2">2</option>
 									<option value="1">1</option>
 								</select>
-								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 id="security_certifications_rating" style={{fill:'#8d8c8c'}} /></div>
+								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 style={{fill:'#8d8c8c'}} /></div>
 							</div>
 						</div>
 					</div>
 					<div className="clearfix">
 						<div className="clearfix">
 							<div style={{float:'left',width:'85%'}}>
-								<label style={{display:'block'}} htmlFor="customer_base"><strong>Customer Base</strong></label>
-								<textarea type="text" name="customer_base" id="customer_base" placeholder="Customer Base" style={{display:'block',fontSize:'12px'}} onChange={this.handleCustomerBase} value={this.state.customerBase}></textarea>
+								<label style={{display:'block'}} htmlFor="regulatory_requirements"><strong>Customer Base</strong></label>
+								<textarea type="text" name="regulatory_requirements" id="regulatory_requirements" placeholder="Regulatory Requirements" style={{display:'block',fontSize:'12px'}} onChange={this.handleTempRegulatoryRequirements} value={this.state.tempRegulatoryRequirements}></textarea>
 							</div>
 							<div style={{float:'right',width:'10%'}}>
-								<label style={{display:'block'}} htmlFor="customer_base">Rating</label>
-								<select style={{width:'50%',float:'left',fontSize:'12px'}} onChange={this.handleCustomerBaseRating.bind(this, 'customer_base_rating')} value={this.state.customerBaseRating}>
+								<label style={{display:'block'}} htmlFor="regulatory_requirements">Rating</label>
+								<select style={{width:'50%',float:'left',fontSize:'12px'}}>
 									<option value="10">10</option>
 									<option value="9">9</option>
 									<option value="8">8</option>
@@ -732,7 +508,7 @@ let AddEditToe = React.createClass({
 									<option value="2">2</option>
 									<option value="1">1</option>
 								</select>
-								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 id="customer_base_rating" style={{fill:'#8d8c8c'}} /></div>
+								<div style={{width:'35%',float:'right',marginTop:'7px'}}><Brightness1 style={{fill:'#8d8c8c'}} /></div>
 							</div>
 						</div>
 					</div>
