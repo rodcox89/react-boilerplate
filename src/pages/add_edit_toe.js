@@ -59,6 +59,11 @@ var inputStyle = {
 let AddEditToe = React.createClass({
 	getInitialState: function() {
 
+		console.log('ran');
+		console.log(this.props.params.toeId);
+
+		toeId = '';
+
 		if(typeof this.props.params.toeId != 'undefined'){
 			toeId = this.props.params.toeId;
 		}
@@ -86,10 +91,6 @@ let AddEditToe = React.createClass({
 			tempShortDesc: '',
 			tempLongDesc: '',
 			tempResource: '',
-
-			rootDomain: '',
-
-
 			seedHostnames: [],
 			addingSeedHostname: false,
 			tempAddSeedHostname: '',
@@ -104,10 +105,16 @@ let AddEditToe = React.createClass({
 			tempEndIp: '',
 			tempEndIpValid: true,
 			tempEndIpStyle: {fontSize:'12px'},
+			domainIntellSource: '',
+			domainIntellToeDomainsCount: '',
+			domainIntellDateLastLoad: '',
+			domainIntellSample: []
 		}
 	},
 	componentDidMount() {
 		if(toeId.length > 0){
+			//console.log('we think we have a toe');
+			//console.log(toeId);
 			$.ajax({
 				url: 'http://localhost:5000/v1/toe/'+toeId,
 				type: 'GET',
@@ -120,7 +127,6 @@ let AddEditToe = React.createClass({
 						shortName: data.short_name,
 						formalName: data.formal_name,
 						industryName: data.industry,
-						rootDomain: data.root_domain,
 						subsidiaries: data.toe_subsidiaries,
 						regulatoryRequirements: data.governance_regulatory_requirements,
 						regulatoryRequirementsRating: data.governance_regulatory_requirements_rating,
@@ -130,7 +136,11 @@ let AddEditToe = React.createClass({
 						customerBaseRating: data.governance_customer_base_rating,
 						dataLossEvents: data.data_loss_events,
 						seedHostnames: data.seed_hostnames,
-						netblockIntell: data.toe_netblocks
+						netblockIntell: data.toe_netblocks,
+						domainIntellSource: data.domain_intell_source,
+						domainIntellToeDomainsCount: data.domain_intell_toe_domains_count,
+						domainIntellDateLastLoad: data.domain_intell_date_last_load,
+						domainIntellSample: data.domain_intell_sample
 					});
 					this.setGovernanceRatingColor('regulatory_requirements_rating', this.state.regulatoryRequirementsRating);
 					this.setGovernanceRatingColor('security_certifications_rating', this.state.securityCertificationsRating);
@@ -144,7 +154,7 @@ let AddEditToe = React.createClass({
 	handleShortNameChange(e, cb) { this.setState({shortName: e.target.value}, () => cb()) },
 	handleFormalNameChange(e, cb) { this.setState({formalName: e.target.value}, () => cb()) },
 	handleIndustryNameChange(e, cb) { this.setState({industryName: e.target.value}, () => cb()) },
-	handleRootDomain(e) { this.setState({rootDomain: e.target.value}) },
+	handleDomainIntellSource(e) { this.setState({domainIntellSource: e.target.value}) },
 	handleTempShortDesc(e) { this.setState({tempShortDesc: e.target.value}) },
 	handleTempLongDesc(e) { this.setState({tempLongDesc: e.target.value}) },
 	handleTempResource(e) { this.setState({tempResource: e.target.value}) },
@@ -359,16 +369,15 @@ let AddEditToe = React.createClass({
 	},
 
 	removeDataLoss(e){
-		console.log('remove data loss');
-		// let temp = this.state.netblockIntell;
-		//
-		// temp.splice(e, 1);
-		//
-		// this.setState({
-		// 	netblockIntell: temp
-		// });
-		//
-		// $('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
+		let temp = this.state.dataLossEvents;
+
+		temp.splice(e, 1);
+
+		this.setState({
+			dataLossEvents: temp
+		});
+
+		$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
 	},
 
 	showAddNetblockIntell(e){
@@ -509,7 +518,8 @@ let AddEditToe = React.createClass({
 				"governance_customer_base_rating": this.state.customerBaseRating,
 				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
-				"toe_netblocks": this.state.netblockIntell
+				"toe_netblocks": this.state.netblockIntell,
+				"domain_intell_source": this.state.domainIntellSource
 			}
 			console.log('EXISTING TOE');
 			console.log(formattedPutObject);
@@ -531,7 +541,7 @@ let AddEditToe = React.createClass({
 		}else{
 			// NEW TOE CALL
 			let formattedPostObject = {
-				//"date_created": this.state.dateCreated,
+				//"date_created": '',
 				"toe_id": this.state.toe_id,
 				"short_name": this.state.shortName,
 				"formal_name": this.state.formalName,
@@ -545,8 +555,10 @@ let AddEditToe = React.createClass({
 				"governance_customer_base_rating": this.state.customerBaseRating,
 				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
-				"toe_netblocks": this.state.netblockIntell
+				"toe_netblocks": this.state.netblockIntell,
+				"domain_intell_source": this.state.domainIntellSource
 			}
+			console.log(formattedPostObject);
 			$.ajax({
 				url: 'http://localhost:5000/v1/toe',
 				type: 'POST',
@@ -607,6 +619,14 @@ let AddEditToe = React.createClass({
 					<TableRowColumn>{netblockIntell.start_ip}</TableRowColumn>
 					<TableRowColumn>{netblockIntell.end_ip}</TableRowColumn>
 					<TableRowColumn style={{width:"90px"}}><ContentRemoveCircle onClick={this.removeNetblockIntell.bind(null, x)} key={x} className="remove-circle" style={{fill:'#8d8c8c'}} /></TableRowColumn>
+				</TableRow>
+			)
+		}, this);
+
+		const domainIntellSampleRow = this.state.domainIntellSample.map((domainIntell, x) => {
+			return(
+				<TableRow key={x}>
+					<TableRowColumn>{domainIntell}</TableRowColumn>
 				</TableRow>
 			)
 		}, this);
@@ -844,64 +864,20 @@ let AddEditToe = React.createClass({
 				<CardTitle title="Domain Intell"></CardTitle>
 				<CardText>
 					<div className="clearfix">
-						<label style={{display:'inline-block'}}>Root Domain:</label> <DebounceInput debounceTimeout={300} style={{display:'inline-block',width:'400px'}} type="text" name="rootDomain" id="rootDomain" placeholder="Root Domain" onChange={this.handleRootDomain} value={this.state.rootDomain} />
-						<br/><strong>Domain Count:</strong> 753 &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Load Date:</strong> 12/12/2015
+						<label style={{display:'inline-block'}}>Root Domain:</label> <DebounceInput debounceTimeout={300} style={{display:'inline-block',width:'400px'}} type="text" name="domainIntellSource" id="domainIntellSource" placeholder="Root Domain" onChange={this.handleDomainIntellSource} value={this.state.domainIntellSource} />
+						<br/><strong>Domain Count:</strong> {this.state.domainIntellToeDomainsCount} &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Load Date:</strong> {this.state.domainIntellDateLastLoad}
 						<span className="domain-intel-refresh-link" onClick={this.refreshDomainIntell}>Refresh/Get</span>
 					</div>
 					<div className="clearfix">
-						<div style={{width:'49%', float:'left'}}>
+						<div>
 							<Table fixedHeader={true}>
 								<TableHeader>
 									<TableRow>
 										<TableHeaderColumn>Domain</TableHeaderColumn>
-										<TableHeaderColumn>Audit Date</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-								</TableBody>
-							</Table>
-						</div>
-						<div style={{width:'49%', float:'right'}}>
-							<Table fixedHeader={true}>
-								<TableHeader>
-									<TableRow>
-										<TableHeaderColumn>Domain</TableHeaderColumn>
-										<TableHeaderColumn>Audit Date</TableHeaderColumn>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
-									<TableRow>
-										<TableRowColumn>asdffd</TableRowColumn>
-										<TableRowColumn>John Smith</TableRowColumn>
-									</TableRow>
+									{domainIntellSampleRow}
 								</TableBody>
 							</Table>
 						</div>

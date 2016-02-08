@@ -148,7 +148,7 @@ render(){
 				<thead>
 				<tr className="success">
 				<TableHeaderColumn><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-				<TableHeaderColumn colSpan="3" style={{textAlign: 'right' }}><Link to="/add_edit_toe"><RaisedButton label="Add Toe" secondary={true}></RaisedButton></Link></TableHeaderColumn>
+				<TableHeaderColumn colSpan="3" style={{textAlign: 'right' }}><Link to="/add_edit_toe/"><RaisedButton label="Add Toe" secondary={true}></RaisedButton></Link></TableHeaderColumn>
 				</tr>
 					<tr className="success">
 					<TableHeaderColumn onClick={this.handleSort.bind(null, 'formal_name')}>Name <i className="fa fa-sort"></i></TableHeaderColumn>
