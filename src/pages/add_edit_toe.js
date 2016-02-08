@@ -519,7 +519,8 @@ let AddEditToe = React.createClass({
 				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
 				"toe_netblocks": this.state.netblockIntell,
-				"domain_intell_source": this.state.domainIntellSource
+				"domain_intell_source": this.state.domainIntellSource,
+				"domain_intell_seed_domain": 'this.state.domainIntellSource'
 			}
 			console.log('EXISTING TOE');
 			console.log(formattedPutObject);
@@ -556,7 +557,9 @@ let AddEditToe = React.createClass({
 				"data_loss_events": this.state.dataLossEvents,
 				"seed_hostnames": this.state.seedHostnames,
 				"toe_netblocks": this.state.netblockIntell,
-				"domain_intell_source": this.state.domainIntellSource
+				"domain_intell_source": this.state.domainIntellSource,
+				"domain_intell_seed_domain": 'this.state.domainIntellSource'
+
 			}
 			console.log(formattedPostObject);
 			$.ajax({
