@@ -59,9 +59,6 @@ var inputStyle = {
 let AddEditToe = React.createClass({
 	getInitialState: function() {
 
-		console.log('ran');
-		console.log(this.props.params.toeId);
-
 		toeId = '';
 
 		if(typeof this.props.params.toeId != 'undefined'){
@@ -120,8 +117,8 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					console.log(data);
-					console.log((typeof data.toe_subsidiaries == 'undefined' ? data.toe_subsidiaries : [] ));
+					//console.log(data);
+					//console.log((typeof data.toe_subsidiaries != 'undefined' ? data.toe_subsidiaries : [] ));
 					this.setState({
 						dateCreated: data.date_created,
 						toe_id: data.toe_id,
@@ -552,9 +549,9 @@ let AddEditToe = React.createClass({
 					"toe_netblocks": this.state.netblockIntell,
 					"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 				}
-				console.log('EXISTING TOE');
-				console.log(formattedPutObject);
-				console.log('----------------');
+				//console.log('EXISTING TOE');
+				//console.log(formattedPutObject);
+				//console.log('----------------');
 				$.ajax({
 					url: 'http://localhost:5000/v1/toe',
 					type: 'PUT',
@@ -564,8 +561,8 @@ let AddEditToe = React.createClass({
 					},
 					data: JSON.stringify(formattedPutObject),
 					success: (data) => {
-						console.log(data);
-						console.log('---------------------------');
+						//console.log(data);
+						//console.log('---------------------------');
 						//window.location.href= "/#/manage_toes";
 					}
 				});
@@ -597,7 +594,7 @@ let AddEditToe = React.createClass({
 						"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 
 					}
-					console.log(formattedPostObject);
+					//console.log(formattedPostObject);
 					$.ajax({
 						url: 'http://localhost:5000/v1/toe',
 						type: 'POST',
@@ -607,7 +604,7 @@ let AddEditToe = React.createClass({
 						},
 						data: JSON.stringify(formattedPostObject),
 						success: (data) => {
-							console.log(data);
+							//console.log(data);
 							window.location.href= "/#/manage_toes";
 						}
 					});
