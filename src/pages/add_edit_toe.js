@@ -529,6 +529,9 @@ let AddEditToe = React.createClass({
 			if(this.state.shortName.length > 0
 				&& this.state.formalName.length > 0
 				&& this.state.industryName.length > 0
+				&& this.state.regulatoryRequirements.length > 0
+				&& this.state.securityCertifications.length > 0
+				&& this.state.customerBase.length > 0
 				&& this.state.domainIntellSeedDomain.length > 0){
 
 				let formattedPutObject = {
@@ -564,16 +567,20 @@ let AddEditToe = React.createClass({
 						//console.log(data);
 						//console.log('---------------------------');
 						//window.location.href= "/#/manage_toes";
+						window.location.href= "/#/manage_toes";
 					}
 				});
 			}else{
-				alert('Please make sure you have a Short Name, Formal Name, Industry Name, and a Domain Intell Seed Domain for the TOE');
+				alert('Please make sure you have a Short Name, Formal Name, Industry Name, Governance text/ratings, and a Domain Intell Seed Domain for the TOE');
 			}
 		}else{
 			// NEW TOE CALL
 			if(this.state.shortName.length > 0
 				&& this.state.formalName.length > 0
 				&& this.state.industryName.length > 0
+				&& this.state.regulatoryRequirements.length > 0
+				&& this.state.securityCertifications.length > 0
+				&& this.state.customerBase.length > 0
 				&& this.state.domainIntellSeedDomain.length > 0){
 					let formattedPostObject = {
 						//"date_created": '',
@@ -609,7 +616,7 @@ let AddEditToe = React.createClass({
 						}
 					});
 				}else{
-					alert('Please make sure you have a Short Name, Formal Name, Industry Name, and a Domain Intell Seed Domain for the new TOE');
+					alert('Please make sure you have a Short Name, Formal Name, Industry Name, Governance text/ratings, and a Domain Intell Seed Domain for the new TOE');
 				}
 		}
 		// redirect to manage toes page??
