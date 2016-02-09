@@ -78,11 +78,11 @@ let AddEditToe = React.createClass({
 			tempSubsidiaryDomains: '',
 			subsidiaries: [],
 			regulatoryRequirements: '',
-			regulatoryRequirementsRating: '',
+			regulatoryRequirementsRating: '10',
 			securityCertifications: '',
-			securityCertificationsRating: '',
+			securityCertificationsRating: '10',
 			customerBase: '',
-			customerBaseRating: '',
+			customerBaseRating: '10',
 			dataLossEvents: [],
 			addingDataLoss: false,
 			tempEventDateValid: true,
@@ -105,7 +105,7 @@ let AddEditToe = React.createClass({
 			tempEndIp: '',
 			tempEndIpValid: true,
 			tempEndIpStyle: {fontSize:'12px'},
-			domainIntellSource: '',
+			domainIntellSeedDomain: '',
 			domainIntellToeDomainsCount: '',
 			domainIntellDateLastLoad: '',
 			domainIntellSample: []
@@ -120,24 +120,24 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					console.log(data);
+					console.log((typeof data.subsidiaries != 'undefined' ? data.subsidiaries : [] ));
 					this.setState({
 						dateCreated: data.date_created,
 						toe_id: data.toe_id,
 						shortName: data.short_name,
 						formalName: data.formal_name,
 						industryName: data.industry,
-						subsidiaries: data.toe_subsidiaries,
+						subsidiaries: (typeof data.subsidiaries != 'undefined' ? data.subsidiaries : [] ),
 						regulatoryRequirements: data.governance_regulatory_requirements,
 						regulatoryRequirementsRating: data.governance_regulatory_requirements_rating,
 						securityCertifications: data.governance_security_certifications,
 						securityCertificationsRating: data.governance_security_certifications_rating,
 						customerBase: data.governance_customer_base,
 						customerBaseRating: data.governance_customer_base_rating,
-						dataLossEvents: data.data_loss_events,
-						seedHostnames: data.seed_hostnames,
-						netblockIntell: data.toe_netblocks,
-						domainIntellSource: data.domain_intell_source,
+						dataLossEvents: (typeof data.data_loss_events != 'undefined' ? data.data_loss_events : [] ),
+						seedHostnames: (typeof data.seed_hostnames != 'undefined' ? data.seed_hostnames : [] ),
+						netblockIntell: (typeof data.toe_netblocks != 'undefined' ? data.toe_netblocks : [] ),
+						domainIntellSeedDomain: data.domain_intell_seed_domain,
 						domainIntellToeDomainsCount: data.domain_intell_toe_domains_count,
 						domainIntellDateLastLoad: data.domain_intell_date_last_load,
 						domainIntellSample: data.domain_intell_sample
@@ -148,13 +148,16 @@ let AddEditToe = React.createClass({
 					$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
 				}
 			});
-
+		}else{
+			this.setGovernanceRatingColor('regulatory_requirements_rating', this.state.regulatoryRequirementsRating);
+			this.setGovernanceRatingColor('security_certifications_rating', this.state.securityCertificationsRating);
+			this.setGovernanceRatingColor('customer_base_rating', this.state.customerBaseRating);
 		}
 	},
 	handleShortNameChange(e, cb) { this.setState({shortName: e.target.value}, () => cb()) },
 	handleFormalNameChange(e, cb) { this.setState({formalName: e.target.value}, () => cb()) },
 	handleIndustryNameChange(e, cb) { this.setState({industryName: e.target.value}, () => cb()) },
-	handleDomainIntellSource(e) { this.setState({domainIntellSource: e.target.value}) },
+	handleDomainIntellSeedDomain(e) { this.setState({domainIntellSeedDomain: e.target.value}) },
 	handleTempShortDesc(e) { this.setState({tempShortDesc: e.target.value}) },
 	handleTempLongDesc(e) { this.setState({tempLongDesc: e.target.value}) },
 	handleTempResource(e) { this.setState({tempResource: e.target.value}) },
@@ -322,7 +325,29 @@ let AddEditToe = React.createClass({
 	},
 
 	refreshDomainIntell(e){
-		console.log('WE WANT TO REFRESH DOMAIN INTELL');
+		if(this.state.domainIntellSeedDomain.length > 0){
+			this.setState({
+				domainIntellToeDomainsCount: '',
+				domainIntellDateLastLoad: '',
+				domainIntellSample: []
+			});
+			$.ajax({
+				url: 'http://localhost:5000/v1/toe/domain_intel/'+this.state.domainIntellSeedDomain+'/'+toeId,
+				type: 'GET',
+				dataType: 'json',
+				success: (data) => {
+					this.setState({
+						domainIntellSeedDomain: data.domain_intell_seed_domain,
+						domainIntellToeDomainsCount: data.domain_intell_toe_domains_count,
+						domainIntellDateLastLoad: data.domain_intell_date_last_load,
+						domainIntellSample: data.domain_intell_sample
+					});
+					$('tbody, tfoot, thead, tr').css('-webkit-transform', 'scale(1)').css('border','none');
+				}
+			});
+		}else{
+			alert('Please enter a Root Domain');
+		}
 	},
 
 	showAddDataLoss(e){
@@ -503,78 +528,91 @@ let AddEditToe = React.createClass({
 		// check if new or updated TOE
 		if(toeId.length > 0){
 			// updating existing TOE
-			let formattedPutObject = {
-				//"date_created": this.state.dateCreated,
-				"toe_id": this.state.toe_id,
-				"short_name": this.state.shortName,
-				"formal_name": this.state.formalName,
-				"industry": this.state.industryName,
-				"toe_subsidiaries": this.state.subsidiaries,
-				"governance_regulatory_requirements": this.state.regulatoryRequirements,
-				"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
-				"governance_security_certifications": this.state.securityCertifications,
-				"governance_security_certifications_rating": this.state.securityCertificationsRating,
-				"governance_customer_base": this.state.customerBase,
-				"governance_customer_base_rating": this.state.customerBaseRating,
-				"data_loss_events": this.state.dataLossEvents,
-				"seed_hostnames": this.state.seedHostnames,
-				"toe_netblocks": this.state.netblockIntell,
-				"domain_intell_source": this.state.domainIntellSource,
-				"domain_intell_seed_domain": 'this.state.domainIntellSource'
-			}
-			console.log('EXISTING TOE');
-			console.log(formattedPutObject);
-			console.log('----------------');
-			$.ajax({
-				url: 'http://localhost:5000/v1/toe',
-				type: 'PUT',
-				dataType: 'json',
-				headers: {
-					'Content-Type':'application/json',
-				},
-				data: JSON.stringify(formattedPutObject),
-				success: (data) => {
-					console.log(data);
-					console.log('---------------------------');
-					//window.location.href= "/#/manage_toes";
+			if(this.state.shortName.length > 0
+				&& this.state.formalName.length > 0
+				&& this.state.industryName.length > 0
+				&& this.state.domainIntellSeedDomain.length > 0){
+
+				let formattedPutObject = {
+					//"date_created": this.state.dateCreated,
+					"toe_id": this.state.toe_id,
+					"short_name": this.state.shortName,
+					"formal_name": this.state.formalName,
+					"industry": this.state.industryName,
+					"toe_subsidiaries": this.state.subsidiaries,
+					"governance_regulatory_requirements": this.state.regulatoryRequirements,
+					"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
+					"governance_security_certifications": this.state.securityCertifications,
+					"governance_security_certifications_rating": this.state.securityCertificationsRating,
+					"governance_customer_base": this.state.customerBase,
+					"governance_customer_base_rating": this.state.customerBaseRating,
+					"data_loss_events": this.state.dataLossEvents,
+					"seed_hostnames": this.state.seedHostnames,
+					"toe_netblocks": this.state.netblockIntell,
+					"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 				}
-			});
+				console.log('EXISTING TOE');
+				console.log(formattedPutObject);
+				console.log('----------------');
+				$.ajax({
+					url: 'http://localhost:5000/v1/toe',
+					type: 'PUT',
+					dataType: 'json',
+					headers: {
+						'Content-Type':'application/json',
+					},
+					data: JSON.stringify(formattedPutObject),
+					success: (data) => {
+						console.log(data);
+						console.log('---------------------------');
+						//window.location.href= "/#/manage_toes";
+					}
+				});
+			}else{
+				alert('Please make sure you have a Short Name, Formal Name, Industry Name, and a Domain Intell Seed Domain for the TOE');
+			}
 		}else{
 			// NEW TOE CALL
-			let formattedPostObject = {
-				//"date_created": '',
-				"toe_id": this.state.toe_id,
-				"short_name": this.state.shortName,
-				"formal_name": this.state.formalName,
-				"industry": this.state.industryName,
-				"toe_subsidiaries": this.state.subsidiaries,
-				"governance_regulatory_requirements": this.state.regulatoryRequirements,
-				"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
-				"governance_security_certifications": this.state.securityCertifications,
-				"governance_security_certifications_rating": this.state.securityCertificationsRating,
-				"governance_customer_base": this.state.customerBase,
-				"governance_customer_base_rating": this.state.customerBaseRating,
-				"data_loss_events": this.state.dataLossEvents,
-				"seed_hostnames": this.state.seedHostnames,
-				"toe_netblocks": this.state.netblockIntell,
-				"domain_intell_source": this.state.domainIntellSource,
-				"domain_intell_seed_domain": 'this.state.domainIntellSource'
+			if(this.state.shortName.length > 0
+				&& this.state.formalName.length > 0
+				&& this.state.industryName.length > 0
+				&& this.state.domainIntellSeedDomain.length > 0){
+					let formattedPostObject = {
+						//"date_created": '',
+						"toe_id": this.state.toe_id,
+						"short_name": this.state.shortName,
+						"formal_name": this.state.formalName,
+						"industry": this.state.industryName,
+						"toe_subsidiaries": this.state.subsidiaries,
+						"governance_regulatory_requirements": this.state.regulatoryRequirements,
+						"governance_regulatory_requirements_rating": this.state.regulatoryRequirementsRating,
+						"governance_security_certifications": this.state.securityCertifications,
+						"governance_security_certifications_rating": this.state.securityCertificationsRating,
+						"governance_customer_base": this.state.customerBase,
+						"governance_customer_base_rating": this.state.customerBaseRating,
+						"data_loss_events": this.state.dataLossEvents,
+						"seed_hostnames": this.state.seedHostnames,
+						"toe_netblocks": this.state.netblockIntell,
+						"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 
-			}
-			console.log(formattedPostObject);
-			$.ajax({
-				url: 'http://localhost:5000/v1/toe',
-				type: 'POST',
-				dataType: 'json',
-				headers: {
-					'Content-Type':'application/json',
-				},
-				data: JSON.stringify(formattedPostObject),
-				success: (data) => {
-					console.log(data);
-					window.location.href= "/#/manage_toes";
+					}
+					console.log(formattedPostObject);
+					$.ajax({
+						url: 'http://localhost:5000/v1/toe',
+						type: 'POST',
+						dataType: 'json',
+						headers: {
+							'Content-Type':'application/json',
+						},
+						data: JSON.stringify(formattedPostObject),
+						success: (data) => {
+							console.log(data);
+							window.location.href= "/#/manage_toes";
+						}
+					});
+				}else{
+					alert('Please make sure you have a Short Name, Formal Name, Industry Name, and a Domain Intell Seed Domain for the new TOE');
 				}
-			});
 		}
 		// redirect to manage toes page??
 
@@ -867,10 +905,15 @@ let AddEditToe = React.createClass({
 				<CardTitle title="Domain Intell"></CardTitle>
 				<CardText>
 					<div className="clearfix">
-						<label style={{display:'inline-block'}}>Root Domain:</label> <DebounceInput debounceTimeout={300} style={{display:'inline-block',width:'400px'}} type="text" name="domainIntellSource" id="domainIntellSource" placeholder="Root Domain" onChange={this.handleDomainIntellSource} value={this.state.domainIntellSource} />
-						<br/><strong>Domain Count:</strong> {this.state.domainIntellToeDomainsCount} &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Load Date:</strong> {this.state.domainIntellDateLastLoad}
-						<span className="domain-intel-refresh-link" onClick={this.refreshDomainIntell}>Refresh/Get</span>
+						<label style={{display:'inline-block'}}>Root Domain:</label> <DebounceInput debounceTimeout={300} style={{display:'inline-block',width:'400px'}} type="text" name="domainIntellSeedDomain" id="domainIntellSeedDomain" placeholder="Root Domain" onChange={this.handleDomainIntellSeedDomain} value={this.state.domainIntellSeedDomain} />
+						{ this.state.domainIntellSample.length > 0 ?
+						<div>
+							<br/><strong>Domain Count:</strong> {this.state.domainIntellToeDomainsCount} &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Load Date:</strong> {this.state.domainIntellDateLastLoad}
+							<span className="domain-intel-refresh-link" onClick={this.refreshDomainIntell}>Refresh/Get</span>
+						</div>
+						:null}
 					</div>
+					{ this.state.domainIntellSample.length > 0 ?
 					<div className="clearfix">
 						<div>
 							<Table fixedHeader={true}>
@@ -885,7 +928,7 @@ let AddEditToe = React.createClass({
 							</Table>
 						</div>
 					</div>
-
+					:null}
 				</CardText>
 			</Card>
 			<div style={{position:'fixed', bottom:'20px', right:'0', width:'200px', background:'#fff', border:'1px solid #E0E0E0', borderRight:'none', padding:'20px'}}>
