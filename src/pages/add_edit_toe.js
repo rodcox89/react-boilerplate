@@ -120,14 +120,15 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					console.log((typeof data.subsidiaries != 'undefined' ? data.subsidiaries : [] ));
+					console.log(data);
+					console.log((typeof data.toe_subsidiaries == 'undefined' ? data.toe_subsidiaries : [] ));
 					this.setState({
 						dateCreated: data.date_created,
 						toe_id: data.toe_id,
 						shortName: data.short_name,
 						formalName: data.formal_name,
 						industryName: data.industry,
-						subsidiaries: (typeof data.subsidiaries != 'undefined' ? data.subsidiaries : [] ),
+						subsidiaries: (typeof data.toe_subsidiaries != 'undefined' ? data.toe_subsidiaries : [] ),
 						regulatoryRequirements: data.governance_regulatory_requirements,
 						regulatoryRequirementsRating: data.governance_regulatory_requirements_rating,
 						securityCertifications: data.governance_security_certifications,
