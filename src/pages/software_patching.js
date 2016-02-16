@@ -40,32 +40,6 @@ let SoftwarePatching = React.createClass({
     $.ajax({
       url: 'http://0.0.0.0:5000/v1/findings/software_patching/'+localStorage.analysis_id,
       success: (data) => {
-        /*
-        <<<<<<< HEAD
-                console.log('success');
-                console.log(data);
-                var received = true;
-                this.setState({findings: data.findings})
-                $('#mytable').DataTable({
-                  paging: false,
-                  "initComplete": function() {
-                    $('.table-responsive').removeClass('is-loading');
-                  },
-                  autoWidth: false,
-                  "columns": [
-                    { "width": "7%" },
-                    { "width": "7%" },
-                    { "width": "27%" },
-                    { "width": "10%" },
-                    { "width": "6%" },
-                    { "width": "4%" },
-                    { "width": "5%" },
-                    { "width": "10%" },
-                    { "width": "5%" },
-                  ]
-                })
-        =======
-        */
         console.log(data)
         if(data.findings.length === 0){
           this.setState({
@@ -209,30 +183,6 @@ let SoftwarePatching = React.createClass({
 
     },
 
-<<<<<<< HEAD
-    return (
-      <form id="net-blocks-form" action="" method="POST">
-      <div className="table-responsive is-loading">
-        <div className="loading">
-          Loading...
-        </div>
-        <table className="table table=bordered" id="mytable" >
-          <thead>
-            <tr className="success">
-              <td>Security Criteria</td>
-              <td>Name Long</td>
-              <td className="data-value">Data Value</td>
-              <td>Host</td>
-              <td>IP</td>
-              <td>Status</td>
-              <td>Confidence</td>
-              <td>Comments</td>
-              <td>Action</td>
-              <td>Remove</td>
-            </tr>
-          </thead>
-            <TableData findings={this.state.findings} deleteFinding={this.deleteFinding}/>
-=======
     render: function(){
       return (
         <div>
@@ -268,7 +218,6 @@ let SoftwarePatching = React.createClass({
         handleCommentChange={this.handleCommentChange}
         searchTerm={this.state.search_term}
         onEdit={this.onEdit}/>
->>>>>>> domains
         </table>
         </div>
         <Link to="/analyses" onClick={this.onSubmit.bind(null, localStorage.analysis_id)}  ><RaisedButton label="I'm done" secondary={true}/></Link>
