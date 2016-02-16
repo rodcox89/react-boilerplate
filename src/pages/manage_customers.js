@@ -40,19 +40,19 @@ getInitialState: function(){
 		has_results: true,
 		reverse: true,
 		search_term: "",
-		toes: []
+		customers: []
 	};
 },
 componentDidMount() {
 	$.ajax({
-		url: 'http://localhost:5000/v1/toes',
+		url: 'http://localhost:5000/v1/customers',
 		type: 'GET',
 		dataType: 'json',
 		success: (data) => {
 			this.setState({
 				loaded: true,
 				has_results: true,
-				toes: data
+				customers: data
 			});
 		},
 		error: (err) => {
@@ -110,22 +110,22 @@ runScan(){
 
 render(){
 
-	const tableElements = this.state.toes.map((toe, x) => {
+	const tableElements = this.state.customers.map((customer, x) => {
 
 		let searchTerm = this.state.search_term;
 		let includeResult = this.state.search_term.length === 0 ? true: false;
 		let tempContent = '';
 
 		if (!includeResult) {
-			toe.formal_name.includes(searchTerm) ? includeResult = true : false
+			customer.formal_name.includes(searchTerm) ? includeResult = true : false
 		}
 
 		if(includeResult){
 			tempContent =
 			<TableRow key={x}>
-					<TableRowColumn>{toe.formal_name}</TableRowColumn>
+					<TableRowColumn>{customer.formal_name}</TableRowColumn>
 					<TableRowColumn>NEED-EDIT-DATE</TableRowColumn>
-					<TableRowColumn><Link to={"/add_edit_customer/"+toe.toe_id}><RaisedButton label="Edit" secondary={true}></RaisedButton></Link></TableRowColumn>
+					<TableRowColumn><Link to={"/add_edit_customer/"+customer.customer_id}><RaisedButton label="Edit" secondary={true}></RaisedButton></Link></TableRowColumn>
 			</TableRow>
 		}
 
@@ -167,7 +167,7 @@ render(){
 	:null	}
 	{ !this.state.has_results ?
 		<div className="container">
-			<p className="error-text">No toes! Oh no!</p>
+			<p className="error-text">No customers! Oh no!</p>
 		</div>
 		:null}
 </div>

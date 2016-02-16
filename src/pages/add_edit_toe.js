@@ -117,7 +117,7 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					//console.log(data);
+					console.log(data);
 					//console.log((typeof data.toe_subsidiaries != 'undefined' ? data.toe_subsidiaries : [] ));
 					this.setState({
 						dateCreated: data.date_created,
@@ -552,9 +552,9 @@ let AddEditToe = React.createClass({
 					"toe_netblocks": this.state.netblockIntell,
 					"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 				}
-				//console.log('EXISTING TOE');
-				//console.log(formattedPutObject);
-				//console.log('----------------');
+				console.log('EXISTING TOE');
+				console.log(formattedPutObject);
+				console.log('----------------');
 				$.ajax({
 					url: 'http://localhost:5000/v1/toe',
 					type: 'PUT',
@@ -680,7 +680,7 @@ let AddEditToe = React.createClass({
 		return (
 			<div style={{marginBottom:'200px'}}>
 			<Card className="card">
-				<CardTitle title={"Manage TOE: " + this.state.shortName}></CardTitle>
+				<CardTitle title={"Manage TOE: " + this.state.formalName}></CardTitle>
 				<CardText>
 					{ this.state.dateCreated ?
 						<div>Created on <strong>{this.state.dateCreated}</strong></div>

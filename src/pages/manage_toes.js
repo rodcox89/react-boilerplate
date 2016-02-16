@@ -49,6 +49,7 @@ componentDidMount() {
 		type: 'GET',
 		dataType: 'json',
 		success: (data) => {
+			console.log(data);
 			this.setState({
 				loaded: true,
 				has_results: true,

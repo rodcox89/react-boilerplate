@@ -115,7 +115,7 @@ ReactDOM.render((
 			<Route path='add_edit_toe/:toeId' component={AddEditToe}/>
 			<Route path='manage_customers' component={ManageCustomers}/>
 			<Route path='add_edit_customer' component={AddEditCustomer}/>
-			<Route path='add_edit_customer/:toeId' component={AddEditCustomer}/>
+			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));
