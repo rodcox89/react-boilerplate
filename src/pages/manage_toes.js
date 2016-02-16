@@ -125,8 +125,8 @@ render(){
 			tempContent =
 			<TableRow key={x}>
 					<TableRowColumn>{toe.formal_name}</TableRowColumn>
-					<TableRowColumn>NEED-EDIT-DATE</TableRowColumn>
-					<TableRowColumn>NEED-SCAN-DATE</TableRowColumn>
+					<TableRowColumn>{toe.date_updated}</TableRowColumn>
+					<TableRowColumn>{toe.date_last_scanned}</TableRowColumn>
 					<TableRowColumn><Link to={"/add_edit_toe/"+toe.toe_id}><RaisedButton label="Edit" secondary={true}></RaisedButton></Link> &nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp; <RaisedButton onClick={this.runScan} label="Scan" secondary={true}></RaisedButton></TableRowColumn>
 			</TableRow>
 		}
