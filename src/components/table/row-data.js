@@ -90,8 +90,8 @@ const Row = React.createClass({
     }
 
     $.ajax({
-    type: 'POST',
-    url: 'http://0.0.0.0:5000/v1/findings/edit_finding',
+    type: 'PUT',
+    url: 'http://0.0.0.0:5000/v1/findings',
     crossDomain: true,
     data: JSON.stringify(submission),
     dataType: 'json',
@@ -139,7 +139,7 @@ const Row = React.createClass({
    delete(e){
      e.preventDefault();
      let f = this.props
-     
+
      let f1 = this.props.finding
      console.log(f);
      console.log(f1);

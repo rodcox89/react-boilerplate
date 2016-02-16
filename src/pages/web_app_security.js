@@ -68,8 +68,8 @@ let WebAppSecurity = React.createClass({
       }
       e.preventDefault()
       $.ajax({
-      type: 'POST',
-      url: 'http://0.0.0.0:5000/v1/findings/delete_finding',
+      type: 'DELETE',
+      url: 'http://0.0.0.0:5000/v1/findings',
       crossDomain: true,
       data: JSON.stringify(f),
       dataType: 'json',
@@ -155,8 +155,8 @@ let WebAppSecurity = React.createClass({
     onSubmit(e) {
       console.log('submitted');
       $.ajax({
-      type: 'GET',
-      url: 'http://0.0.0.0:5000/v1/update_analyses/web_app_security/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      type: 'PUT',
+      url: 'http://0.0.0.0:5000/v1/analyses/web_app_security/'+localStorage.analysis_id+'/'+localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',

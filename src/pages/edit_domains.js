@@ -94,6 +94,7 @@ let EditDomains = React.createClass({
     handleApproval(e){
       console.log('approved');
       $.ajax({
+        type: 'PUT',
         url: 'http://0.0.0.0:5000/v1/completed/domains/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           console.log(data)

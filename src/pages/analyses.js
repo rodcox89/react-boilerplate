@@ -133,7 +133,7 @@ runCounts(e){
   console.log('run counts clicked');
   console.log(e.analysis_id);
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/findings/run_counts/'+e.analysis_id,
+    url: 'http://0.0.0.0:5000/v1/counts/'+e.analysis_id,
     type: 'GET',
     success: (data) => {
       console.log(data);

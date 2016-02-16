@@ -162,8 +162,8 @@ let WebEncryption = React.createClass({
     onSubmit(e) {
       console.log('submitted');
       $.ajax({
-      type: 'GET',
-      url: 'http://0.0.0.0:5000/v1/update_analyses/threat_intell/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      type: 'PUT',
+      url: 'http://0.0.0.0:5000/v1/analyses/threat_intell/'+localStorage.analysis_id+'/'+localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',

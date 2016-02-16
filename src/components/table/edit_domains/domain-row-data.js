@@ -69,22 +69,18 @@ let Domain = React.createClass({
   onSave(e){
     let newdomain = {
       analyst_edit_registrant_org: this.props.domain.analyst_edit_registrant_org,
-      analyst_edit_include_in_analysis: this.props.domain.analyst_edit_include_in_analysis,
-      start_ip: this.props.domain.start_ip,
       unique_key: this.props.domain.unique_key,
       analysis_id: this.props.domain.analysis_id,
     }
 
     $.ajax({
-    type: 'POST',
-    url: 'http://0.0.0.0:5000/v1/domains/edit_domains',
+    type: 'PUT',
+    url: 'http://0.0.0.0:5000/v1/domains',
     crossDomain: true,
     data: JSON.stringify(newdomain),
     dataType: 'json',
     contentType: 'application/json',
     success: (data) => {
-      console.log('success');
-      console.log(data);
       this.setState({isInput: false})
     },
     error: function () {
