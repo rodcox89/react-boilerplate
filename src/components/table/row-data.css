@@ -33,3 +33,6 @@
 #domain_name{
   box-shadow:none;
 }
+#mytable > tbody > tr{
+  background-color: #fff;
+}

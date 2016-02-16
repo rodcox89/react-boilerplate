@@ -1,0 +1,84 @@
+@import './../colors';
+body{
+  background-color: $backgroundGrey;
+}
+.card{
+  font-size: 100px;
+  shadow:4px 4px 0 rgba(0,0,0,0.1);
+  padding:30px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  width: 100%;
+  align-items: center;
+}
+.card-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.inline-radios{
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+.inline_radio2 {
+  justify-content: flex-start;
+  margin-left: 2em;
+}
+.radio{
+
+}
+.horizontal-container {
+  display: flex;
+  justify-content:center;
+  width: 100%;
+  align-items: baseline;
+  margin-left: 7%;
+  margin-bottom: 8%;
+}
+
+.Floating-Label-Input{
+  justify-content: center;
+  align-items:center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex: .8;
+}
+
+.test{
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+#mui-id-2{
+  box-shadow: none !important;
+  outline: none;
+  border: none;
+  clear: left;
+  width: 80%;
+}
+
+.domain-intel-refresh-link {display:block; float:right; margin-bottom:20px; text-decoration:underline;}
+.domain-intel-refresh-link:hover {cursor:pointer;}
+
+.remove-circle {color:rgba(255, 0, 0, 0.87); float:right;}
+.remove-circle:hover {cursor:pointer;}
+
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -1,11 +1,40 @@
 #net-blocks-form {margin:20px;}
-#net-blocks tbody tr input[type="text"] {display:none;}
-#net-blocks tbody tr.shown span {display:none;}
-#net-blocks tbody tr.shown input[type="text"] {display:block;}
-#net-blocks tbody tr .button.is-loading {opacity:0.2;}
-#net-blocks tbody tr td table tr:hover {background:#FFF;}
+#netblockstable tbody tr input[type="text"] {display:none;}
+#netblockstable tbody tr.shown span {display:none;}
+#netblockstable tbody tr.shown input[type="text"] {display:block;}
+#netblockstable tbody tr .button.is-loading {opacity:0.2;}
+#netblockstable tbody tr td table tr:hover {background:#666;}
 
 #mytable {width:100%; table-layout:fixed;}
+
+table tbody td {word-wrap:break-word; vertical-align:top;}
+
+.data-value{
+  width: 20pt;
+}
+
+.finding-row:hover{
+  background-color: ;
+}
+
+#mytable > tbody > tr{
+  border-top: 1px solid #F6F6F6;
+}
+#mytable > thead > tr{
+  border-bottom: 1pt solid #F2F2F2;
+}
+
+#mytable > tbody > tr > td:nth-child(9) > i.fa.fa-edit.fa-2x.finding-action{
+  margin-top: .15em;
+  margin-right: .2em;
+}
+#mytable > tbody > tr > td:nth-child(9) > i.fa.fa-trash-o.fa-2x.finding-action{
+
+  margin-left: .2em;
+}
+
+/*
+<<<<<<< HEAD
 table.dataTable tbody td {word-wrap:break-word; vertical-align:top; border-bottom:1px solid #F8F8F8;}
 .table-responsive .loading {display:none;}
 
@@ -13,3 +42,5 @@ table.dataTable tbody td {word-wrap:break-word; vertical-align:top; border-botto
 .table-responsive.is-loading .loading {position:absolute; top:20px; left:50%; font-weight:bold; font-size:18px; display:block;}
 .table-responsive.is-loading #mytable {opacity:0.1;}
 .table-responsive.is-loading .submit_button {opacity:0.1;}
+=======
+*/

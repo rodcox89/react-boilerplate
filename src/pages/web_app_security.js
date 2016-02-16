@@ -5,6 +5,7 @@ import { RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import Spinner from 'react-spinkit';
 import Table from 'material-ui/lib/table/table';
 import TableBody from 'material-ui/lib/table/table-body';
 import TableFooter from 'material-ui/lib/table/table-footer';
@@ -15,188 +16,221 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 
+import Css from 'styles/findings/findings.css';
+import LoaderCSS from './../styles/loader.scss'
+
+import TableData from './../components/table/web_app_security/table-data'
+import CircularProgress from 'material-ui/lib/circular-progress';
+
 
 
 let WebAppSecurity = React.createClass({
 
-
   getInitialState: function() {
     return {
       findings: [],
-      selectable: false,
-      displayRowCheckbox: false,
-      enableSelectAll: false,
-      preScanRows: false,
-      row: '',
-      col: '',
-      cellSelection: {
-        row: '',
-        col: '',
-      },
-      postData: [],
-
+      findings_copy: [],
+      reverse: true,
+      search_term: "",
+      loaded: false,
+      has_results: true,
     }
   },
-  componentDidMount() {
-    console.log('component mounted');
+  componentDidMount: function() {
+    var self = this;
     $.ajax({
       url: 'http://0.0.0.0:5000/v1/findings/web_app_security/'+localStorage.analysis_id,
-      type: 'GET',
-      dataType: 'json',
       success: (data) => {
-        this.setState({findings: data.findings}, () => {console.log('RWAGH', this.state.findings)});
-      },
-      error: (err) => {
-        console.log('api error')
+        console.log(data)
+        if(data.findings.length === 0){
+          this.setState({
+            loaded: true,
+            has_results: false,
+          })
+        }
+        else{
+          this.setState({
+              findings: data.findings,
+              loaded: true,
+              has_results: true,
+            }, () => {console.log('RWAGH', this.state.findings)
+          })
+        }
+        this.onSubmit()
+      }})
+    },
+
+    delete: function(finding, e , index){
+      console.log(finding);
+      let f = {
+        unique_key: finding['unique_key'],
+        analysis_id: finding['analysis_id'],
       }
-    })
-    $(document).on('keydown', function(event) {
-   if (event.keyCode == 9) {   //tab pressed
-      event.preventDefault(); // stops its action
-   }
-});
-  },
-  onClick: function(x) {
-    console.log('test');
-    localStorage.foo = 'bar'
-  },
-  handleCellSelection(rowNumber, columnID) {
-    console.log(rowNumber, columnID);
-    console.log(this.state.findings[rowNumber].columnID);
-    let postData = this.state.postData
+      e.preventDefault()
+      $.ajax({
+      type: 'POST',
+      url: 'http://0.0.0.0:5000/v1/findings/delete_finding',
+      crossDomain: true,
+      data: JSON.stringify(f),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: (data) => {
+        console.log('success');
+        console.log(data);
+        let findings = this.state.findings
+        let newfindings = []
+        for (var i = 0; i < this.state.findings.length; ++i) {
+          if (!(i === index)) {
+            newfindings.push(this.state.findings[i])
+          }
+        }
+        this.setState({findings: newfindings})
+      },
+      error: function () {
+        console.log('error');
 
-    console.log(postData);
+      },
+    });
+
+    },
+    handleStatusChange: function(status, e, index){
+      console.log(e.target.value);
+      let findings = this.state.findings
+      let newfinding = this.state.findings[index]
+      newfinding.analyst_status = e.target.value
+      this.setState({[findings[index]]: newfinding})
+      console.log(findings[index]);
+    },
+    handleConfidenceChange: function(choice, e, index){
+      console.log(e.target.selectedOptions[0].id);
+      let findings = this.state.findings
+      let newfinding = this.state.findings[index]
+      newfinding.analyst_confidence = e.target.selectedOptions[0].id
+      this.setState({[findings[index]]: newfinding})
+      console.log(findings[index]);
+    },
+    handleCommentChange: function(comment, e, index){
+      console.log(e.target.value);
+      let findings = this.state.findings
+      let newfinding = this.state.findings[index]
+      newfinding.analyst_comments = e.target.value
+      this.setState({[findings[index]]: newfinding})
+      console.log(findings[index]);
+    },
+    handleSort(e) {
+      let reverse = this.state.reverse
+      if(reverse === true){
+        reverse = false
+      }
+      else{
+        reverse = true
+      }
+      this.setState({reverse: reverse})
+      let findings = this.state.findings
+      findings.sort(this.sort_by(e, reverse, function(a) {return a.toLowerCase()}))
+      this.setState({findings: findings})
+    },
+    handleNumberSort(e) {
+      let reverse = this.state.reverse
+      if(reverse === true){
+        reverse = false
+      }
+      else{
+        reverse = true
+      }
+      this.setState({reverse: reverse})
+      let findings = this.state.findings
+      findings.sort(this.sort_by(e, reverse, parseInt))
+      this.setState({findings: findings})
+    },
+    sort_by(field, reverse, primer) {
+      var key = primer ?
+        function(x) {return primer(x[field])} :
+        function(x) {return x[field]};
+      reverse =!reverse ? 1 : -1;
+      return function (a, b) {
+        return a = key(a), b= key(b), reverse * ((a>b) - (b>a));
+      }
+    },
+    onSubmit(e) {
+      console.log('submitted');
+      $.ajax({
+      type: 'GET',
+      url: 'http://0.0.0.0:5000/v1/update_analyses/web_app_security/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      crossDomain: true,
+      dataType: 'json',
+      contentType: 'application/json',
+      success: (data) => {
+        console.log('success');
+        console.log(data);
+      },
+      error: function () {
+        console.log('error');
+
+      },
+    });
 
 
-  },
+    },
+    handleSearch(e){
+      this.setState({search_term: e.target.value})
+      console.log(this.state.search_term);
+    },
 
-  onFormChange: function(e){
-    console.log('form changed');
-    console.log(e.target);
+    render: function(){
+      return (
+        <div>
+          { !this.state.loaded ?
+            <div className="container">
+              <Spinner className="spinner"  spinnerName='cube-grid'/>
+            </div>
+          :null}
+          { this.state.loaded & this.state.has_results ?
+            <div>
+              <h1>Web Application Security</h1>
+              <input type="text" defaultValue="" onFocus={this.gainFocus} onChange={this.handleSearch}></input>
+              <div className="table-responsive">
+                <table className="table table-bordered" id="mytable" >
+                  <thead>
+                  <tr className="success">
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'security_criteria')}>Security Criteria <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_type')}>Type <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_subtype')}>Subtype <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_display_name_long')}>Name Long <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_data_description')}>Data Description <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_data_value')}>Data Value <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleNumberSort.bind(null,'ip_addr')}>IP <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'host_name')}>Host <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_status')}>Status <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn onClick={this.handleNumberSort.bind(null,'analyst_confidence')}>Confidence <i className="fa fa-sort"></i></TableHeaderColumn>
+                    <TableHeaderColumn></TableHeaderColumn>
+                  </tr>
+                  </thead>
+                    <TableData
+                    findings={this.state.findings}
+                    delete={this.delete}
+                    handleStatusChange={this.handleStatusChange}
+                    handleConfidenceChange={this.handleConfidenceChange}
+                    handleCommentChange={this.handleCommentChange}
+                    searchTerm={this.state.search_term}
+                    onEdit={this.onEdit}/>
+                </table>
+              </div>
+              <Link to="/analyses" onClick={this.onSubmit.bind(null, localStorage.analysis_id)}  ><RaisedButton label="I'm done" secondary={true}/></Link>
+            </div>
+          :null  }
+          { !this.has_results ?
+            <div className="container">
+              <p className="error-text">Sorry! There are no web application findings for analysis_id: { localStorage.analysis_id }</p>
+            </div>
+            :null}
+        </div>
 
-  },
-  onTextFieldExit: function(e) {
-    console.log(e.target)
-    console.log(e);
-    console.log('text field exited');
-    return  e
-  },
-
-
-render() {
-
-  const tableElements = this.state.findings.map((finding, x) => {
-
-// security_criteria
-// analyst_type
-// analyst_subtype
-ip_addr
-host_name
-// domain_name
-// analyst_display_name_short
-// analyst_display_name_long
-// analyst_data_description
-analyst_data_value
-// analyst_severity
-analyst_status
-analyst_comments
-analyst_include
-// analyst_confidence
-
-
-
-return(
-        <TableRow key={x}>
-            <TableRowColumn><TextField
-                              defaultValue={finding.security_criteria}
-                              onChange={this.onFormChange}
-                              onFocus={this.onFormChange}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                              defaultValue={finding.analyst_confidence}
-                              onChange={this.onFormChange}
-                              onFocus={this.onFormChange}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                              defaultValue={finding.analyst_type}
-                              onChange={this.onFormChange}
-                              onFocus={this.onFormChange}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                              defaultValue={finding.analyst_subtype}
-                              onChange={this.onFormChange}
-                              /></TableRowColumn>
-            <TableRowColumn><TextField
-                              defaultValue={finding.domain_name}
-                              onChange={this.onFormChange}
-                              /></TableRowColumn>
-            <TableRowColumn><TextField
-                            defaultValue={finding.analyst_data_value}
-                            onChange={this.onFormChange}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                            defaultValue={finding.analyst_status}
-                            onChange={this.onFormChange}
-                            onBlur={this.onTextFieldExit}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                            defaultValue={finding.display_name_short}
-                            onChange={this.onFormChange}
-                            onBlur={this.onTextFieldExit}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                            defaultValue={finding.display_name_long}
-                            onChange={this.onFormChange}
-                            onBlur={this.onTextFieldExit}
-                            /></TableRowColumn>
-            <TableRowColumn><TextField
-                            defaultValue={finding.display_data_description}
-                            onChange={this.onFormChange}
-                            onBlur={this.onTextFieldExit}
-                            /></TableRowColumn>
-
-        </TableRow>
       )
-    }, this);
-  return (
-    <Table
-    height={this.state.height}
-    onCellClick={this.handleCellSelection}
-    fixedHeader={this.state.fixedHeader}
-    fixedFooter={this.state.fixedFooter}
-    multiSelectable={this.state.multiSelectable}
-    selectable={this.state.selectable}
-    >
+    }
+  });
 
 
-      <TableHeader enableSelectAll={this.state.enableSelectAll}>
-        <TableRow>
-          <TableHeaderColumn>Criteria</TableHeaderColumn>
-          <TableHeaderColumn>Type</TableHeaderColumn>
-          <TableHeaderColumn  style={{textAlign: 'center' }}>Subtype</TableHeaderColumn>
-          <TableHeaderColumn  style={{textAlign: 'center' }}>Domain Name</TableHeaderColumn>
-          <TableHeaderColumn  style={{textAlign: 'center' }} tooltip='Security Domains'>Security Domains</TableHeaderColumn>
-          <TableHeaderColumn  style={{textAlign: 'center' }} tooltip='Security Domains'>Security Domains</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody
-        displayRowCheckbox={this.state.displayRowCheckbox}
-        showRowHover={this.state.showRowHover}
-        stripedRows={this.state.stripedRows}>
 
-        { tableElements }
-      </TableBody>
-      <TableFooter>
 
-        <TableRow>
-          <TableRowColumn colSpan="3" style={{textAlign: 'center'}}>
-          </TableRowColumn>
-        </TableRow>
-      </TableFooter>
-    </Table>
-  )
-  }
-
-});
-
-module.exports = WebAppSecurity;
+  module.exports = WebAppSecurity;
