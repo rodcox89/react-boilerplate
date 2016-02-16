@@ -98,8 +98,8 @@ let Netblock = React.createClass({
     }
 
     $.ajax({
-    type: 'POST',
-    url: 'http://0.0.0.0:5000/v1/netblocks/edit_netblock',
+    type: 'PUT',
+    url: 'http://0.0.0.0:5000/v1/netblocks',
     crossDomain: true,
     data: JSON.stringify(newnetblock),
     dataType: 'json',
