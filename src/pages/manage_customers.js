@@ -124,7 +124,7 @@ render(){
 			tempContent =
 			<TableRow key={x}>
 					<TableRowColumn>{customer.formal_name}</TableRowColumn>
-					<TableRowColumn>NEED-EDIT-DATE</TableRowColumn>
+					<TableRowColumn>{customer.date_updated}</TableRowColumn>
 					<TableRowColumn><Link to={"/add_edit_customer/"+customer.customer_id}><RaisedButton label="Edit" secondary={true}></RaisedButton></Link></TableRowColumn>
 			</TableRow>
 		}

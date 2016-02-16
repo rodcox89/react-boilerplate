@@ -128,7 +128,9 @@ let AddEditToe = React.createClass({
 	handleContactNameChange(e, cb) { this.setState({contactName: e.target.value}, () => cb()) },
 	handleContactEmailChange(e, cb) { this.setState({contactEmail: e.target.value}, () => cb()) },
 	handleContactPhoneChange(e, cb) { this.setState({contactPhone: e.target.value}, () => cb()) },
-	handleTempSubscriptionName(e) { this.setState({tempSubscriptionName: e.target.value})},
+	handleTempSubscriptionName(e) {
+		this.setState({tempSubscriptionName: e.target.value})
+	},
 	handleTempSubscriptionType(e) { this.setState({tempSubscriptionType: e.target.value})},
 
 	editCustomerInfo(){
@@ -337,7 +339,7 @@ let AddEditToe = React.createClass({
 			return(
 				<TableRow key={x}>
 					<TableRowColumn>{subscription.toe_short_name}</TableRowColumn>
-					<TableRowColumn>STARTDATE</TableRowColumn>
+					<TableRowColumn>{subscription.date_updated}</TableRowColumn>
 					<TableRowColumn style={{width:"120px"}}>
 						<KeyboardArrowRight onClick={this.switchSubscriptionType.bind(null, subscription.toe_id, 'one_time')} style={{fill:'#8d8c8c',cursor:'pointer'}} />
 						<ContentRemoveCircle onClick={this.removeSubscription.bind(null, subscription.toe_id)} className="remove-circle" style={{fill:'#8d8c8c'}} />
@@ -350,7 +352,7 @@ let AddEditToe = React.createClass({
 			return(
 				<TableRow key={x}>
 					<TableRowColumn>{subscription.toe_short_name}</TableRowColumn>
-					<TableRowColumn>STARTDATE</TableRowColumn>
+					<TableRowColumn>{subscription.date_updated}</TableRowColumn>
 					<TableRowColumn style={{width:"120px"}}>
 						<KeyboardArrowLeft onClick={this.switchSubscriptionType.bind(null, subscription.toe_id, 'continuous')} style={{fill:'#8d8c8c',cursor:'pointer'}} />
 						<ContentRemoveCircle onClick={this.removeSubscription.bind(null, subscription.toe_id)} className="remove-circle" style={{fill:'#8d8c8c'}} />
@@ -424,7 +426,7 @@ let AddEditToe = React.createClass({
 								<TableHeader>
 									<TableRow>
 										<TableHeaderColumn>Name</TableHeaderColumn>
-										<TableHeaderColumn>Start Date</TableHeaderColumn>
+										<TableHeaderColumn>Date Updated</TableHeaderColumn>
 										<TableHeaderColumn style={{width:"120px"}}>&nbsp;</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
@@ -439,7 +441,7 @@ let AddEditToe = React.createClass({
 								<TableHeader>
 									<TableRow>
 										<TableHeaderColumn>Name</TableHeaderColumn>
-										<TableHeaderColumn>Start Date</TableHeaderColumn>
+										<TableHeaderColumn>Date Updated</TableHeaderColumn>
 										<TableHeaderColumn style={{width:"120px"}}>&nbsp;</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
