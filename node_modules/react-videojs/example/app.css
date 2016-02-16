@@ -1,8 +1,0 @@
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
-.app {
-  max-width: 400px;
-  margin: 0 auto;
-}
