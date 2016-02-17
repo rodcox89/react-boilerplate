@@ -1,7 +1,11 @@
 {
   "name": "ops-app-ui",
   "version": "1.0.0",
-  "description": "",
+  "description": "RiskRecon Ops App UI",
+	"repository": {
+    "type": "git",
+    "url": "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/ops-app-ui"
+  },
   "main": "module.js",
   "scripts": {
     "build": "webpack --progress --profile --colors",
