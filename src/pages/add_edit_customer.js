@@ -45,7 +45,7 @@ import 'react-select2-wrapper/css/select2.css';
 let customerId = '';
 
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 var inputStyle = {
 	outline: 'none !important',
 	border: 'none',
@@ -423,14 +423,14 @@ let AddEditToe = React.createClass({
 						<div style={{width:'47%',float:'left'}}>
 							<strong>Continuous</strong>
 							<Table fixedHeader={true}>
-								<TableHeader>
+								<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 									<TableRow>
 										<TableHeaderColumn>Name</TableHeaderColumn>
 										<TableHeaderColumn>Date Updated</TableHeaderColumn>
 										<TableHeaderColumn style={{width:"120px"}}>&nbsp;</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
-								<TableBody>
+								<TableBody displayRowCheckbox={false}>
 									{toeSubscriptionContinuousRow}
 								</TableBody>
 							</Table>
@@ -438,14 +438,14 @@ let AddEditToe = React.createClass({
 						<div style={{width:'47%',float:'right'}}>
 							<strong>One Time</strong>
 							<Table fixedHeader={true}>
-								<TableHeader>
+								<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 									<TableRow>
 										<TableHeaderColumn>Name</TableHeaderColumn>
 										<TableHeaderColumn>Date Updated</TableHeaderColumn>
 										<TableHeaderColumn style={{width:"120px"}}>&nbsp;</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
-								<TableBody>
+								<TableBody displayRowCheckbox={false}>
 									{toeSubscriptionOneTimeRow}
 								</TableBody>
 							</Table>

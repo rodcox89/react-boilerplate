@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { Router , Route, IndexRoute, Link } from 'react-router'
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import AppBar from 'material-ui/lib/app-bar'
 import AssignmentIcon from 'material-ui/lib/svg-icons/action/assignment'
@@ -96,7 +97,7 @@ const App = React.createClass({
 		)
 	}
 });
-
+injectTapEventPlugin();
 ReactDOM.render((
 	<Router>
 		<Route path='/' component={App} >

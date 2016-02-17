@@ -4,7 +4,7 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 import RaisedButton from 'material-ui/lib/raised-button';
 import { Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+//injectTapEventPlugin();
 let MyAwesomeReactComponent = React.createClass({
 
 render(){

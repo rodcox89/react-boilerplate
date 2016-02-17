@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
@@ -162,6 +162,7 @@ render(){
 					deselectOnClickaway={this.state.deselectOnClickaway}
 					showRowHover={false}
 					stripedRows={false}
+					displayRowCheckbox={false}
 					>
 					{ tableElements }
 				</TableBody>

@@ -47,7 +47,7 @@ const companiesAssignedPaperStyles = {display:'inline-block', margin:'8px', padd
 let toeId = '';
 
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 var inputStyle = {
 	outline: 'none !important',
 	border: 'none',
@@ -705,14 +705,14 @@ let AddEditToe = React.createClass({
 				</CardTitle>
 				<CardText>
 					<Table fixedHeader={true}>
-						<TableHeader>
+						<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 							<TableRow>
 								<TableHeaderColumn>Subsidiary</TableHeaderColumn>
 								<TableHeaderColumn>Domains</TableHeaderColumn>
 								<TableHeaderColumn style={{width:"90px"}}>&nbsp;</TableHeaderColumn>
 							</TableRow>
 						</TableHeader>
-						<TableBody>
+						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingSubsidiary ?
 								<TableRow>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="subsidiary_name" id="subsidiary_name" placeholder="Subsidiary Name" style={{fontSize:'12px'}} onChange={this.handleTempSubsidiaryName} value={this.state.tempSubsidiaryName} /></TableRowColumn>
@@ -814,7 +814,7 @@ let AddEditToe = React.createClass({
 				</CardTitle>
 				<CardText>
 					<Table fixedHeader={true}>
-						<TableHeader>
+						<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 							<TableRow>
 								<TableHeaderColumn>Event Date</TableHeaderColumn>
 								<TableHeaderColumn>Short Desc</TableHeaderColumn>
@@ -823,7 +823,7 @@ let AddEditToe = React.createClass({
 								<TableHeaderColumn style={{width:"90px"}}>&nbsp;</TableHeaderColumn>
 							</TableRow>
 						</TableHeader>
-						<TableBody>
+						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingDataLoss ?
 								<TableRow>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="event_date" id="event_date" placeholder="MM/YYYY" style={this.state.tempEventDateStyle} onChange={this.handleTempEventDate} value={this.state.tempEventDate} /></TableRowColumn>
@@ -861,7 +861,7 @@ let AddEditToe = React.createClass({
 									<TableHeaderColumn></TableHeaderColumn>
 								</TableRow>
 							</TableHeader>
-							<TableBody>
+							<TableBody displayRowCheckbox={false}>
 								{seedHostnamesRow}
 							</TableBody>
 						</Table>
@@ -878,7 +878,7 @@ let AddEditToe = React.createClass({
 				</CardTitle>
 				<CardText>
 					<Table fixedHeader={true}>
-						<TableHeader>
+						<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 							<TableRow>
 								<TableHeaderColumn>Registrant Org</TableHeaderColumn>
 								<TableHeaderColumn>Country</TableHeaderColumn>
@@ -888,7 +888,7 @@ let AddEditToe = React.createClass({
 								<TableHeaderColumn style={{width:"90px"}}>&nbsp;</TableHeaderColumn>
 							</TableRow>
 						</TableHeader>
-						<TableBody>
+						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingNetblockIntell ?
 								<TableRow>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="registrant_org" id="registrant_org" placeholder="Registrant Org" style={{fontSize:'12px'}} onChange={this.handleTempRegistrantOrg} value={this.state.tempRegistrantOrg} /></TableRowColumn>
@@ -922,12 +922,12 @@ let AddEditToe = React.createClass({
 					<div className="clearfix">
 						<div>
 							<Table fixedHeader={true}>
-								<TableHeader>
+								<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 									<TableRow>
 										<TableHeaderColumn>Domain</TableHeaderColumn>
 									</TableRow>
 								</TableHeader>
-								<TableBody>
+								<TableBody displayRowCheckbox={false}>
 									{domainIntellSampleRow}
 								</TableBody>
 							</Table>

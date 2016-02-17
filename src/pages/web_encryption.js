@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 import Spinner from 'react-spinkit';
 import Table from 'material-ui/lib/table/table';

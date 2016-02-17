@@ -5,7 +5,7 @@ import { RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import DebounceInput from 'react-debounce-input'
 import Griddle from 'griddle-react'
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
