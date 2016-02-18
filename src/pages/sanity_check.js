@@ -29,9 +29,7 @@ getInitialState: function(){
     fixedHeader: true,
     reverse: true,
     search_term: "",
-    analyses: {
-      analysis: [],
-    },
+    analyses: [],
     loaded: false,
     has_results: true,
   };
@@ -56,9 +54,8 @@ componentDidMount() {
       }
       else{
         let analyses_props = this.state.analyses;
-        analyses_props['analysis'] = data.analyses
         this.setState({
-          analyses: analyses_props,
+          analyses: data,
           loaded: true,
           has_results: true,
         }, () => {console.log('RWAGH', this.state.analyses)});
@@ -82,9 +79,9 @@ handleSort(e) {
     reverse = true
   }
   this.setState({reverse: reverse})
-  let analyses = this.state.analyses.analysis
+  let analyses = this.state.analyses
   analyses.sort(this.sort_by(e, reverse, function(a) {return a.toLowerCase()}))
-  this.setState({[analyses.analysis]: analyses})
+  this.setState({[analyses]: analyses})
 },
 handleNumberSort(e) {
   let reverse = this.state.reverse
@@ -96,7 +93,7 @@ handleNumberSort(e) {
   }
   this.setState({reverse: reverse})
   let analyses = this.state.analyses
-  analyses.analysis.sort(this.sort_by(e, reverse, parseInt))
+  analyses.sort(this.sort_by(e, reverse, parseInt))
   this.setState({analyses: analyses})
 },
 sort_by(field, reverse, primer) {
@@ -122,7 +119,7 @@ localStorage.unique_key = analysis.unique_key
 },
 
 render(){
-  const tableElements = this.state.analyses.analysis.map((analysis, x) => {
+  const tableElements = this.state.analyses.map((analysis, x) => {
     let searchTerm = this.state.search_term;
     let includeResult = this.state.search_term.length === 0 ? true: false;
     let netblocks_button

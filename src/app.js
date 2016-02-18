@@ -15,6 +15,7 @@ import HourglassIcon from 'material-ui/lib/svg-icons/action/hourglass-empty'
 import IconAddCircle from 'material-ui/lib/svg-icons/content/add-circle-outline'
 import IconAirlineSeatReclineExtra from 'material-ui/lib/svg-icons/notification/airline-seat-recline-extra'
 import IconTagFaces from 'material-ui/lib/svg-icons/image/tag-faces'
+import FindInPage from 'material-ui/lib/svg-icons/action/find-in-page'
 import IconButton from 'material-ui/lib/icon-button';
 import LeftNav from 'material-ui/lib/left-nav'
 import List from 'material-ui/lib/lists/list';
@@ -40,6 +41,7 @@ import ManageToes from 'pages/manage_toes'
 import AddEditCustomer from 'pages/add_edit_customer'
 import ManageCustomers from 'pages/manage_customers'
 import CreateReports from 'pages/create_reports'
+import FinalizeMetrics from 'pages/finalize_metrics'
 
 const App = React.createClass({
 
@@ -80,14 +82,18 @@ const App = React.createClass({
 				 <LeftNav ref="leftNav" open={this.state.open} onRequestChange={this.handleToggle} menuItems={this.menuItems}>
 					<AppBar title="Menu" iconElementRight={<IconButton	onTouchTap={this.handleToggle} ><NavigationClose onRightIconButtonTouchTap={this.handleToggle} /></IconButton>} iconElementLeft={<IconButton></IconButton>} />
 					<List>
-						<ListItem containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans Qeued" rightIcon={<ScheduleIcon/>}></ListItem>
-						<ListItem containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" rightIcon={<HourglassIcon/>}></ListItem>
+						<ListItem primaryTogglesNestedList={true} primaryText="Scans" nestedItems={[
+							<ListItem key={1} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans Qeued" rightIcon={<ScheduleIcon/>}></ListItem>,
+							<ListItem key={2} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" rightIcon={<HourglassIcon/>}></ListItem>,
+						]}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" rightIcon={<CheckIcon/>}></ListItem>
-						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" rightIcon={<AssignmentIcon/>}></ListItem>
-						<ListItem containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Create Reports" rightIcon={<AssignmentIcon/>}></ListItem>
+						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Report Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
+						<ListItem primaryTogglesNestedList={true} primaryText="Report Stages" nestedItems={[
+							<ListItem key={1} containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" rightIcon={<CheckIcon/>}></ListItem>,
+							<ListItem key={2} containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" rightIcon={<FindInPage/>}></ListItem>,
+							<ListItem key={3} containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Finalize" rightIcon={<AssignmentIcon/>}></ListItem>,
+						]}></ListItem>
 						<Divider/>
 						<ListItem containerElement={<Link to="/manage_toes" />} linkButton={true} primaryText="Manage TOEs" rightIcon={<IconAirlineSeatReclineExtra/>}></ListItem>
 						<Divider/>
@@ -120,6 +126,7 @@ ReactDOM.render((
 			<Route path='add_edit_customer' component={AddEditCustomer}/>
 			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
 			<Route path='create_reports' component={CreateReports}/>
+			<Route path='finalize_metrics' component={FinalizeMetrics}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));

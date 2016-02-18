@@ -12,7 +12,7 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
 
-const CreateReports = React.createClass({
+const FinalizeMetrics = React.createClass({
 	getInitialState: function() {
 		return {
 			analyses: [],
@@ -28,47 +28,49 @@ const CreateReports = React.createClass({
 					this.setState({
 						analyses: data,
 						loaded: true,
-						})
+					})
 				}
 				else {
 					this.setState({
 						loaded: true,
 						has_results: false
-						})
-					}
-
+					})
+				}
 			},
 			error: function () {
 				console.log('api error');
-
 			}
-			})
+		})
 	},
 	render: function(){
 		const tableElements = this.state.analyses.map((analysis, x) => {
-		let metricsState
-		let ratingsState
-		let languageState
-		if (analysis.analysis_state_report_derived_metrics_completed){
-			metricsState = <Link to="/finalize_metrics"><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
-		}
-		else{
-			metricsState = ''
-		}
-		if (analysis.analysis_state_report_derived_ratings_completed){
-			ratingsState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-		}
-		else{
-			ratingsState = ''
-		}
-		if (analysis.analysis_state_report_derived_language_completed){
-			languageState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-		}
-		else{
-			languageState = ''
-		}
+			let metricsState
+			let ratingsState
+			let languageState
+			if (analysis.analysis_state_report_derived_metrics_completed){
+				if(analysis.analysis_state_report_derived_metrics_completed == '1'){
+					metricsState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
+				}else{
+					metricsState = 'Processing...'
+				}
+			}
+			else{
+				metricsState = ''
+			}
+			if (analysis.analysis_state_report_derived_ratings_completed){
+				ratingsState = <Link to="/finalize_metrics"><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+			}
+			else{
+				ratingsState = ''
+			}
+			if (analysis.analysis_state_report_derived_language_completed){
+				languageState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
+			}
+			else{
+				languageState = ''
+			}
 
-		return(
+			return(
 				<TableRow key={x}>
 					<TableRowColumn>{analysis.analyst_edit_analyzed_entity_name}</TableRowColumn>
 					<TableRowColumn>{analysis.analysis_id}</TableRowColumn>
@@ -77,19 +79,19 @@ const CreateReports = React.createClass({
 					<TableRowColumn>{languageState}</TableRowColumn>
 					<TableRowColumn></TableRowColumn>
 				</TableRow>
-		)
+			)
 
 		}, this)
 		return(
 			<div>
 				{ !this.state.loaded ?
 					<div className="container">
-						<Spinner className="spinner" spinnerName='cube-grid'/>
+						<Spinner className="spinner"	spinnerName='cube-grid'/>
 					</div>
 				:null}
 				{ this.state.loaded & this.state.has_results ?
 					<Card>
-						<CardTitle title="Create Reports"/>
+						<CardTitle title="Finalize Metrics"/>
 						<table className="table table-bordered" style={{width: '100%'}}>
 							<thead>
 								<tr>
@@ -98,7 +100,7 @@ const CreateReports = React.createClass({
 									<TableHeaderColumn style={{width:'170px'}}>Metrics</TableHeaderColumn>
 									<TableHeaderColumn style={{width:'170px'}}>Ratings</TableHeaderColumn>
 									<TableHeaderColumn style={{width:'170px'}}>Language</TableHeaderColumn>
-									<TableHeaderColumn style={{width:'300px'}}></TableHeaderColumn>
+									<TableHeaderColumn style={{width:'250px'}}></TableHeaderColumn>
 								</tr>
 							</thead>
 							<TableBody
@@ -117,4 +119,4 @@ const CreateReports = React.createClass({
 
 })
 
-module.exports = CreateReports
+module.exports = FinalizeMetrics
