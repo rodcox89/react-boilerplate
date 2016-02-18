@@ -39,6 +39,7 @@ import AddEditToe from 'pages/add_edit_toe'
 import ManageToes from 'pages/manage_toes'
 import AddEditCustomer from 'pages/add_edit_customer'
 import ManageCustomers from 'pages/manage_customers'
+import CreateReports from 'pages/create_reports'
 
 const App = React.createClass({
 
@@ -84,6 +85,7 @@ const App = React.createClass({
 						<Divider/>
 						<ListItem containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" rightIcon={<CheckIcon/>}></ListItem>
 						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" rightIcon={<AssignmentIcon/>}></ListItem>
+						<ListItem containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Create Reports" rightIcon={<AssignmentIcon/>}></ListItem>
 						<Divider/>
 						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
 						<Divider/>
@@ -117,6 +119,7 @@ ReactDOM.render((
 			<Route path='manage_customers' component={ManageCustomers}/>
 			<Route path='add_edit_customer' component={AddEditCustomer}/>
 			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
+			<Route path='create_reports' component={CreateReports}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));

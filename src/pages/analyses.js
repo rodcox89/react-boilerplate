@@ -41,10 +41,7 @@ getInitialState: function(){
     has_results: true,
     reverse: true,
     search_term: "",
-    analyses: {
-      analysis: [],
-
-    },
+    analyses: []
   };
 },
 componentWillMount() {
@@ -59,7 +56,7 @@ componentDidMount() {
     type: 'GET',
     dataType: 'json',
     success: (data) => {
-      if(data.analyses.length === 0){
+      if(data.length === 0){
         this.setState({
           loaded: true,
           has_results: false,
@@ -70,7 +67,7 @@ componentDidMount() {
         analyses_props['analysis'] = data.analyses
         this.setState({
           has_results: true,
-          analyses: analyses_props,
+          analyses: data,
           loaded: true,
         }, () => {console.log('RWAGH', this.state.analyses)});
       }
@@ -126,17 +123,20 @@ handleSearch(e){
 onClick: function(x) {
 
 console.log('clicked')
-localStorage.analysis_id = this.state.analyses.analysis[x].analysis_id
-localStorage.unique_key = this.state.analyses.analysis[x].unique_key
+localStorage.analysis_id = this.state.analyses[x].analysis_id
+localStorage.unique_key = this.state.analyses[x].unique_key
 },
 runCounts(e){
-  console.log('run counts clicked');
-  console.log(e.analysis_id);
+  this.setState({loaded: false})
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/counts/'+e.analysis_id,
-    type: 'GET',
+    url: 'http://0.0.0.0:5000/v1/calculate_derived_metrics/'+e.analysis_id+'/'+e.unique_key,
+    dataType: 'json',
+    type: 'POST',
     success: (data) => {
-      console.log(data);
+      this.setState({
+        analyses: data,
+        loaded: true
+      })
     },
     error: (err) => {
       console.log('api error')
@@ -147,7 +147,7 @@ runCounts(e){
 
 render(){
 
-  const tableElements = this.state.analyses.analysis.map((analysis, x) => {
+  const tableElements = this.state.analyses.map((analysis, x) => {
     let searchTerm = this.state.search_term;
     let count_link
     let includeResult = this.state.search_term.length === 0 ? true: false;
@@ -166,7 +166,7 @@ render(){
 
         if (analysis.analysis_state_security_domain_dns_security_completed === 'true' && analysis.analysis_state_security_domain_defensibility_completed === 'true' && analysis.analysis_state_security_domain_threat_intell_completed === 'true' && analysis.analysis_state_security_domain_web_app_security_completed  === 'true' && analysis.analysis_state_security_domain_web_app_security_completed === 'true'){
           console.log('this should print');
-           count_link = <RaisedButton label="Run Counts" onClick={this.runCounts.bind(null, analysis)} primary={true} disabled={false } />
+           count_link = <RaisedButton id={analysis.analysis_id} label="Run Counts" onClick={this.runCounts.bind(this, analysis)} primary={true} disabled={false } />
         }
         else {
             if (analysis.analysis_state_security_domain_software_patching_completed === 'true'){
@@ -232,7 +232,7 @@ render(){
     :null}
     { this.state.loaded & this.state.has_results ?
     <Card>
-      <CardTitle title="Analyses"/>
+      <CardTitle title="Review Findings"/>
       <table className="table table-bordered" style={{width:'100%'}}>
         <thead>
         <tr className="success">
