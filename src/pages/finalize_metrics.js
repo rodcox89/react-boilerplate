@@ -38,7 +38,6 @@ const FinalizeMetrics = React.createClass({
 				}
 			},
 			error: function () {
-				console.log('api error');
 			}
 		})
 	},
@@ -72,7 +71,7 @@ const FinalizeMetrics = React.createClass({
 
 			return(
 				<TableRow key={x}>
-					<TableRowColumn>{analysis.analyst_edit_analyzed_entity_name}</TableRowColumn>
+					<TableRowColumn>{analysis.analyzed_entity_name}</TableRowColumn>
 					<TableRowColumn>{analysis.analysis_id}</TableRowColumn>
 					<TableRowColumn>{metricsState}</TableRowColumn>
 					<TableRowColumn>{ratingsState}</TableRowColumn>

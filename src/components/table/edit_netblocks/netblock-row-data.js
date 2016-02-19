@@ -105,12 +105,9 @@ let Netblock = React.createClass({
     dataType: 'json',
     contentType: 'application/json',
     success: (data) => {
-      console.log('success');
-      console.log(data);
       this.setState({isInput: false})
     },
     error: function () {
-      console.log('error');
       // this.state
       // this.setState({
       //   analyst_comments: this.state[temp.analyst_comments],
@@ -143,13 +140,10 @@ let Netblock = React.createClass({
    dataType: 'json',
    contentType: 'application/json',
    success: (data) => {
-     console.log('success');
-     console.log(data);
      ndata = data
      this.setState({ipdata:ndata})
    },
    error: function () {
-     console.log('error');
 
    },
  });
@@ -162,8 +156,6 @@ let Netblock = React.createClass({
 },
 
 closePopover(key) {
-  console.log('closePopover');
-  console.log(key);
   if (this.state.activePopover !== key)
     return
   this.setState({
@@ -171,7 +163,6 @@ closePopover(key) {
   });
 },
 setAnchor(positionElement, position, e) {
-  console.log('setAnchor');
   let {anchorOrigin} = this.state;
   anchorOrigin[positionElement] = position;
 
@@ -181,7 +172,6 @@ setAnchor(positionElement, position, e) {
 },
 
 setTarget(positionElement, position, e) {
-  console.log('setTarget');
   let {targetOrigin} = this.state;
   targetOrigin[positionElement] = position;
 

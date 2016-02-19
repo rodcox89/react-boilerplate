@@ -15,8 +15,6 @@ delete(finding, e , index) {
   this.props.delete(finding, e , index)
 },
 handleStatusChange(status, e, index) {
-  console.log(status);
-  console.log(e);
   this.props.handleStatusChange(status, e, index)
 },
 handleConfidenceChange( choice, e, index) {
@@ -26,8 +24,6 @@ handleCommentChange( comment, e, index) {
   this.props.handleCommentChange(comment,e, index)
 },
 onEdit(finding, e , index, input) {
-  console.log('onedit');
-  console.log(input);
   return true
   // this.props.onEdit(finding, e, index, input)
 },

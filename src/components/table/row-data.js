@@ -72,11 +72,9 @@ const Row = React.createClass({
     }
   },
   onChange(e) {
-    console.log([e.target.id]+ e.target.value);
     this.setState({[e.target.id]: e.target.value})
   },
   onEdit(e){
-    console.log('clicked');
     this.setState({isInput: true})
 
   },
@@ -97,11 +95,8 @@ const Row = React.createClass({
     dataType: 'json',
     contentType: 'application/json',
     success: (data) => {
-      console.log('success');
-      console.log(data);
     },
     error: function () {
-      console.log('error');
       // this.state
       // this.setState({
       //   analyst_comments: this.state[temp.analyst_comments],
@@ -114,7 +109,6 @@ const Row = React.createClass({
   this.setState({isInput: false})
 },
   viewRawValue(e){
-    console.log('view raw value');
   },
   handleStatusChange(e){
     this.setState({analyst_status: e.target.selectedOptions[0].id})
@@ -125,14 +119,10 @@ const Row = React.createClass({
     console.log(e.target.selectedOptions[0].id)
 
     this.setState({analyst_confidence: e.target.selectedOptions[0].id})
-    console.log(this.state.analyst_status);
 
    },
   handleExclude(e){
-    console.log(e);
-    console.log(e.target.checked);
     this.finding.props.finding.analyst_include = e.target.checked
-    console.log(this.finding.props.finding.analyst_include);
 
    },
 
@@ -141,8 +131,6 @@ const Row = React.createClass({
      let f = this.props
 
      let f1 = this.props.finding
-     console.log(f);
-     console.log(f1);
 
      this.props.delete(f)
 

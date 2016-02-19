@@ -49,7 +49,6 @@ componentDidMount() {
 		type: 'GET',
 		dataType: 'json',
 		success: (data) => {
-			console.log(data);
 			this.setState({
 				loaded: true,
 				has_results: true,
@@ -63,8 +62,6 @@ componentDidMount() {
 },
 
 handleSort(e) {
-	console.log('handleSort clicked');
-	console.log(e);
 	let reverse = this.state.reverse
 	if(reverse === true){
 		reverse = false
@@ -100,13 +97,10 @@ sort_by(field, reverse, primer) {
 	}
 },
 handleSearch(e){
-	console.log(e);
 	this.setState({search_term: e.target.value})
-	console.log(this.state.search_term);
 },
 
 runScan(){
-	console.log('WANTED TO RUN A SCAN');
 },
 
 render(){

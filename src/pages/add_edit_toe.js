@@ -110,15 +110,14 @@ let AddEditToe = React.createClass({
 	},
 	componentDidMount() {
 		if(toeId.length > 0){
-			//console.log('we think we have a toe');
-			//console.log(toeId);
+			//
+			//
 			$.ajax({
 				url: 'http://localhost:5000/v1/toe/'+toeId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					console.log(data);
-					//console.log((typeof data.toe_subsidiaries != 'undefined' ? data.toe_subsidiaries : [] ));
+					//
 					this.setState({
 						dateCreated: data.date_created,
 						toe_id: data.toe_id,
@@ -552,9 +551,6 @@ let AddEditToe = React.createClass({
 					"toe_netblocks": this.state.netblockIntell,
 					"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 				}
-				console.log('EXISTING TOE');
-				console.log(formattedPutObject);
-				console.log('----------------');
 				$.ajax({
 					url: 'http://localhost:5000/v1/toe',
 					type: 'PUT',
@@ -564,8 +560,8 @@ let AddEditToe = React.createClass({
 					},
 					data: JSON.stringify(formattedPutObject),
 					success: (data) => {
-						//console.log(data);
-						//console.log('---------------------------');
+						//
+						//
 						//window.location.href= "/#/manage_toes";
 						window.location.href= "/#/manage_toes";
 					}
@@ -601,7 +597,7 @@ let AddEditToe = React.createClass({
 						"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 
 					}
-					//console.log(formattedPostObject);
+					//
 					$.ajax({
 						url: 'http://localhost:5000/v1/toe',
 						type: 'POST',
@@ -611,7 +607,7 @@ let AddEditToe = React.createClass({
 						},
 						data: JSON.stringify(formattedPostObject),
 						success: (data) => {
-							//console.log(data);
+							//
 							window.location.href= "/#/manage_toes";
 						}
 					});

@@ -936,11 +936,11 @@ var Motion = {
 
 var Move = function(duration, elem, fn){
   var anim, prog, start = null;
-  // console.log('called');
+  //
 
   function move(ts){
     if(!start) start = window.performance.now();
-    // console.log(start, ts);
+    //
     prog = ts - start;
     fn.apply(elem);
 
@@ -1631,7 +1631,7 @@ Foundation.Motion = Motion;
         break;
 
         // case "mutate" :
-        // console.log('mutate', $target);
+        //
         // $target.triggerHandler('mutate.zf.trigger');
         //
         // //make sure we don't get stuck in an infinite loop from sloppy codeing
@@ -2778,7 +2778,7 @@ Foundation.Motion = Motion;
     $elem.children('.js-drilldown-back')
       .on('click.zf.drilldown', function(e){
         e.stopImmediatePropagation();
-        // console.log('mouseup on back');
+        //
         _this._hide($elem);
       });
   };
@@ -4424,7 +4424,7 @@ OffCanvas.prototype.open = function(event, trigger) {
 //   }
 //
 //   $(window).on('scroll.zf.offcanvas', function(e){
-//     console.log(e);
+//
 //     var pageY = window.pageYOffset;
 //     elStyle.transform = 'translate(0,' + pageY + 'px)';
 //     if(exitStyle !== undefined){ exitStyle.transform = 'translate(0,' + pageY + 'px)'; }
@@ -6254,10 +6254,10 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
 
     this.scrollCount = this.options.checkEvery;
     this.isStuck = false;
-    // console.log(this.options.anchor, this.options.topAnchor);
+    //
     if(this.options.topAnchor !== ''){
       this._parsePoints();
-      // console.log(this.points[0]);
+      //
     }else{
       this.$anchor = this.options.anchor ? $('#' + this.options.anchor) : $(document.body);
     }
@@ -6293,7 +6293,7 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
       }
       breaks[i] = pt;
     }
-      // console.log(breaks);
+      //
     this.points = breaks;
     return;
   };
@@ -6304,7 +6304,7 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
    * @param {String} id - psuedo-random id for unique scroll event listener.
    */
   Sticky.prototype._events = function(id){
-    // console.log('called');
+    //
     var _this = this,
         scrollListener = 'scroll.zf.' + id;
     if(this.isOn){ return; }
@@ -6481,7 +6481,7 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
         comp = window.getComputedStyle(this.$container[0]),
         pdng = parseInt(comp['padding-right'], 10);
 
-    // console.log(this.$anchor);
+    //
     if(this.$anchor && this.$anchor.length){
       this.anchorHeight = this.$anchor[0].getBoundingClientRect().height;
     }else{
@@ -7313,7 +7313,7 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
       'aria-hidden': false
     });
     _this.isActive = true;
-    // console.log(this.template);
+    //
     this.template.stop().hide().css('visibility', '').fadeIn(this.options.fadeInDuration, function(){
       //maybe do stuff?
     });
@@ -7330,7 +7330,7 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
    * @function
    */
   Tooltip.prototype.hide = function(){
-    // console.log('hiding', this.$element.data('yeti-box'));
+    //
     var _this = this;
     this.template.stop().attr({
       'aria-hidden': true,
@@ -7413,7 +7413,6 @@ Foundation.plugin(ResponsiveToggle, 'ResponsiveToggle');
     this.$element
       .on('focus.zf.tooltip', function(e){
         isFocus = true;
-        console.log(_this.isClick);
         if(_this.isClick){
           return false;
         }else{

@@ -89,20 +89,17 @@ let EditDomains = React.createClass({
     },
     handleSearch(e){
       this.setState({search_term: e.target.value})
-      console.log(this.state.search_term);
     },
     handleApproval(e){
-      console.log('approved');
       $.ajax({
         type: 'PUT',
-        url: 'http://0.0.0.0:5000/v1/completed/domains/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+        url: 'http://0.0.0.0:5000/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           console.log(data)
           }
         })
     },
     handleTrashed(e){
-      console.log('trashed');
     },
     render: function(){
       return(
