@@ -126,7 +126,7 @@ ReactDOM.render((
 			<Route path='add_edit_customer' component={AddEditCustomer}/>
 			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
 			<Route path='create_reports' component={CreateReports}/>
-			<Route path='finalize_metrics' component={FinalizeMetrics}/>
+			<Route path='finalize_metrics/:analysisId' component={FinalizeMetrics}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));

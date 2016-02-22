@@ -11,22 +11,34 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
+import MetricRow from './../components/table/finalize_report/metric-row';
+
 
 const FinalizeMetrics = React.createClass({
 	getInitialState: function() {
+
+		let analysisId = '';
+
+		if(typeof this.props.params.analysisId != 'undefined'){
+			analysisId = this.props.params.analysisId;
+		}
+
 		return {
-			analyses: [],
+			metrics: [],
 			loaded: false,
-			has_results: true
+			has_results: true,
+			analysisId: analysisId
 		}
 	},
 	componentDidMount: function() {
+		console.log(this.state.analysisId);
 		$.ajax({
-			url: 'http://0.0.0.0:5000/v1/analyses/reporting',
+			url: 'http://localhost:5000/v1/report/derived/metrics/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
+					console.log(data);
 					this.setState({
-						analyses: data,
+						metrics: data,
 						loaded: true,
 					})
 				}
@@ -42,43 +54,38 @@ const FinalizeMetrics = React.createClass({
 			}
 		})
 	},
+	handleMetricChange(metric, index){
+		//let metrics = this.state.metrics;
+		//this.setState({[metrics[index]]: metric});
+		//console.log(this.state.metrics);
+		//console.log('post updated metric and reshow updated metrics state');
+		console.log(metric);
+		$.ajax({
+			url: 'http://localhost:5000/v1/report/derived/metrics',
+			type: 'PUT',
+			dataType: 'json',
+			headers: {
+				'Content-Type':'application/json',
+			},
+			data: JSON.stringify(metric),
+			success: (data) => {
+				this.setState({
+					metrics: data,
+					//metrics: []
+				});
+				//console.log(data[index]);
+				console.log(data);
+			}
+		});
+	},
+	doneMetrics(){
+		console.log('do whatever we need to do to make this be marked as completed.');
+	},
 	render: function(){
-		const tableElements = this.state.analyses.map((analysis, x) => {
-			let metricsState
-			let ratingsState
-			let languageState
-			if (analysis.analysis_state_report_derived_metrics_completed){
-				if(analysis.analysis_state_report_derived_metrics_completed == '1'){
-					metricsState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-				}else{
-					metricsState = 'Processing...'
-				}
-			}
-			else{
-				metricsState = ''
-			}
-			if (analysis.analysis_state_report_derived_ratings_completed){
-				ratingsState = <Link to="/finalize_metrics"><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
-			}
-			else{
-				ratingsState = ''
-			}
-			if (analysis.analysis_state_report_derived_language_completed){
-				languageState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-			}
-			else{
-				languageState = ''
-			}
+		const tableElements = this.state.metrics.map((metric, x) => {
 
 			return(
-				<TableRow key={x}>
-					<TableRowColumn>{analysis.analyst_edit_analyzed_entity_name}</TableRowColumn>
-					<TableRowColumn>{analysis.analysis_id}</TableRowColumn>
-					<TableRowColumn>{metricsState}</TableRowColumn>
-					<TableRowColumn>{ratingsState}</TableRowColumn>
-					<TableRowColumn>{languageState}</TableRowColumn>
-					<TableRowColumn></TableRowColumn>
-				</TableRow>
+				<MetricRow key={x} index={x} metric={metric} handleMetricChange={this.handleMetricChange} />
 			)
 
 		}, this)
@@ -86,32 +93,34 @@ const FinalizeMetrics = React.createClass({
 			<div>
 				{ !this.state.loaded ?
 					<div className="container">
-						<Spinner className="spinner"	spinnerName='cube-grid'/>
+						<Spinner className="spinner" spinnerName='cube-grid'/>
 					</div>
 				:null}
 				{ this.state.loaded & this.state.has_results ?
-					<Card>
-						<CardTitle title="Finalize Metrics"/>
-						<table className="table table-bordered" style={{width: '100%'}}>
-							<thead>
-								<tr>
-									<TableHeaderColumn>TOE</TableHeaderColumn>
-									<TableHeaderColumn>Analysis ID</TableHeaderColumn>
-									<TableHeaderColumn style={{width:'170px'}}>Metrics</TableHeaderColumn>
-									<TableHeaderColumn style={{width:'170px'}}>Ratings</TableHeaderColumn>
-									<TableHeaderColumn style={{width:'170px'}}>Language</TableHeaderColumn>
-									<TableHeaderColumn style={{width:'250px'}}></TableHeaderColumn>
-								</tr>
-							</thead>
-							<TableBody
-								showRowHover={false}
-								stripedRows={false}
-								displayRowCheckbox={false}
-								>
-									{ tableElements }
-							</TableBody>
-						</table>
-					</Card>
+					<div>
+						<Card>
+							<CardTitle title="Finalize Metrics"/>
+							<table className="table table-bordered" style={{width:'100%'}}>
+								<thead>
+									<tr>
+										<TableHeaderColumn>Key</TableHeaderColumn>
+										<TableHeaderColumn>Value</TableHeaderColumn>
+										<TableHeaderColumn>Notes</TableHeaderColumn>
+										<TableHeaderColumn style={{width:'150px'}}>Include in analysis</TableHeaderColumn>
+										<TableHeaderColumn></TableHeaderColumn>
+									</tr>
+								</thead>
+								<TableBody
+									showRowHover={false}
+									stripedRows={false}
+									displayRowCheckbox={false}
+									>
+										{ tableElements }
+								</TableBody>
+							</table>
+						</Card>
+						<RaisedButton label="Done" secondary={true} onClick={this.doneMetrics} style={{margin:'20px'}} />
+					</div>
 				:null }
 			</div>
 		)
