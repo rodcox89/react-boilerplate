@@ -50,7 +50,6 @@ const FinalizeMetrics = React.createClass({
 				}
 			},
 			error: function () {
-				console.log('api error');
 			}
 		})
 	},

@@ -32,7 +32,7 @@ const FloatingLabelInput = React.createClass({
 
   handleChange(e) {
     this.props.onChange(e, () => {
-      //console.log('handling change');
+      //
       this.showLabel(e.target);
     });
   },

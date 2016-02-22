@@ -61,7 +61,6 @@ let WebEncryption = React.createClass({
     },
 
     delete: function(finding, e , index){
-      console.log(finding);
       let f = {
         unique_key: finding['unique_key'],
         analysis_id: finding['analysis_id'],
@@ -75,8 +74,6 @@ let WebEncryption = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
-        console.log('success');
-        console.log(data);
         let findings = this.state.findings
         let newfindings = []
         for (var i = 0; i < this.state.findings.length; ++i) {
@@ -90,35 +87,28 @@ let WebEncryption = React.createClass({
         })
       },
       error: function () {
-        console.log('error');
 
       },
     });
 
     },
     handleStatusChange: function(status, e, index){
-      console.log(e.target.value);
       let findings = this.state.findings
       let newfinding = this.state.findings[index]
       newfinding.analyst_status = e.target.value
       this.setState({[findings[index]]: newfinding})
-      console.log(findings[index]);
     },
     handleConfidenceChange: function(choice, e, index){
-      console.log(e.target.selectedOptions[0].id);
       let findings = this.state.findings
       let newfinding = this.state.findings[index]
       newfinding.analyst_confidence = e.target.selectedOptions[0].id
       this.setState({[findings[index]]: newfinding})
-      console.log(findings[index]);
     },
     handleCommentChange: function(comment, e, index){
-      console.log(e.target.value);
       let findings = this.state.findings
       let newfinding = this.state.findings[index]
       newfinding.analyst_comments = e.target.value
       this.setState({[findings[index]]: newfinding})
-      console.log(findings[index]);
     },
     handleSort(e) {
       let reverse = this.state.reverse
@@ -157,10 +147,8 @@ let WebEncryption = React.createClass({
     },
     handleSearch(e){
       this.setState({search_term: e.target.value})
-      console.log(this.state.search_term);
     },
     onSubmit(e) {
-      console.log('submitted');
       $.ajax({
       type: 'PUT',
       url: 'http://0.0.0.0:5000/v1/analyses/threat_intell/'+localStorage.analysis_id+'/'+localStorage.unique_key,
@@ -168,11 +156,8 @@ let WebEncryption = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
-        console.log('success');
-        console.log(data);
       },
       error: function () {
-        console.log('error');
 
       },
     });

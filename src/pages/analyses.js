@@ -63,13 +63,11 @@ componentDidMount() {
         })
       }
       else{
-        let analyses_props = this.state.analyses;
-        analyses_props['analysis'] = data.analyses
         this.setState({
           has_results: true,
           analyses: data,
           loaded: true,
-        }, () => {console.log('RWAGH', this.state.analyses)});
+        }), () => {console.log('RWAGH', this.state.analyses)};
       }
 
     },
@@ -152,7 +150,7 @@ render(){
     let count_link
     let includeResult = this.state.search_term.length === 0 ? true: false;
     if (!includeResult) {
-      analysis.analyst_edit_analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
+      analysis.analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
     }
 
       let software_patching_link;
@@ -162,21 +160,22 @@ render(){
       let defensibility_link;
       let dns_security_link;
 
-      if (includeResult && analysis.analysis_state_netblocks_review_completed === 'true') {
+      if (includeResult ) {
 
-        if (analysis.analysis_state_security_domain_dns_security_completed === 'true' && analysis.analysis_state_security_domain_defensibility_completed === 'true' && analysis.analysis_state_security_domain_threat_intell_completed === 'true' && analysis.analysis_state_security_domain_web_app_security_completed  === 'true' && analysis.analysis_state_security_domain_web_app_security_completed === 'true'){
+        if (analysis.analysis_state_opapp_edit_security_domain_software_patching_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_dns_security_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_defensibility_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_threat_intell_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_web_app_security_complete  === '1' && analysis.analysis_state_opapp_edit_security_domain_web_encryption_complete === '1' && analysis.analysis_state_lambda_derived_hosts_complete == '1'){
           console.log('this should print');
            count_link = <RaisedButton id={analysis.analysis_id} label="Run Counts" onClick={this.runCounts.bind(this, analysis)} primary={true} disabled={false } />
         }
         else {
-            if (analysis.analysis_state_security_domain_software_patching_completed === 'true'){
+
+            if (analysis.analysis_state_opapp_edit_security_domain_software_patching_complete === '1'){
               software_patching_link = <Link to="/software_patching" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="Patching" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
               software_patching_link = <Link to="/software_patching" onClick={this.onClick.bind(this, x)}><RaisedButton  label="Patching" disabled={false} secondary={true}></RaisedButton></Link>
             }
 
-            if (analysis.analysis_state_security_domain_web_app_security_completed === 'true'){
+            if (analysis.analysis_state_opapp_edit_security_domain_web_app_security_complete === '1'){
               web_app_security_link = <Link to="/web_app_security" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="App Security" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
@@ -184,28 +183,28 @@ render(){
 
             }
 
-            if (analysis.analysis_state_security_domain_web_encryption_completed === 'true'){
+            if (analysis.analysis_state_opapp_edit_security_domain_web_encryption_complete === '1'){
               web_encryption_link = <Link to="/web_encryption" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="Encryption" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
               web_encryption_link = <Link to="/web_encryption" onClick={this.onClick.bind(this, x)}><RaisedButton  label="Encryption" disabled={false} secondary={true}></RaisedButton></Link>
             }
 
-            if (analysis.analysis_state_security_domain_threat_intell_completed === 'true'){
+            if (analysis.analysis_state_opapp_edit_security_domain_threat_intell_complete === '1'){
               threat_intell_link = <Link to="/threat_intell" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="Intell" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
               threat_intell_link = <Link to="/threat_intell" onClick={this.onClick.bind(this, x)}><RaisedButton  label="Intell" disabled={false} secondary={true}></RaisedButton></Link>
             }
 
-            if (analysis.analysis_state_security_domain_defensibility_completed === 'true'){
+            if (analysis.analysis_state_opapp_edit_security_domain_defensibility_complete === '1'){
               defensibility_link = <Link to="/defensibility" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="Defensibility" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
               defensibility_link = <Link to="/defensibility" onClick={this.onClick.bind(this, x)}><RaisedButton  label="Defensibility" disabled={false} secondary={true}></RaisedButton></Link>
             }
 
-            if (analysis.analysis_state_security_domain_dns_security_completed === 'true'){
+            if (analysis.analysis_state_opapp_edit_security_domain_dns_security_complete === '1'){
               dns_security_link = <Link to="/dns_security" onClick={this.onClick.bind(this, x)}><RaisedButton className="button-domain-completed" label="DNS" disabled={false} secondary={true}></RaisedButton></Link>
             }
             else{
@@ -215,7 +214,7 @@ render(){
 
     return(
       <TableRow key={x}>
-          <TableRowColumn>{analysis.analyst_edit_analyzed_entity_name }</TableRowColumn>
+          <TableRowColumn>{analysis.analyzed_entity_name }</TableRowColumn>
           <TableRowColumn>{analysis.analysis_scan_completed_ts_utc_str}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_id}</TableRowColumn>
           <TableRowColumn>{count_link || software_patching_link } {web_app_security_link} {web_encryption_link} {threat_intell_link} {defensibility_link} {dns_security_link}</TableRowColumn>
@@ -243,7 +242,7 @@ render(){
         <TableHeaderColumn colSpan="6"></TableHeaderColumn>
         </tr>
           <tr className="success">
-          <TableHeaderColumn onClick={this.handleSort.bind(null, 'analyst_edit_analyzed_entity_name')}>Target <i className="fa fa-sort"></i></TableHeaderColumn>
+          <TableHeaderColumn onClick={this.handleSort.bind(null, 'analyzed_entity_name')}>Target <i className="fa fa-sort"></i></TableHeaderColumn>
           <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'security_domain_software_patching_completed')}>Scan Completed <i className="fa fa-sort"></i></TableHeaderColumn>
             <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'analysis_id')} tooltip='Analysis ID'>Analysis ID <i className="fa fa-sort"></i></TableHeaderColumn>
             <TableHeaderColumn style={{textAlign: 'center' }} tooltip='Security Domains'>Security Domains</TableHeaderColumn>

@@ -42,7 +42,7 @@ componentDidMount() {
   console.log('did mount');
   console.log('component mounted');
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/analyses',
+    url: 'http://0.0.0.0:5000/v1/nodes',
     type: 'GET',
     dataType: 'json',
     success: (data) => {
@@ -126,7 +126,7 @@ render(){
 		let domains_button
     let proceed_analysis
     if (!includeResult) {
-      analysis.analyst_edit_analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
+      analysis.analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
     }
       // if (includeResult && analysis.state_netblocks_review_completed != 'true') {
     if (includeResult & analysis.analysis_state_netblocks_review_completed != 'true') {
@@ -149,9 +149,9 @@ render(){
 
     return(
       <TableRow key={x}>
-      <TableRowColumn>{analysis.analyst_edit_analyzed_entity_name}</TableRowColumn>
+      <TableRowColumn>{analysis.analyzed_entity_name}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_scan_ordered_ts_utc_str}</TableRowColumn>
-          <TableRowColumn>{analysis.analysis_scan_completed_ts_utc_str}</TableRowColumn>
+          <TableRowColumn>{analysis.analysis_state_lambda_export_files_load_dynamo_complete_ts_utc_str}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_id}</TableRowColumn>
           <TableRowColumn></TableRowColumn>
           <TableRowColumn colSpan="2">{netblocks_button} {domains_button}</TableRowColumn>
@@ -178,11 +178,11 @@ render(){
             <TableHeaderColumn colSpan="5"></TableHeaderColumn>
           </tr>
             <tr className="success">
-            <TableHeaderColumn onClick={this.handleSort.bind(null, 'analyst_edit_analyzed_entity_name')}>Target <i className="fa fa-sort"></i></TableHeaderColumn>
+            <TableHeaderColumn onClick={this.handleSort.bind(null, 'analyzed_entity_name')}>Target <i className="fa fa-sort"></i></TableHeaderColumn>
             <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'security_domain_software_patching_completed')}>Scan ordered <i className="fa fa-sort"></i></TableHeaderColumn>
-            <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'security_domain_software_patching_completed')}>Scan Completed <i className="fa fa-sort"></i></TableHeaderColumn>
-              <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'analysis_id')} tooltip='Analysis ID'>Analysis ID <i className="fa fa-sort"></i></TableHeaderColumn>
-              <TableHeaderColumn colSpan="4" style={{textAlign: 'center' }} tooltip='Security Domains'>Actions</TableHeaderColumn>
+            <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'analysis_state_lambda_export_files_load_dynamo_complete_ts_utc_str')}>Date Arrived in Dynamo <i className="fa fa-sort"></i></TableHeaderColumn>
+            <TableHeaderColumn onClick={this.handleNumberSort.bind(null, 'analysis_id')} tooltip='Analysis ID'>Analysis ID <i className="fa fa-sort"></i></TableHeaderColumn>
+            <TableHeaderColumn colSpan="4" style={{textAlign: 'center' }} tooltip='Security Domains'>Actions</TableHeaderColumn>
             </tr>
           </thead>
           <TableBody

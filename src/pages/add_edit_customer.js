@@ -82,14 +82,13 @@ let AddEditToe = React.createClass({
 		}
 	},
 	componentDidMount() {
-		console.log(customerId);
 		if(customerId.length > 0){
 			$.ajax({
 				url: 'http://localhost:5000/v1/customer/'+customerId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					//console.log(data);
+					//
 					this.setState({
 						customer_id: data.customer_id,
 						contactEmail: data.contact_email,
@@ -107,7 +106,7 @@ let AddEditToe = React.createClass({
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
-					//console.log(data.continuous);
+					//
 					this.setState({
 						subscriptionsContinuous: data.continuous,
 						subscriptionsOneTime: data.one_time,
@@ -141,7 +140,7 @@ let AddEditToe = React.createClass({
 	},
 
 	addSaveCustomerInfo(){
-		//console.log('save customer info');
+		//
 		if(customerId.length > 0){
 			// EXISTING CUSTOMER
 			if(this.state.shortName.length > 0
@@ -159,7 +158,7 @@ let AddEditToe = React.createClass({
 						"contact_email": this.state.contactEmail,
 						"contact_phone": this.state.contactPhone
 					}
-					//console.log(formattedPostObject);
+					//
 					$.ajax({
 						url: 'http://localhost:5000/v1/customer',
 						type: 'PUT',
@@ -169,7 +168,7 @@ let AddEditToe = React.createClass({
 						},
 						data: JSON.stringify(formattedPostObject),
 						success: (data) => {
-							//console.log(data);
+							//
 							this.setState({
 								editingCustomerInfo: false
 							});
@@ -195,7 +194,7 @@ let AddEditToe = React.createClass({
 						"contact_email": this.state.contactEmail,
 						"contact_phone": this.state.contactPhone
 					}
-					//console.log(formattedPostObject);
+					//
 					$.ajax({
 						url: 'http://localhost:5000/v1/customer',
 						type: 'POST',
@@ -205,7 +204,7 @@ let AddEditToe = React.createClass({
 						},
 						data: JSON.stringify(formattedPostObject),
 						success: (data) => {
-							//console.log(data);
+							//
 							this.setState({
 								customer_id: data.customer_id,
 							});
@@ -214,7 +213,6 @@ let AddEditToe = React.createClass({
 								type: 'GET',
 								dataType: 'json',
 								success: (data) => {
-									console.log(data);
 									this.setState({
 										subscriptionsContinuous: data.continuous,
 										subscriptionsOneTime: data.one_time,
@@ -241,7 +239,7 @@ let AddEditToe = React.createClass({
 			type: 'GET',
 			dataType: 'json',
 			success: (data) => {
-				//console.log(data);
+				//
 				let toes = [{'text':'--Select--','id':'-1'}];
 				for (var i = 1; i < data.length; i++) {
 					toes[i] = {'text':data[i].short_name,'id':data[i].toe_id}
@@ -257,9 +255,9 @@ let AddEditToe = React.createClass({
 	},
 
 	addSubscription(){
-		// console.log('add new subscription');
-		// console.log(this.state.tempSubscriptionName);
-		// console.log(this.state.tempSubscriptionType);
+		//
+		//
+		//
 		if(this.state.tempSubscriptionName.length > 0
 			&& this.state.tempSubscriptionType.length > 0){
 				let formattedPostObject = {
@@ -267,7 +265,7 @@ let AddEditToe = React.createClass({
 					"customer_id": this.state.customer_id,
 					"frequency": this.state.tempSubscriptionType
 				}
-				//console.log(formattedPostObject);
+				//
 				$.ajax({
 					url: 'http://localhost:5000/v1/customer/relationships',
 					type: 'POST',
@@ -277,7 +275,7 @@ let AddEditToe = React.createClass({
 					},
 					data: JSON.stringify(formattedPostObject),
 					success: (data) => {
-						//console.log(this.state.tempSubscriptionType);
+						//
 						this.setState({
 							subscriptionsContinuous: data.continuous,
 							subscriptionsOneTime: data.one_time,
@@ -315,7 +313,6 @@ let AddEditToe = React.createClass({
 			"frequency": frequency,
 			"is_deleted": 'false'
 		}
-		console.log(formattedPostObject);
 		$.ajax({
 			url: 'http://localhost:5000/v1/customer/relationships',
 			type: 'PUT',

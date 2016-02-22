@@ -33,8 +33,6 @@ handleOrgChange(org, e, index){
   this.props.handleOrgChange(org, e, index)
 },
 onEdit(finding, e , index, input) {
-  console.log('onedit');
-  console.log(input);
   return true
   // this.props.onEdit(finding, e, index, input)
 },

@@ -71,11 +71,8 @@ const Row = React.createClass({
     dataType: 'json',
     contentType: 'application/json',
     success: (data) => {
-      console.log('success');
-      console.log(data);
     },
     error: function () {
-      console.log('error');
       // this.state
       // this.setState({
       //   analyst_comments: this.state[temp.analyst_comments],
@@ -88,7 +85,6 @@ const Row = React.createClass({
   this.setState({isInput: false})
 },
   viewRawValue(e){
-    console.log('view raw value');
   },
    debounce(fn, delay) {
     var timer = null;
@@ -102,7 +98,6 @@ const Row = React.createClass({
   },
   onEdit(e){
     e.preventDefault()
-    console.log('clicked');
     this.setState({isInput: true})
     // this.setState({isInput: true})
     // let finding = this.props.finding
@@ -112,31 +107,24 @@ const Row = React.createClass({
   },
   handleStatusChange(e){
     e.preventDefault();
-    console.log('status paged in youngest child');
     let status = this.props.finding
     let index = this.props.index
-    console.log(status);
     this.props.handleStatusChange(status, e, index)
   },
   handleConfidenceChange(e){
     e.preventDefault();
-    console.log('status paged in youngest child');
     let index = this.props.index
     let choice = this.props.finding
     this.props.handleConfidenceChange(choice, e, index)
    },
 
    handleCommentChange(event) {
-     console.log('running');
      let index = this.props.index
      let comment = this.props.analyst_comment
      this.props.handleCommentChange(comment, event, index)
    },
   handleExclude(e){
-    console.log(e);
-    console.log(e.target.checked);
     this.finding.props.finding.analyst_include = e.target.checked
-    console.log(this.finding.props.finding.analyst_include);
    },
 
    delete(e){
