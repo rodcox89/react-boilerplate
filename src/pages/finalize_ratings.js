@@ -11,7 +11,7 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
-import MetricRow from './../components/table/finalize_report/metric-row';
+import RatingRow from './../components/table/finalize_report/rating-row';
 
 
 const FinalizeRatings = React.createClass({
@@ -24,7 +24,7 @@ const FinalizeRatings = React.createClass({
 		}
 
 		return {
-			metrics: [],
+			ratings: [],
 			loaded: false,
 			has_results: true,
 			analysisId: analysisId
@@ -33,12 +33,12 @@ const FinalizeRatings = React.createClass({
 	componentDidMount: function() {
 		console.log(this.state.analysisId);
 		$.ajax({
-			url: 'http://localhost:5000/v1/report/derived/metrics/' + this.state.analysisId,
+			url: 'http://localhost:5000/v1/report/derived/ratings/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					console.log(data);
 					this.setState({
-						metrics: data,
+						ratings: data,
 						loaded: true,
 					})
 				}
@@ -53,38 +53,38 @@ const FinalizeRatings = React.createClass({
 			}
 		})
 	},
-	handleMetricChange(metric, index){
-		//let metrics = this.state.metrics;
-		//this.setState({[metrics[index]]: metric});
-		//console.log(this.state.metrics);
-		//console.log('post updated metric and reshow updated metrics state');
-		console.log(metric);
-		$.ajax({
-			url: 'http://localhost:5000/v1/report/derived/metrics',
-			type: 'PUT',
-			dataType: 'json',
-			headers: {
-				'Content-Type':'application/json',
-			},
-			data: JSON.stringify(metric),
-			success: (data) => {
-				this.setState({
-					metrics: data,
-					//metrics: []
-				});
-				//console.log(data[index]);
-				console.log(data);
-			}
-		});
-	},
-	doneMetrics(){
+	// handleMetricChange(metric, index){
+	// 	//let metrics = this.state.metrics;
+	// 	//this.setState({[metrics[index]]: metric});
+	// 	//console.log(this.state.metrics);
+	// 	//console.log('post updated metric and reshow updated metrics state');
+	// 	console.log(metric);
+	// 	$.ajax({
+	// 		url: 'http://localhost:5000/v1/report/derived/metrics',
+	// 		type: 'PUT',
+	// 		dataType: 'json',
+	// 		headers: {
+	// 			'Content-Type':'application/json',
+	// 		},
+	// 		data: JSON.stringify(metric),
+	// 		success: (data) => {
+	// 			this.setState({
+	// 				metrics: data,
+	// 				//metrics: []
+	// 			});
+	// 			//console.log(data[index]);
+	// 			console.log(data);
+	// 		}
+	// 	});
+	// },
+	doneRatings(){
 		console.log('do whatever we need to do to make this be marked as completed.');
 	},
 	render: function(){
-		const tableElements = this.state.metrics.map((metric, x) => {
+		const tableElements = this.state.ratings.map((rating, x) => {
 
 			return(
-				<MetricRow key={x} metric={metric} />
+				<RatingRow key={x} rating={rating} />
 			)
 
 		}, this)
@@ -102,11 +102,13 @@ const FinalizeRatings = React.createClass({
 							<table className="table table-bordered" style={{width:'100%'}}>
 								<thead>
 									<tr>
-										<TableHeaderColumn>Key</TableHeaderColumn>
-										<TableHeaderColumn>Value</TableHeaderColumn>
+										<TableHeaderColumn>Criteria</TableHeaderColumn>
+										<TableHeaderColumn>Criteria Rating</TableHeaderColumn>
+										<TableHeaderColumn>Criteria Rating Numeric</TableHeaderColumn>
+										<TableHeaderColumn>Domain</TableHeaderColumn>
+										<TableHeaderColumn>Domain Rating Numeric</TableHeaderColumn>
 										<TableHeaderColumn>Notes</TableHeaderColumn>
-										<TableHeaderColumn style={{width:'150px'}}>Include in analysis</TableHeaderColumn>
-										<TableHeaderColumn></TableHeaderColumn>
+										<TableHeaderColumn>Include In Analysis</TableHeaderColumn>
 									</tr>
 								</thead>
 								<TableBody
@@ -118,7 +120,7 @@ const FinalizeRatings = React.createClass({
 								</TableBody>
 							</table>
 						</Card>
-						<RaisedButton label="Done" secondary={true} onClick={this.doneMetrics} style={{margin:'20px'}} />
+						<RaisedButton label="Done" secondary={true} onClick={this.doneRatings} style={{margin:'20px'}} />
 					</div>
 				:null }
 			</div>
