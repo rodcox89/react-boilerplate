@@ -11,7 +11,7 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
-import AdministratorRow from './../components/table/finalize_report/administrator-row';
+import AdministratorRow from './../components/table/administrator-row';
 
 
 const ReportAdministrator = React.createClass({
@@ -49,7 +49,7 @@ const ReportAdministrator = React.createClass({
 		const tableElements = this.state.analyses.map((analysis, x) => {
 
 			return(
-				<MetricRow key={x} analysis={analysis} />
+				<AdministratorRow key={x} analysis={analysis} />
 			)
 
 		}, this)
@@ -63,14 +63,13 @@ const ReportAdministrator = React.createClass({
 				{ this.state.loaded & this.state.has_results ?
 					<div>
 						<Card>
-							<CardTitle title="Finalize Metrics"/>
+							<CardTitle title="Report Administrator"/>
 							<table className="table table-bordered" style={{width:'100%'}}>
 								<thead>
 									<tr>
-										<TableHeaderColumn>Key</TableHeaderColumn>
-										<TableHeaderColumn>Value</TableHeaderColumn>
-										<TableHeaderColumn>Notes</TableHeaderColumn>
-										<TableHeaderColumn style={{width:'150px'}}>Include in analysis</TableHeaderColumn>
+										<TableHeaderColumn>Name</TableHeaderColumn>
+										<TableHeaderColumn>Analysis ID</TableHeaderColumn>
+										<TableHeaderColumn>Analysis State</TableHeaderColumn>
 										<TableHeaderColumn></TableHeaderColumn>
 									</tr>
 								</thead>
