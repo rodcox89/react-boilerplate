@@ -52,37 +52,37 @@ const CreateReports = React.createClass({
 
 		switch(analysis.analysis_state_lambda_report_derived_metrics_general_metrics_complete){
 			case '-1':
-				metricsState = 'Processing...'
+				metricsState = ' '
 			break;
 			case '0':
-				metricsState = <Link to={"/finalize_metrics/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				metricsState = 'Processing'
 			break;
 			case '1':
-				metricsState = 'Done'
+				metricsState = <Link to={"/finalize_metrics/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 
 		switch(analysis.analysis_state_lambda_report_derived_ratings_complete){
 			case '-1':
-				ratingsState = 'Processing...'
+				ratingsState = ' '
 			break;
 			case '0':
-				ratingsState = <Link to={"/finalize_ratings/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				ratingsState = 'Processing...'
 			break;
 			case '1':
-				ratingsState = 'Done'
+				ratingsState = <Link to={"/finalize_ratings/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 
 		switch(analysis.analysis_state_lambda_report_derived_language_complete){
 			case '-1':
-				languageState = 'Processing...'
+				languageState = ' '
 			break;
 			case '0':
-				languageState = <Link to={"/finalize_language/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				languageState = 'Processing...'
 			break;
 			case '1':
-				languageState = 'Done'
+				languageState = <Link to={"/finalize_language/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 
