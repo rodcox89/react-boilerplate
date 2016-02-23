@@ -20,7 +20,8 @@ let AdministratorRow = React.createClass({
 			isEditing: false,
 			key: '',
 			//index: '',
-			analysis: {}
+			analysis: {},
+			allowedAnalysisStates: []
 		}
 	},
 	getInitialState(){
@@ -28,7 +29,8 @@ let AdministratorRow = React.createClass({
 			isEditing: false,
 			key: this.props.key,
 			//index: this.props.index,
-			analysis: this.props.analysis
+			analysis: this.props.analysis,
+			allowedAnalysisStates: ['Sanity Check', 'Findings', 'Finalize']
 		}
 	},
 	handleAnalysisStateChange(e){
@@ -42,23 +44,22 @@ let AdministratorRow = React.createClass({
 	},
 	saveAnalysis(e){
 		e.preventDefault()
-		// $.ajax({
-		// 	url: 'http://localhost:5000/v1/report/derived/metrics',
-		// 	type: 'PUT',
-		// 	dataType: 'json',
-		// 	headers: {
-		// 		'Content-Type':'application/json',
-		// 	},
-		// 	data: JSON.stringify(this.state.metric),
-		// 	success: (data) => {
-		// 		this.setState({
-		// 			metric: data,
-		// 			isEditing: false
-		// 		});
-		// 		console.log(data);
-		// 	}
-		// });
-		console.log(this.state.analysis);
+		$.ajax({
+			url: 'http://localhost:5000/v1/report_state',
+			type: 'PUT',
+			dataType: 'json',
+			headers: {
+				'Content-Type':'application/json',
+			},
+			data: JSON.stringify(this.state.analysis),
+			success: (data) => {
+				this.setState({
+					analysis: data[0],
+					isEditing: false
+				});
+				//console.log(data[0]);
+			}
+		});
 	},
 	debounce(fn, delay) {
    var timer = null;
@@ -71,6 +72,18 @@ let AdministratorRow = React.createClass({
    }
  },
 	render: function(){
+		const stateOptions = this.state.allowedAnalysisStates.map((analysisState, x) => {
+			let optionHtml
+			let currentAnalysisStateIndex = this.state.allowedAnalysisStates.indexOf(this.state.analysis['analysis_state']);
+
+			if(x < currentAnalysisStateIndex){
+				optionHtml = <option key={x} value={analysisState}>{analysisState}</option>
+			}else{
+				optionHtml = <option key={x} disabled="disabled" value={analysisState}>{analysisState}</option>
+			}
+
+			return optionHtml
+		})
 		var el
 		if(this.state.isEditing){
 			el =
@@ -79,9 +92,7 @@ let AdministratorRow = React.createClass({
 				<TableRowColumn>{this.state.analysis['analysis_id']}</TableRowColumn>
 				<TableRowColumn>
 					<select style={{fontSize:'12px'}} value={this.state.analysis['analysis_state']} onChange={event=>this.debounce(this.handleAnalysisStateChange(event), 200)}>
-						<option value="Sanity Check">Sanity Check</option>
-						<option value="Findings">Findings</option>
-						<option value="Finalize">Finalize</option>
+						{stateOptions}
 					</select>
 				</TableRowColumn>
 				<TableRowColumn><RaisedButton label="Save" secondary={true} onClick={this.saveAnalysis} /></TableRowColumn>
