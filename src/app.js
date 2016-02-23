@@ -41,7 +41,9 @@ import ManageToes from 'pages/manage_toes'
 import AddEditCustomer from 'pages/add_edit_customer'
 import ManageCustomers from 'pages/manage_customers'
 import CreateReports from 'pages/create_reports'
+import ReportAdministrator from 'pages/report_administrator'
 import FinalizeMetrics from 'pages/finalize_metrics'
+import FinalizeRatings from 'pages/finalize_ratings'
 
 const App = React.createClass({
 
@@ -87,7 +89,7 @@ const App = React.createClass({
 							<ListItem key={2} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" rightIcon={<HourglassIcon/>}></ListItem>,
 						]}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Report Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
+						<ListItem containerElement={<Link to="/report_administrator" />} linkButton={true} primaryText="Report Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
 						<Divider/>
 						<ListItem primaryTogglesNestedList={true} primaryText="Report Stages" nestedItems={[
 							<ListItem key={1} containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" rightIcon={<CheckIcon/>}></ListItem>,
@@ -126,7 +128,9 @@ ReactDOM.render((
 			<Route path='add_edit_customer' component={AddEditCustomer}/>
 			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
 			<Route path='create_reports' component={CreateReports}/>
+			<Route path='report_administrator' component={ReportAdministrator}/>
 			<Route path='finalize_metrics/:analysisId' component={FinalizeMetrics}/>
+			<Route path='finalize_ratings/:analysisId' component={FinalizeRatings}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));
