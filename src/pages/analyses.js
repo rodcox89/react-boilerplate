@@ -127,7 +127,7 @@ localStorage.unique_key = this.state.analyses[x].unique_key
 runCounts(e){
   this.setState({loaded: false})
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/calculate_derived_metrics/'+e.analysis_id+'/'+e.unique_key,
+    url: 'http://0.0.0.0:5000/v1/netblocks_domainrecords_join/'+e.analysis_id+'/'+e.unique_key,
     dataType: 'json',
     type: 'POST',
     success: (data) => {
