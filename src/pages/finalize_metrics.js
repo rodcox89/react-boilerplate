@@ -84,7 +84,7 @@ const FinalizeMetrics = React.createClass({
 		const tableElements = this.state.metrics.map((metric, x) => {
 
 			return(
-				<MetricRow key={x} index={x} metric={metric} handleMetricChange={this.handleMetricChange} />
+				<MetricRow key={x} metric={metric} />
 			)
 
 		}, this)

@@ -22,9 +22,10 @@ const CreateReports = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://0.0.0.0:5000/v1/analyses/reporting',
+			url: 'http://localhost:5000/v1/create_reports',
 			success: (data) => {
 				if(data.length > 0){
+					console.log(data);
 					this.setState({
 						analyses: data,
 						loaded: true,
@@ -48,37 +49,55 @@ const CreateReports = React.createClass({
 		let metricsState
 		let ratingsState
 		let languageState
-		if (analysis.analysis_state_report_derived_metrics_completed){
-			metricsState = <Link to="/finalize_metrics"><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+
+		switch(analysis.analysis_state_lambda_report_derived_metrics_general_metrics_complete){
+			case '-1':
+				metricsState = 'Processing...'
+			break;
+			case '0':
+				metricsState = <Link to={"/finalize_metrics/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+			break;
+			case '1':
+				metricsState = 'Done'
+			break;
 		}
-		else{
-			metricsState = ''
+
+		switch(analysis.analysis_state_lambda_report_derived_ratings_complete){
+			case '-1':
+				ratingsState = 'Processing...'
+			break;
+			case '0':
+				ratingsState = <Link to={"/finalize_ratings/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+			break;
+			case '1':
+				ratingsState = 'Done'
+			break;
 		}
-		if (analysis.analysis_state_report_derived_ratings_completed){
-			ratingsState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-		}
-		else{
-			ratingsState = ''
-		}
-		if (analysis.analysis_state_report_derived_language_completed){
-			languageState = <RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton>
-		}
-		else{
-			languageState = ''
+
+		switch(analysis.analysis_state_lambda_report_derived_language_complete){
+			case '-1':
+				languageState = 'Processing...'
+			break;
+			case '0':
+				languageState = <Link to={"/finalize_language/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+			break;
+			case '1':
+				languageState = 'Done'
+			break;
 		}
 
 		return(
-				<TableRow key={x}>
-					<TableRowColumn>{analysis.analyzed_entity_name}</TableRowColumn>
-					<TableRowColumn>{analysis.analysis_id}</TableRowColumn>
-					<TableRowColumn>{metricsState}</TableRowColumn>
-					<TableRowColumn>{ratingsState}</TableRowColumn>
-					<TableRowColumn>{languageState}</TableRowColumn>
-					<TableRowColumn></TableRowColumn>
-				</TableRow>
+			<TableRow key={x}>
+				<TableRowColumn>{analysis.analyzed_entity_name}</TableRowColumn>
+				<TableRowColumn>{analysis.analysis_id}</TableRowColumn>
+				<TableRowColumn>{metricsState}</TableRowColumn>
+				<TableRowColumn>{ratingsState}</TableRowColumn>
+				<TableRowColumn>{languageState}</TableRowColumn>
+				<TableRowColumn></TableRowColumn>
+			</TableRow>
 		)
 
-		}, this)
+	}, this)
 		return(
 			<div>
 				{ !this.state.loaded ?
@@ -100,11 +119,7 @@ const CreateReports = React.createClass({
 									<TableHeaderColumn style={{width:'300px'}}></TableHeaderColumn>
 								</tr>
 							</thead>
-							<TableBody
-								showRowHover={false}
-								stripedRows={false}
-								displayRowCheckbox={false}
-								>
+							<TableBody showRowHover={false} stripedRows={false} displayRowCheckbox={false}>
 									{ tableElements }
 							</TableBody>
 						</table>

@@ -19,7 +19,7 @@ let MetricRow = React.createClass({
 		return {
 			isEditing: false,
 			key: '',
-			index: '',
+			//index: '',
 			metric: {}
 		}
 	},
@@ -27,7 +27,7 @@ let MetricRow = React.createClass({
 		return {
 			isEditing: false,
 			key: this.props.key,
-			index: this.props.index,
+			//index: this.props.index,
 			metric: this.props.metric
 		}
 	},
@@ -41,14 +41,34 @@ let MetricRow = React.createClass({
 		tempMetric['analyst_edit_notes'] = e.target.value
 		this.setState({metric: tempMetric});
 	},
+	handleIncludeInAnalysisChange(e){
+		let tempMetric = this.state.metric
+		tempMetric['analyst_edit_include_in_analysis'] = e.target.value
+		this.setState({metric: tempMetric});
+	},
 	editMetric(e){
 		e.preventDefault()
 		this.setState({isEditing: true})
 	},
 	saveMetric(e){
 		e.preventDefault()
-		this.props.handleMetricChange(this.state.metric, this.state.index);
-		this.setState({isEditing: false})
+		$.ajax({
+			url: 'http://localhost:5000/v1/report/derived/metrics',
+			type: 'PUT',
+			dataType: 'json',
+			headers: {
+				'Content-Type':'application/json',
+			},
+			data: JSON.stringify(this.state.metric),
+			success: (data) => {
+				this.setState({
+					metric: data,
+					isEditing: false
+				});
+				console.log(data);
+			}
+		});
+		//console.log(this.state.metric);
 	},
 	debounce(fn, delay) {
    var timer = null;
@@ -65,14 +85,15 @@ let MetricRow = React.createClass({
 		if(this.state.isEditing){
 			el =
 			<TableRow key={this.state.key}>
-				<TableRowColumn>(({this.state.metric['unique_key']})) {this.state.metric['data_key']}</TableRowColumn>
+				<TableRowColumn>{this.state.metric['data_key']}</TableRowColumn>
 				<TableRowColumn>
-
 					<textArea style={{width:'100%',fontSize:'12px',resize:'vertical'}} defaultValue={this.state.metric['data_value']} onChange={event=>this.debounce(this.handleDataValueChange(event), 200)} />
 				</TableRowColumn>
-				<TableRowColumn><textArea style={{width:'100%',fontSize:'12px',resize:'vertical'}} value={this.state.metric['analyst_edit_notes']} onChange={event=>this.debounce(this.handleNotesChange(event), 200)} /></TableRowColumn>
 				<TableRowColumn>
-					<select style={{fontSize:'12px'}}>
+					<textArea style={{width:'100%',fontSize:'12px',resize:'vertical'}} value={this.state.metric['analyst_edit_notes']} onChange={event=>this.debounce(this.handleNotesChange(event), 200)} />
+				</TableRowColumn>
+				<TableRowColumn>
+					<select style={{fontSize:'12px'}} value={this.state.metric['analyst_edit_include_in_analysis']} onChange={event=>this.debounce(this.handleIncludeInAnalysisChange(event), 200)}>
 						<option value="1">Yes</option>
 						<option value="0">No</option>
 					</select>
@@ -84,11 +105,11 @@ let MetricRow = React.createClass({
 		else {
 			el =
 			<TableRow key={this.state.key}>
-				<TableRowColumn>(({this.state.metric['unique_key']})) {this.state.metric['data_key']}</TableRowColumn>
+				<TableRowColumn>{this.state.metric['data_key']}</TableRowColumn>
 				<TableRowColumn><textArea style={{width:'100%',fontSize:'12px',resize:'vertical'}} value={this.state.metric['data_value']} disabled="disabled" /></TableRowColumn>
 				<TableRowColumn><textArea style={{width:'100%',fontSize:'12px',resize:'vertical'}} value={this.state.metric['analyst_edit_notes']} disabled="disabled" /></TableRowColumn>
 				<TableRowColumn>
-					<select style={{fontSize:'12px'}} disabled="disabled">
+					<select style={{fontSize:'12px'}} value={this.state.metric['analyst_edit_include_in_analysis']} disabled="disabled">
 						<option value="1">Yes</option>
 						<option value="0">No</option>
 					</select>
