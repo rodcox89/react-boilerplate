@@ -49,6 +49,7 @@ let EditNetblocks = React.createClass({
             has_results: false,
             loaded: true,
           })
+					this.handleApproval()
         }
         else{
           this.setState({

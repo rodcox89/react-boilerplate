@@ -199,7 +199,7 @@ render(){
     :null  }
     { !this.state.has_results ?
       <div className="container">
-        <p className="error-text">Sorry! There are no netblocks to be tested</p>
+        <p className="error-text">Sorry! There are no reports in this state</p>
       </div>
       :null}
 </div>

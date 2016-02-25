@@ -56,6 +56,7 @@ componentDidMount() {
     type: 'GET',
     dataType: 'json',
     success: (data) => {
+			console.log(data);
       if(data.length === 0){
         this.setState({
           loaded: true,
@@ -162,7 +163,7 @@ render(){
 
       if (includeResult ) {
 
-        if (analysis.analysis_state_opapp_edit_security_domain_software_patching_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_dns_security_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_defensibility_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_threat_intell_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_web_app_security_complete  === '1' && analysis.analysis_state_opapp_edit_security_domain_web_encryption_complete === '1' && analysis.analysis_state_lambda_derived_hosts_complete == '1'){
+        if (analysis.analysis_state_opapp_edit_security_domain_software_patching_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_dns_security_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_defensibility_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_threat_intell_complete === '1' && analysis.analysis_state_opapp_edit_security_domain_web_app_security_complete  === '1' && analysis.analysis_state_opapp_edit_security_domain_web_encryption_complete === '1'){
           console.log('this should print');
            count_link = <RaisedButton id={analysis.analysis_id} label="Run Counts" onClick={this.runCounts.bind(this, analysis)} primary={true} disabled={false } />
         }

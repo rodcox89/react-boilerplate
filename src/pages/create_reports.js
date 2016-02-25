@@ -50,7 +50,7 @@ const CreateReports = React.createClass({
 		let ratingsState
 		let languageState
 
-		switch(analysis.analysis_state_lambda_report_derived_metrics_general_metrics_complete){
+		switch(analysis.analysis_state_lambda_report_derived_metrics_complete){
 			case '-1':
 				metricsState = ' '
 			break;
