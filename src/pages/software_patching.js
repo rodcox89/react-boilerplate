@@ -22,7 +22,7 @@ import LoaderCSS from './../styles/loader.scss'
 import TableData from './../components/table/software_patching/table-data'
 
 
-
+var no_results
 let SoftwarePatching = React.createClass({
 
   getInitialState: function() {
@@ -38,14 +38,16 @@ let SoftwarePatching = React.createClass({
   componentDidMount: function() {
     var self = this;
     $.ajax({
-      url: 'http://0.0.0.0:5000/v1/findings/software_patching/'+localStorage.analysis_id,
+      url: 'http://ops.riskrecon.net:5000/v1/findings/software_patching/'+localStorage.analysis_id,
       success: (data) => {
         console.log(data)
         if(data.findings.length === 0){
+          no_results = <div className="container"><p className="error-text">Sorry! There are no software patching findings for analysis_id: { localStorage.analysis_id }</p></div>
           this.setState({
             loaded: true,
             has_results: false,
           })
+          this.onSubmit()
         }
         else{
           this.setState({
@@ -55,7 +57,6 @@ let SoftwarePatching = React.createClass({
             }, () => {console.log('RWAGH', this.state.findings)
           })
         }
-        this.onSubmit()
       }})
     },
     handleClick: function(e){
@@ -69,7 +70,7 @@ let SoftwarePatching = React.createClass({
       e.preventDefault()
       $.ajax({
       type: 'DELETE',
-      url: 'http://0.0.0.0:5000/v1/findings',
+      url: 'http://ops.riskrecon.net:5000/v1/findings',
       crossDomain: true,
       data: JSON.stringify(f),
       dataType: 'json',
@@ -153,7 +154,7 @@ let SoftwarePatching = React.createClass({
     onSubmit(e) {
       $.ajax({
       type: 'PUT',
-      url: 'http://0.0.0.0:5000/v1/analyses/software_patching/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      url: 'http://ops.riskrecon.net:5000/v1/analyses/software_patching/'+localStorage.analysis_id+'/'+localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',
@@ -204,18 +205,14 @@ let SoftwarePatching = React.createClass({
         onEdit={this.onEdit}/>
         </table>
         </div>
-        <Link to="/analyses" onClick={this.onSubmit.bind(null, localStorage.analysis_id)}  ><RaisedButton label="I'm done" secondary={true}/></Link>
+        <Link to="/analyses"><RaisedButton onClick={this.onSubmit.bind(null, localStorage.analysis_id)} label="I'm done" secondary={true}/></Link>
         </div>
-        :null  }
-        { !this.has_results ?
-          <div className="container">
-            <p className="error-text">Sorry! There are no software patching findings for analysis_id: { localStorage.analysis_id }</p>
-          </div>
-          :null}
-      </div>
-      )
-    }
-  });
+        :null}
+        {no_results}
+        </div>
+    )
+  }
+});
 
 
 

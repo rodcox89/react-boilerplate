@@ -25,7 +25,7 @@ const ReportAdministrator = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://localhost:5000/v1/report_state',
+			url: 'http://ops.riskrecon.net:5000/v1/report_state',
 			success: (data) => {
 				if(data.length > 0){
 					console.log(data);

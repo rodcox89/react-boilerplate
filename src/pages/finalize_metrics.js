@@ -33,7 +33,7 @@ const FinalizeMetrics = React.createClass({
 	componentDidMount: function() {
 		console.log(this.state.analysisId);
 		$.ajax({
-			url: 'http://localhost:5000/v1/report/derived/metrics/' + this.state.analysisId,
+			url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					console.log(data);
@@ -60,7 +60,7 @@ const FinalizeMetrics = React.createClass({
 		//console.log('post updated metric and reshow updated metrics state');
 		console.log(metric);
 		$.ajax({
-			url: 'http://localhost:5000/v1/report/derived/metrics',
+			url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

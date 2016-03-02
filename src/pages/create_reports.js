@@ -22,7 +22,7 @@ const CreateReports = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://localhost:5000/v1/create_reports',
+			url: 'http://ops.riskrecon.net:5000/v1/create_reports',
 			success: (data) => {
 				if(data.length > 0){
 					console.log(data);

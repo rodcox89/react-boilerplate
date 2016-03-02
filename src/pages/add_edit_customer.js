@@ -84,7 +84,7 @@ let AddEditToe = React.createClass({
 	componentDidMount() {
 		if(customerId.length > 0){
 			$.ajax({
-				url: 'http://localhost:5000/v1/customer/'+customerId,
+				url: 'http://ops.riskrecon.net:5000/v1/customer/'+customerId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -102,7 +102,7 @@ let AddEditToe = React.createClass({
 				}
 			});
 			$.ajax({
-				url: 'http://localhost:5000/v1/customer/relationships/'+customerId,
+				url: 'http://ops.riskrecon.net:5000/v1/customer/relationships/'+customerId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -160,7 +160,7 @@ let AddEditToe = React.createClass({
 					}
 					//
 					$.ajax({
-						url: 'http://localhost:5000/v1/customer',
+						url: 'http://ops.riskrecon.net:5000/v1/customer',
 						type: 'PUT',
 						dataType: 'json',
 						headers: {
@@ -196,7 +196,7 @@ let AddEditToe = React.createClass({
 					}
 					//
 					$.ajax({
-						url: 'http://localhost:5000/v1/customer',
+						url: 'http://ops.riskrecon.net:5000/v1/customer',
 						type: 'POST',
 						dataType: 'json',
 						headers: {
@@ -209,7 +209,7 @@ let AddEditToe = React.createClass({
 								customer_id: data.customer_id,
 							});
 							$.ajax({
-								url: 'http://localhost:5000/v1/customer/relationships/'+this.state.customer_id,
+								url: 'http://ops.riskrecon.net:5000/v1/customer/relationships/'+this.state.customer_id,
 								type: 'GET',
 								dataType: 'json',
 								success: (data) => {
@@ -235,7 +235,7 @@ let AddEditToe = React.createClass({
 
 	showAddSubscription(){
 		$.ajax({
-			url: 'http://localhost:5000/v1/customer/toes',
+			url: 'http://ops.riskrecon.net:5000/v1/customer/toes',
 			type: 'GET',
 			dataType: 'json',
 			success: (data) => {
@@ -267,7 +267,7 @@ let AddEditToe = React.createClass({
 				}
 				//
 				$.ajax({
-					url: 'http://localhost:5000/v1/customer/relationships',
+					url: 'http://ops.riskrecon.net:5000/v1/customer/relationships',
 					type: 'POST',
 					dataType: 'json',
 					headers: {
@@ -293,7 +293,7 @@ let AddEditToe = React.createClass({
 
 	removeSubscription(toe_id){
 		$.ajax({
-			url: 'http://localhost:5000/v1/customer/relationships/'+this.state.customer_id+'/'+toe_id,
+			url: 'http://ops.riskrecon.net:5000/v1/customer/relationships/'+this.state.customer_id+'/'+toe_id,
 			type: 'DELETE',
 			dataType: 'json',
 			success: (data) => {
@@ -314,7 +314,7 @@ let AddEditToe = React.createClass({
 			"is_deleted": 'false'
 		}
 		$.ajax({
-			url: 'http://localhost:5000/v1/customer/relationships',
+			url: 'http://ops.riskrecon.net:5000/v1/customer/relationships',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

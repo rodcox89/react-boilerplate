@@ -52,7 +52,7 @@ componentDidMount() {
   console.log('did mount');
   console.log('component mounted');
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/analyses',
+    url: 'http://ops.riskrecon.net:5000/v1/analyses',
     type: 'GET',
     dataType: 'json',
     success: (data) => {
@@ -128,7 +128,7 @@ localStorage.unique_key = this.state.analyses[x].unique_key
 runCounts(e){
   this.setState({loaded: false})
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/netblocks_domainrecords_join/'+e.analysis_id+'/'+e.unique_key,
+    url: 'http://ops.riskrecon.net:5000/v1/netblocks_domainrecords_join/'+e.analysis_id+'/'+e.unique_key,
     dataType: 'json',
     type: 'POST',
     success: (data) => {

@@ -41,7 +41,7 @@ let EditDomains = React.createClass({
   componentDidMount: function() {
 
     $.ajax({
-      url: 'http://0.0.0.0:5000/v1/domains/'+localStorage.analysis_id,
+      url: 'http://ops.riskrecon.net:5000/v1/domains/'+localStorage.analysis_id,
       success: (data) => {
         console.log(data)
         if (data.data.length === 0){
@@ -94,7 +94,7 @@ let EditDomains = React.createClass({
     handleApproval(e){
       $.ajax({
         type: 'PUT',
-        url: 'http://0.0.0.0:5000/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+        url: 'http://ops.riskrecon.net:5000/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           console.log(data)
           }

@@ -75,7 +75,7 @@ let Domain = React.createClass({
 
     $.ajax({
     type: 'PUT',
-    url: 'http://0.0.0.0:5000/v1/domains',
+    url: 'http://ops.riskrecon.net:5000/v1/domains',
     crossDomain: true,
     data: JSON.stringify(newdomain),
     dataType: 'json',

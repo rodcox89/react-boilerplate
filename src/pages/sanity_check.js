@@ -21,6 +21,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import SoftwarePatchingRowDataSyles from './../components/table/row-data.css'
 
+import SanityCheckCSS from './../styles/pages/analyses.scss'
 import LoaderCSS from './../styles/loader.scss'
 let SanityCheck = React.createClass({
 getInitialState: function(){
@@ -42,7 +43,7 @@ componentDidMount() {
   console.log('did mount');
   console.log('component mounted');
   $.ajax({
-    url: 'http://0.0.0.0:5000/v1/nodes',
+    url: 'http://ops.riskrecon.net:5000/v1/nodes',
     type: 'GET',
     dataType: 'json',
     success: (data) => {
@@ -129,14 +130,14 @@ render(){
       analysis.analyzed_entity_name.includes(searchTerm) ? includeResult = true : false
     }
       // if (includeResult && analysis.state_netblocks_review_completed != 'true') {
-    if (includeResult & analysis.analysis_state_netblocks_review_completed != 'true') {
-        if(analysis.analysis_state_netblocks_review_completed === 'true') {
+    if (includeResult & analysis.analysis_state_opapp_edit_netblocks_review_complete != '1' || analysis.analysis_state_opapp_edit_domainrecords_review_complete !='1') {
+        if(analysis.analysis_state_opapp_edit_netblocks_review_complete === '1') {
           netblocks_button = <RaisedButton  label="Netblocks" disabled={true} default={true}></RaisedButton>
         }
         else {
           netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
-        if(analysis.analysis_state_domains_review_completed === 'true') {
+        if(analysis.analysis_state_opapp_edit_domainrecords_review_complete === '1') {
           domains_button = <RaisedButton  label="Domains" disabled={true} secondary={true}></RaisedButton>
         }
         else {

@@ -23,7 +23,7 @@ import TableData from './../components/table/web_app_security/table-data'
 import CircularProgress from 'material-ui/lib/circular-progress';
 
 
-
+var no_results
 let WebAppSecurity = React.createClass({
 
   getInitialState: function() {
@@ -39,24 +39,25 @@ let WebAppSecurity = React.createClass({
   componentDidMount: function() {
     var self = this;
     $.ajax({
-      url: 'http://0.0.0.0:5000/v1/findings/web_app_security/'+localStorage.analysis_id,
+      url: 'http://ops.riskrecon.net:5000/v1/findings/web_app_security/'+localStorage.analysis_id,
       success: (data) => {
         console.log(data)
         if(data.findings.length === 0){
+          no_results = <div className="container"><p className="error-text">Sorry! There are no Web Application Security findings for analysis_id: { localStorage.analysis_id }</p></div>
           this.setState({
             loaded: true,
             has_results: false,
           })
+          this.onSubmit()
         }
         else{
           this.setState({
+            has_results: true,
               findings: data.findings,
-              loaded: true,
-              has_results: true,
+              loaded: true
             }, () => {console.log('RWAGH', this.state.findings)
           })
         }
-        this.onSubmit()
       }})
     },
 
@@ -68,7 +69,7 @@ let WebAppSecurity = React.createClass({
       e.preventDefault()
       $.ajax({
       type: 'DELETE',
-      url: 'http://0.0.0.0:5000/v1/findings',
+      url: 'http://ops.riskrecon.net:5000/v1/findings',
       crossDomain: true,
       data: JSON.stringify(f),
       dataType: 'json',
@@ -145,7 +146,7 @@ let WebAppSecurity = React.createClass({
     onSubmit(e) {
       $.ajax({
       type: 'PUT',
-      url: 'http://0.0.0.0:5000/v1/analyses/web_app_security/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      url: 'http://ops.riskrecon.net:5000/v1/analyses/web_app_security/'+localStorage.analysis_id+'/'+localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',
@@ -204,15 +205,16 @@ let WebAppSecurity = React.createClass({
               <Link to="/analyses" onClick={this.onSubmit.bind(null, localStorage.analysis_id)}  ><RaisedButton label="I'm done" secondary={true}/></Link>
             </div>
           :null  }
-          { !this.has_results ?
+          { this.state.has_results=== false ?(
+
             <div className="container">
               <p className="error-text">Sorry! There are no web application findings for analysis_id: { localStorage.analysis_id }</p>
-            </div>
+            </div>)
             :null}
-        </div>
-
-      )
-    }
+            {no_results}
+            </div>
+        )
+      }
   });
 
 

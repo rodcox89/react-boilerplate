@@ -66,7 +66,7 @@ const Row = React.createClass({
 
     $.ajax({
     type: 'PUT',
-    url: 'http://0.0.0.0:5000/v1/findings',
+    url: 'http://ops.riskrecon.net:5000/v1/findings',
     crossDomain: true,
     data: JSON.stringify(submission),
     dataType: 'json',
