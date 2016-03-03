@@ -58,7 +58,7 @@ const CreateReports = React.createClass({
 				metricsState = 'Processing'
 			break;
 			case '1':
-				metricsState = <Link to={"/finalize_metrics/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				metricsState = <Link to={"/finalize_metrics/"+analysis.unique_key+"/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 
@@ -70,7 +70,7 @@ const CreateReports = React.createClass({
 				ratingsState = 'Processing...'
 			break;
 			case '1':
-				ratingsState = <Link to={"/finalize_ratings/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				ratingsState = <Link to={"/finalize_ratings/"+analysis.unique_key+"/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 
@@ -82,7 +82,7 @@ const CreateReports = React.createClass({
 				languageState = 'Processing...'
 			break;
 			case '1':
-				languageState = <Link to={"/finalize_language/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
+				languageState = <Link to={"/finalize_language/"+analysis.unique_key+"/"+analysis.analysis_id}><RaisedButton label="Review" disabled={false} secondary={true}></RaisedButton></Link>
 			break;
 		}
 

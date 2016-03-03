@@ -44,6 +44,7 @@ import CreateReports from 'pages/create_reports'
 import ReportAdministrator from 'pages/report_administrator'
 import FinalizeMetrics from 'pages/finalize_metrics'
 import FinalizeRatings from 'pages/finalize_ratings'
+import FinalizeLanguage from 'pages/finalize_language'
 
 const App = React.createClass({
 
@@ -129,8 +130,9 @@ ReactDOM.render((
 			<Route path='add_edit_customer/:customerId' component={AddEditCustomer}/>
 			<Route path='create_reports' component={CreateReports}/>
 			<Route path='report_administrator' component={ReportAdministrator}/>
-			<Route path='finalize_metrics/:analysisId' component={FinalizeMetrics}/>
-			<Route path='finalize_ratings/:analysisId' component={FinalizeRatings}/>
+			<Route path='finalize_metrics/:uniqueId/:analysisId' component={FinalizeMetrics}/>
+			<Route path='finalize_ratings/:uniqueId/:analysisId' component={FinalizeRatings}/>
+			<Route path='finalize_language/:uniqueId/:analysisId' component={FinalizeLanguage}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));

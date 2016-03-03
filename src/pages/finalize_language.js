@@ -11,10 +11,10 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
-import MetricRow from './../components/table/finalize_report/metric-row';
+import LanguageRow from './../components/table/finalize_report/language-row';
 
 
-const FinalizeMetrics = React.createClass({
+const FinalizeLanguage = React.createClass({
 	getInitialState: function() {
 
 		let analysisId = '';
@@ -29,7 +29,7 @@ const FinalizeMetrics = React.createClass({
 		}
 
 		return {
-			metrics: [],
+			language: [],
 			loaded: false,
 			has_results: true,
 			uniqueId: uniqueId,
@@ -39,12 +39,12 @@ const FinalizeMetrics = React.createClass({
 	componentDidMount: function() {
 		console.log(this.state.analysisId);
 		$.ajax({
-			url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics/' + this.state.analysisId,
+			url: 'http://ops.riskrecon.net:5000/v1/report/derived/language/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					console.log(data);
 					this.setState({
-						metrics: data,
+						language: data,
 						loaded: true,
 					})
 				}
@@ -59,33 +59,35 @@ const FinalizeMetrics = React.createClass({
 			}
 		})
 	},
-	handleMetricChange(metric, index){
-		//let metrics = this.state.metrics;
-		//this.setState({[metrics[index]]: metric});
-		//console.log(this.state.metrics);
-		//console.log('post updated metric and reshow updated metrics state');
-		console.log(metric);
+	// handleMetricChange(metric, index){
+	// 	//let metrics = this.state.metrics;
+	// 	//this.setState({[metrics[index]]: metric});
+	// 	//console.log(this.state.metrics);
+	// 	//console.log('post updated metric and reshow updated metrics state');
+	// 	console.log(metric);
+	// 	$.ajax({
+	// 		url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
+	// 		type: 'PUT',
+	// 		dataType: 'json',
+	// 		headers: {
+	// 			'Content-Type':'application/json',
+	// 		},
+	// 		data: JSON.stringify(metric),
+	// 		success: (data) => {
+	// 			this.setState({
+	// 				metrics: data,
+	// 				//metrics: []
+	// 			});
+	// 			//console.log(data[index]);
+	// 			console.log(data);
+	// 		}
+	// 	});
+	// },
+	doneLanguage(){
+		// console.log(this.state.analysisId);
+		// console.log(this.state.uniqueId);
 		$.ajax({
-			url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
-			type: 'PUT',
-			dataType: 'json',
-			headers: {
-				'Content-Type':'application/json',
-			},
-			data: JSON.stringify(metric),
-			success: (data) => {
-				this.setState({
-					metrics: data,
-					//metrics: []
-				});
-				//console.log(data[index]);
-				console.log(data);
-			}
-		});
-	},
-	doneMetrics(){
-		$.ajax({
-			url: 'http://localhost:5000/v1/complete_metrics/'+this.state.analysisId+'/'+this.state.uniqueId,
+			url: 'http://localhost:5000/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
 			type: 'POST',
 			//dataType: 'json',
 			// headers: {
@@ -102,10 +104,10 @@ const FinalizeMetrics = React.createClass({
 		});
 	},
 	render: function(){
-		const tableElements = this.state.metrics.map((metric, x) => {
+		const tableElements = this.state.language.map((language, x) => {
 
 			return(
-				<MetricRow key={x} metric={metric} />
+				<LanguageRow key={x} language={language} />
 			)
 
 		}, this)
@@ -119,15 +121,21 @@ const FinalizeMetrics = React.createClass({
 				{ this.state.loaded & this.state.has_results ?
 					<div>
 						<Card>
-							<CardTitle title="Finalize Metrics"/>
+							<CardTitle title="Finalize Language"/>
 							<table className="table table-bordered" style={{width:'100%'}}>
 								<thead>
 									<tr>
-										<TableHeaderColumn>Key</TableHeaderColumn>
-										<TableHeaderColumn>Value</TableHeaderColumn>
-										<TableHeaderColumn>Notes</TableHeaderColumn>
-										<TableHeaderColumn style={{width:'150px'}}>Include in analysis</TableHeaderColumn>
-										<TableHeaderColumn></TableHeaderColumn>
+										<TableHeaderColumn>Criteria</TableHeaderColumn>
+										<TableHeaderColumn>Display Name</TableHeaderColumn>
+										<TableHeaderColumn>Data List</TableHeaderColumn>
+										<TableHeaderColumn>Long</TableHeaderColumn>
+										<TableHeaderColumn>Short</TableHeaderColumn>
+										<TableHeaderColumn>Rating</TableHeaderColumn>
+										<TableHeaderColumn>Rating Numeric</TableHeaderColumn>
+										<TableHeaderColumn>Domain</TableHeaderColumn>
+										<TableHeaderColumn>Domain Rating</TableHeaderColumn>
+										<TableHeaderColumn>Domain Rating Numeric</TableHeaderColumn>
+										<TableHeaderColumn>Short Label</TableHeaderColumn>
 									</tr>
 								</thead>
 								<TableBody
@@ -139,7 +147,7 @@ const FinalizeMetrics = React.createClass({
 								</TableBody>
 							</table>
 						</Card>
-						<RaisedButton label="Done" secondary={true} onClick={this.doneMetrics} style={{margin:'20px'}} />
+						<RaisedButton label="Done" secondary={true} onClick={this.doneLanguage} style={{margin:'20px'}} />
 					</div>
 				:null }
 			</div>
@@ -148,4 +156,4 @@ const FinalizeMetrics = React.createClass({
 
 })
 
-module.exports = FinalizeMetrics
+module.exports = FinalizeLanguage

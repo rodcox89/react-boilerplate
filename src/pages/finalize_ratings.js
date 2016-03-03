@@ -18,15 +18,21 @@ const FinalizeRatings = React.createClass({
 	getInitialState: function() {
 
 		let analysisId = '';
+		let uniqueId = '';
 
 		if(typeof this.props.params.analysisId != 'undefined'){
 			analysisId = this.props.params.analysisId;
+		}
+
+		if(typeof this.props.params.uniqueId != 'undefined'){
+			uniqueId = this.props.params.uniqueId;
 		}
 
 		return {
 			ratings: [],
 			loaded: false,
 			has_results: true,
+			uniqueId: uniqueId,
 			analysisId: analysisId
 		}
 	},
@@ -78,7 +84,24 @@ const FinalizeRatings = React.createClass({
 	// 	});
 	// },
 	doneRatings(){
-		console.log('do whatever we need to do to make this be marked as completed.');
+		// console.log(this.state.analysisId);
+		// console.log(this.state.uniqueId);
+		$.ajax({
+			url: 'http://localhost:5000/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
+			type: 'POST',
+			//dataType: 'json',
+			// headers: {
+			// 	'Content-Type':'application/json',
+			// },
+			// data: JSON.stringify(metric),
+			success: (data) => {
+				console.log('sent ratings done');
+				console.log(data);
+			},
+			error: function () {
+				console.log('error');
+			}
+		});
 	},
 	render: function(){
 		const tableElements = this.state.ratings.map((rating, x) => {
