@@ -53,7 +53,7 @@ let Defensibility = React.createClass({
               findings: data.findings,
               loaded: true,
               has_results: true,
-            }, () => {)
+            }, () => {
           })
         }
       }})
@@ -161,7 +161,7 @@ let Defensibility = React.createClass({
         }
       },
       error: function () {
-				
+
       },
     });
 
