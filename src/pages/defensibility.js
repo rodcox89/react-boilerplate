@@ -47,7 +47,7 @@ let Defensibility = React.createClass({
             loaded: true,
             has_results: false,
           })
-          this.onSubmit()
+          this.onSubmit('auto')
         }
         else{
           this.setState({
@@ -166,8 +166,12 @@ let Defensibility = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
-        console.log('success');
-        console.log(data);
+        if(e !== 'auto'){
+          window.location.href= "/#/analyses";
+        }
+        else{
+          console.log('this is to prevent an auto redirect with no records');
+        }
       },
       error: function () {
         console.log('error');
@@ -218,7 +222,7 @@ let Defensibility = React.createClass({
                   onEdit={this.onEdit}/>
               </table>
             </div>
-              <Link to="/analyses"><RaisedButton label="I'm done" secondary={true}/></Link>
+              <RaisedButton label="I'm done" onClick={this.onSubmit.bind(null, localStorage.analysis_id)} secondary={true}/>
           </div>
         :null  }
         { !this.has_results ?

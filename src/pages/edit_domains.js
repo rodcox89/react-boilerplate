@@ -49,7 +49,7 @@ let EditDomains = React.createClass({
             has_results: false,
             loaded: true,
           })
-					this.handleApproval()
+					this.handleApproval('auto')
         }
         else{
           this.setState({
@@ -97,6 +97,12 @@ let EditDomains = React.createClass({
         url: 'http://ops.riskrecon.net:5000/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           console.log(data)
+          if(e !== 'auto'){
+          window.location.href= "/#/sanity_check";
+        }
+        else{
+          console.log('this is to prevent an auto redirect with no records');
+        }
           }
         })
     },
@@ -119,7 +125,7 @@ let EditDomains = React.createClass({
             <tr>
               <TableHeaderColumn colSpan={3}><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
               <TableHeaderColumn colSpan={6} style={{textAlign: 'right'}}><p>Does the data from this scan look clean enough to use, or should does this scan have significant errors</p></TableHeaderColumn>
-              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><Link to="/sanity_check" onClick={this.handleApproval}><RaisedButton primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></Link></TableHeaderColumn>
+              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_name')}>Registrant Name <i className="fa fa-sort" ></i></TableHeaderColumn>

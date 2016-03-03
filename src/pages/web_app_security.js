@@ -48,7 +48,7 @@ let WebAppSecurity = React.createClass({
             loaded: true,
             has_results: false,
           })
-          this.onSubmit()
+          this.onSubmit('event')
         }
         else{
           this.setState({
@@ -151,6 +151,13 @@ let WebAppSecurity = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
+        if(e !== 'auto'){
+          window.location.href= "/#/analyses";
+        }
+        else{
+          console.log('this is to prevent an auto redirect with no records');
+        }
+
       },
       error: function () {
 
@@ -202,7 +209,7 @@ let WebAppSecurity = React.createClass({
                     onEdit={this.onEdit}/>
                 </table>
               </div>
-              <Link to="/analyses" onClick={this.onSubmit.bind(null, localStorage.analysis_id)}  ><RaisedButton label="I'm done" secondary={true}/></Link>
+              <RaisedButton label="I'm done" onClick={this.onSubmit.bind(null, localStorage.analysis_id)} secondary={true}/>
             </div>
           :null  }
           { this.state.has_results=== false ?(

@@ -21,7 +21,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import SoftwarePatchingRowDataSyles from './../components/table/row-data.css'
 
-import SanityCheckCSS from './../styles/pages/analyses.scss'
+import SanityCheckCSS from './../styles/pages/sanity_check.scss'
 import LoaderCSS from './../styles/loader.scss'
 let SanityCheck = React.createClass({
 getInitialState: function(){
@@ -132,13 +132,13 @@ render(){
       // if (includeResult && analysis.state_netblocks_review_completed != 'true') {
     if (includeResult & analysis.analysis_state_opapp_edit_netblocks_review_complete != '1' || analysis.analysis_state_opapp_edit_domainrecords_review_complete !='1') {
         if(analysis.analysis_state_opapp_edit_netblocks_review_complete === '1') {
-          netblocks_button = <RaisedButton  label="Netblocks" disabled={true} default={true}></RaisedButton>
+          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" className="button-node-completed" default={true}></RaisedButton></Link>
         }
         else {
           netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
         if(analysis.analysis_state_opapp_edit_domainrecords_review_complete === '1') {
-          domains_button = <RaisedButton  label="Domains" disabled={true} secondary={true}></RaisedButton>
+          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" className="button-node-completed"  secondary={true}></RaisedButton></Link>
         }
         else {
           domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" disabled={false} secondary={true}></RaisedButton></Link>
@@ -151,7 +151,7 @@ render(){
     return(
       <TableRow key={x}>
       <TableRowColumn>{analysis.analyzed_entity_name}</TableRowColumn>
-          <TableRowColumn>{analysis.analysis_scan_ordered_ts_utc_str}</TableRowColumn>
+          <TableRowColumn>{analysis.analysis_state_scan_ordered_ts_utc_str}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_state_lambda_export_files_load_dynamo_complete_ts_utc_str}</TableRowColumn>
           <TableRowColumn>{analysis.analysis_id}</TableRowColumn>
           <TableRowColumn></TableRowColumn>

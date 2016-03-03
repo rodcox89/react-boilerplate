@@ -47,7 +47,8 @@ let SoftwarePatching = React.createClass({
             loaded: true,
             has_results: false,
           })
-          this.onSubmit()
+          this.onSubmit('auto')
+          // auto is for auto complete
         }
         else{
           this.setState({
@@ -159,6 +160,12 @@ let SoftwarePatching = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
+      if(e !== 'auto'){
+        window.location.href= "/#/analyses";
+      }
+      else{
+        console.log('this is to prevent an auto redirect with no records');
+      }
       },
       error: function () {
 
@@ -205,7 +212,7 @@ let SoftwarePatching = React.createClass({
         onEdit={this.onEdit}/>
         </table>
         </div>
-        <Link to="/analyses"><RaisedButton onClick={this.onSubmit.bind(null, localStorage.analysis_id)} label="I'm done" secondary={true}/></Link>
+        <RaisedButton onClick={this.onSubmit.bind(null, localStorage.analysis_id)} label="I'm done" secondary={true}/>
         </div>
         :null}
         {no_results}

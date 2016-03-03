@@ -49,7 +49,7 @@ let EditNetblocks = React.createClass({
             has_results: false,
             loaded: true,
           })
-					this.handleApproval()
+					this.handleApproval('auto')
         }
         else{
           this.setState({
@@ -110,15 +110,22 @@ let EditNetblocks = React.createClass({
       this.setState({search_term: e.target.value})
     },
     handleApproval(e){
+
       $.ajax({
         type: 'PUT',
         url: 'http://ops.riskrecon.net:5000/v1/nodes/netblocks/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
-          console.log(data)
+          if(e !== 'auto'){
+          window.location.href= "/#/sanity_check";
+        }
+        else{
+          console.log('this is to prevent an auto redirect with no records');
+        }
           }
         })
     },
     handleTrashed(e){
+      console.log('nothing works here');
     },
     render: function(){
       return(
@@ -140,7 +147,7 @@ let EditNetblocks = React.createClass({
               <TableHeaderColumn style={{textAlign: 'center'}}></TableHeaderColumn>
               <TableHeaderColumn ></TableHeaderColumn>
               <TableHeaderColumn colSpan={2} style={{textAlign: 'center'}}><p>Does the data from this scan look clean enough to use, or should does this scan have significant errors</p></TableHeaderColumn>
-              <TableHeaderColumn><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><Link to="/sanity_check" onClick={this.handleApproval}><RaisedButton primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></Link></TableHeaderColumn>
+              <TableHeaderColumn><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton> <RaisedButton onClick={this.handleApproval} primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_org')}>Registrant Org <i className="fa fa-sort" ></i></TableHeaderColumn>

@@ -48,7 +48,7 @@ let WebEncryption = React.createClass({
             loaded: true,
             has_results: false,
           })
-          this.onSubmit()
+          this.onSubmit('auto')
         }
         else{
           this.setState({
@@ -157,6 +157,13 @@ let WebEncryption = React.createClass({
       dataType: 'json',
       contentType: 'application/json',
       success: (data) => {
+        if(e !== 'auto'){
+          window.location.href= "/#/analyses";
+        }
+        else{
+          console.log('this is to prevent an auto redirect with no records');
+        }
+
       },
       error: function () {
 
@@ -206,7 +213,7 @@ let WebEncryption = React.createClass({
                   onEdit={this.onEdit}/>
                   </table>
                 </div>
-              <Link onClick={this.onSubmit.bind(null, localStorage.analysis_id)} to="/analyses"><RaisedButton label="I'm done" secondary={true}/></Link>
+              <RaisedButton label="I'm done" onClick={this.onSubmit.bind(null, localStorage.analysis_id)} secondary={true}/>
               </div>
           :null  }
           {no_results}
