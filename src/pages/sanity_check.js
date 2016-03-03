@@ -25,7 +25,6 @@ import SanityCheckCSS from './../styles/pages/sanity_check.scss'
 import LoaderCSS from './../styles/loader.scss'
 let SanityCheck = React.createClass({
 getInitialState: function(){
-  console.log('in analyses');
   return {
     fixedHeader: true,
     reverse: true,
@@ -36,12 +35,9 @@ getInitialState: function(){
   };
 },
 componentWillMount() {
-console.log('will mount');
 
 },
 componentDidMount() {
-  console.log('did mount');
-  console.log('component mounted');
   $.ajax({
     url: 'http://ops.riskrecon.net:5000/v1/nodes',
     type: 'GET',
@@ -59,19 +55,16 @@ componentDidMount() {
           analyses: data,
           loaded: true,
           has_results: true,
-        }, () => {console.log('RWAGH', this.state.analyses)});
+        }, () => {});
 
       }
 
     },
     error: (err) => {
-      console.log('api error')
     }
   })
 },
 handleSort(e) {
-  console.log('handleSort clicked');
-  console.log(e);
   let reverse = this.state.reverse
   if(reverse === true){
     reverse = false
@@ -107,13 +100,9 @@ sort_by(field, reverse, primer) {
   }
 },
 handleSearch(e){
-  console.log(e);
   this.setState({search_term: e.target.value})
-  // console.log(this.state.search_term);
 },
 onClick: function(analysis) {
-console.log(analysis);
-console.log('clicked')
 localStorage.analysis_id = analysis.analysis_id
 localStorage.unique_key = analysis.unique_key
 // localStorage.unique_key = this.state.analyses.analysis[x].unique_key

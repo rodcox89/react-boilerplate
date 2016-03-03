@@ -25,7 +25,6 @@ const CreateReports = React.createClass({
 			url: 'http://ops.riskrecon.net:5000/v1/create_reports',
 			success: (data) => {
 				if(data.length > 0){
-					console.log(data);
 					this.setState({
 						analyses: data,
 						loaded: true,

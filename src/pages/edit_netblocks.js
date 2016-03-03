@@ -43,7 +43,6 @@ let EditNetblocks = React.createClass({
     $.ajax({
       url: 'http://ops.riskrecon.net:5000/v1/netblock/'+localStorage.analysis_id,
       success: (data) => {
-        console.log(data)
         if (data.data.length === 0){
           this.setState({
             has_results: false,
@@ -119,13 +118,13 @@ let EditNetblocks = React.createClass({
           window.location.href= "/#/sanity_check";
         }
         else{
-          console.log('this is to prevent an auto redirect with no records');
+          
         }
           }
         })
     },
     handleTrashed(e){
-      console.log('nothing works here');
+
     },
     render: function(){
       return(

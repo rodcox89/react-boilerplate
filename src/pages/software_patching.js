@@ -40,7 +40,6 @@ let SoftwarePatching = React.createClass({
     $.ajax({
       url: 'http://ops.riskrecon.net:5000/v1/findings/software_patching/'+localStorage.analysis_id,
       success: (data) => {
-        console.log(data)
         if(data.findings.length === 0){
           no_results = <div className="container"><p className="error-text">Sorry! There are no software patching findings for analysis_id: { localStorage.analysis_id }</p></div>
           this.setState({
@@ -55,7 +54,7 @@ let SoftwarePatching = React.createClass({
               findings: data.findings,
               loaded: true,
               has_results: true,
-            }, () => {console.log('RWAGH', this.state.findings)
+            }, () => {
           })
         }
       }})
@@ -164,7 +163,6 @@ let SoftwarePatching = React.createClass({
         window.location.href= "/#/analyses";
       }
       else{
-        console.log('this is to prevent an auto redirect with no records');
       }
       },
       error: function () {

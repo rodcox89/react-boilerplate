@@ -115,8 +115,6 @@ const Row = React.createClass({
 
   },
   handleConfidenceChange(e){
-    console.log(e.target.selectedOptions)
-    console.log(e.target.selectedOptions[0].id)
 
     this.setState({analyst_confidence: e.target.selectedOptions[0].id})
 

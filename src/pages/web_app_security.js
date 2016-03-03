@@ -41,7 +41,6 @@ let WebAppSecurity = React.createClass({
     $.ajax({
       url: 'http://ops.riskrecon.net:5000/v1/findings/web_app_security/'+localStorage.analysis_id,
       success: (data) => {
-        console.log(data)
         if(data.findings.length === 0){
           no_results = <div className="container"><p className="error-text">Sorry! There are no Web Application Security findings for analysis_id: { localStorage.analysis_id }</p></div>
           this.setState({
@@ -55,7 +54,7 @@ let WebAppSecurity = React.createClass({
             has_results: true,
               findings: data.findings,
               loaded: true
-            }, () => {console.log('RWAGH', this.state.findings)
+            }, () => {
           })
         }
       }})
@@ -155,7 +154,6 @@ let WebAppSecurity = React.createClass({
           window.location.href= "/#/analyses";
         }
         else{
-          console.log('this is to prevent an auto redirect with no records');
         }
 
       },

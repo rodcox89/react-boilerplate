@@ -65,10 +65,8 @@ let LanguageRow = React.createClass({
 	// 				metric: data,
 	// 				isEditing: false
 	// 			});
-	// 			console.log(data);
 	// 		}
 	// 	});
-	// 	//console.log(this.state.metric);
 	// },
 	debounce(fn, delay) {
    var timer = null;

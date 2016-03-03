@@ -57,7 +57,6 @@ let AdministratorRow = React.createClass({
 					analysis: data[0],
 					isEditing: false
 				});
-				//console.log(data[0]);
 			}
 		});
 	},

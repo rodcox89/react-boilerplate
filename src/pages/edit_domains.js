@@ -43,7 +43,6 @@ let EditDomains = React.createClass({
     $.ajax({
       url: 'http://ops.riskrecon.net:5000/v1/domains/'+localStorage.analysis_id,
       success: (data) => {
-        console.log(data)
         if (data.data.length === 0){
           this.setState({
             has_results: false,
@@ -96,12 +95,11 @@ let EditDomains = React.createClass({
         type: 'PUT',
         url: 'http://ops.riskrecon.net:5000/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
-          console.log(data)
           if(e !== 'auto'){
           window.location.href= "/#/sanity_check";
         }
         else{
-          console.log('this is to prevent an auto redirect with no records');
+					
         }
           }
         })

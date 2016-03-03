@@ -65,21 +65,19 @@ let MetricRow = React.createClass({
 					metric: data,
 					isEditing: false
 				});
-				console.log(data);
 			}
 		});
-		//console.log(this.state.metric);
 	},
 	debounce(fn, delay) {
-   var timer = null;
-   return function () {
-     var context = this, args = arguments;
-     clearTimeout(timer);
-     timer = setTimeout(function () {
-       fn.apply(context, args);
-     }, delay);
-   }
- },
+		var timer = null;
+		return function () {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+			fn.apply(context, args);
+			}, delay);
+		}
+	},
 	render: function(){
 		var el
 		if(this.state.isEditing){

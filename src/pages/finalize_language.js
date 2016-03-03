@@ -37,12 +37,10 @@ const FinalizeLanguage = React.createClass({
 		}
 	},
 	componentDidMount: function() {
-		console.log(this.state.analysisId);
 		$.ajax({
 			url: 'http://ops.riskrecon.net:5000/v1/report/derived/language/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
-					console.log(data);
 					this.setState({
 						language: data,
 						loaded: true,
@@ -62,9 +60,6 @@ const FinalizeLanguage = React.createClass({
 	// handleMetricChange(metric, index){
 	// 	//let metrics = this.state.metrics;
 	// 	//this.setState({[metrics[index]]: metric});
-	// 	//console.log(this.state.metrics);
-	// 	//console.log('post updated metric and reshow updated metrics state');
-	// 	console.log(metric);
 	// 	$.ajax({
 	// 		url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
 	// 		type: 'PUT',
@@ -78,14 +73,10 @@ const FinalizeLanguage = React.createClass({
 	// 				metrics: data,
 	// 				//metrics: []
 	// 			});
-	// 			//console.log(data[index]);
-	// 			console.log(data);
 	// 		}
 	// 	});
 	// },
 	doneLanguage(){
-		// console.log(this.state.analysisId);
-		// console.log(this.state.uniqueId);
 		$.ajax({
 			url: 'http://localhost:5000/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
 			type: 'POST',
@@ -95,11 +86,9 @@ const FinalizeLanguage = React.createClass({
 			// },
 			// data: JSON.stringify(metric),
 			success: (data) => {
-				console.log('sent metrics done');
-				console.log(data);
+				window.location.href= "/#/create_reports";
 			},
 			error: function () {
-				console.log('error');
 			}
 		});
 	},

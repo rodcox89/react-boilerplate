@@ -56,7 +56,6 @@ componentDidMount() {
 			});
 		},
 		error: (err) => {
-			console.log('api error')
 		}
 	})
 },
