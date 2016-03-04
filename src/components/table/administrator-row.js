@@ -45,7 +45,7 @@ let AdministratorRow = React.createClass({
 	saveAnalysis(e){
 		e.preventDefault()
 		$.ajax({
-			url: 'http://ops.riskrecon.net:5000/v1/report_state',
+			url: 'http://opsapi.riskrecon.com:5010/v1/report_state',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

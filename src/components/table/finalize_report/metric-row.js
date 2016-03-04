@@ -53,7 +53,7 @@ let MetricRow = React.createClass({
 	saveMetric(e){
 		e.preventDefault()
 		$.ajax({
-			url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
+			url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/metrics',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

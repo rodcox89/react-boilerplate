@@ -99,7 +99,7 @@ let Netblock = React.createClass({
 
     $.ajax({
     type: 'PUT',
-    url: 'http://ops.riskrecon.net:5000/v1/netblocks',
+    url: 'http://opsapi.riskrecon.com:5010/v1/netblocks',
     crossDomain: true,
     data: JSON.stringify(newnetblock),
     dataType: 'json',

@@ -38,7 +38,7 @@ const FinalizeLanguage = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://ops.riskrecon.net:5000/v1/report/derived/language/' + this.state.analysisId,
+			url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/language/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					this.setState({
@@ -61,7 +61,7 @@ const FinalizeLanguage = React.createClass({
 	// 	//let metrics = this.state.metrics;
 	// 	//this.setState({[metrics[index]]: metric});
 	// 	$.ajax({
-	// 		url: 'http://ops.riskrecon.net:5000/v1/report/derived/metrics',
+	// 		url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/metrics',
 	// 		type: 'PUT',
 	// 		dataType: 'json',
 	// 		headers: {
@@ -78,7 +78,7 @@ const FinalizeLanguage = React.createClass({
 	// },
 	doneLanguage(){
 		$.ajax({
-			url: 'http://localhost:5000/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
+			url: 'http://opsapi.riskrecon.com:5010/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
 			type: 'POST',
 			//dataType: 'json',
 			// headers: {

@@ -39,7 +39,7 @@ let WebEncryption = React.createClass({
   componentDidMount: function() {
     var self = this;
     $.ajax({
-      url: 'http://ops.riskrecon.net:5000/v1/findings/threat_intell/'+localStorage.analysis_id,
+      url: 'http://opsapi.riskrecon.com:5010/v1/findings/threat_intell/'+localStorage.analysis_id,
       success: (data) => {
         if(data.findings.length === 0){
           no_results = <div className="container"><p className="error-text">Sorry! There are no Threat Intelligence findings for analysis_id: { localStorage.analysis_id }</p></div>
@@ -68,7 +68,7 @@ let WebEncryption = React.createClass({
       e.preventDefault()
       $.ajax({
       type: 'POST',
-      url: 'http://ops.riskrecon.net:5000/v1/findings/delete_finding',
+      url: 'http://opsapi.riskrecon.com:5010/v1/findings/delete_finding',
       crossDomain: true,
       data: JSON.stringify(f),
       dataType: 'json',
@@ -151,7 +151,7 @@ let WebEncryption = React.createClass({
     onSubmit(e) {
       $.ajax({
       type: 'PUT',
-      url: 'http://ops.riskrecon.net:5000/v1/analyses/threat_intell/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      url: 'http://opsapi.riskrecon.com:5010/v1/analyses/threat_intell/'+localStorage.analysis_id+'/'+localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',

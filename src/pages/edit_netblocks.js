@@ -41,7 +41,7 @@ let EditNetblocks = React.createClass({
   componentDidMount: function() {
 
     $.ajax({
-      url: 'http://ops.riskrecon.net:5000/v1/netblock/'+localStorage.analysis_id,
+      url: 'http://opsapi.riskrecon.com:5010/v1/netblock/'+localStorage.analysis_id,
       success: (data) => {
         if (data.data.length === 0){
           this.setState({
@@ -112,7 +112,7 @@ let EditNetblocks = React.createClass({
 
       $.ajax({
         type: 'PUT',
-        url: 'http://ops.riskrecon.net:5000/v1/nodes/netblocks/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+        url: 'http://opsapi.riskrecon.com:5010/v1/nodes/netblocks/'+localStorage.analysis_id+'/'+localStorage.unique_key,
         success: (data) => {
           if(e !== 'auto'){
           window.location.href= "/#/sanity_check";

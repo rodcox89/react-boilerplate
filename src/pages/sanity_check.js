@@ -39,7 +39,7 @@ componentWillMount() {
 },
 componentDidMount() {
   $.ajax({
-    url: 'http://ops.riskrecon.net:5000/v1/nodes',
+    url: 'http://opsapi.riskrecon.com:5010/v1/nodes',
     type: 'GET',
     dataType: 'json',
     success: (data) => {

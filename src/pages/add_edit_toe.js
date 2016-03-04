@@ -113,7 +113,7 @@ let AddEditToe = React.createClass({
 			//
 			//
 			$.ajax({
-				url: 'http://ops.riskrecon.net:5000/v1/toe/'+toeId,
+				url: 'http://opsapi.riskrecon.com:5010/v1/toe/'+toeId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -329,7 +329,7 @@ let AddEditToe = React.createClass({
 				domainIntellSample: []
 			});
 			$.ajax({
-				url: 'http://ops.riskrecon.net:5000/v1/toe/domain_intel/'+this.state.domainIntellSeedDomain+'/'+toeId,
+				url: 'http://opsapi.riskrecon.com:5010/v1/toe/domain_intel/'+this.state.domainIntellSeedDomain+'/'+toeId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -552,7 +552,7 @@ let AddEditToe = React.createClass({
 					"domain_intell_seed_domain": this.state.domainIntellSeedDomain
 				}
 				$.ajax({
-					url: 'http://ops.riskrecon.net:5000/v1/toe',
+					url: 'http://opsapi.riskrecon.com:5010/v1/toe',
 					type: 'PUT',
 					dataType: 'json',
 					headers: {
@@ -599,7 +599,7 @@ let AddEditToe = React.createClass({
 					}
 					//
 					$.ajax({
-						url: 'http://ops.riskrecon.net:5000/v1/toe',
+						url: 'http://opsapi.riskrecon.com:5010/v1/toe',
 						type: 'POST',
 						dataType: 'json',
 						headers: {
