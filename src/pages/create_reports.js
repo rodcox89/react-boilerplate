@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react'
 import ReactDom from 'react-dom'
 import {RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'

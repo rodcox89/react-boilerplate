@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react'
 import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'

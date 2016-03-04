@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react'
 import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
@@ -43,6 +45,9 @@ let AdministratorRow = React.createClass({
 		this.setState({isEditing: true})
 	},
 	saveAnalysis(e){
+		if(Constants.debug){
+			console.log(JSON.stringify(this.state.analysis));
+		}
 		e.preventDefault()
 		$.ajax({
 			url: 'http://opsapi.riskrecon.com:5010/v1/report_state',
@@ -53,6 +58,9 @@ let AdministratorRow = React.createClass({
 			},
 			data: JSON.stringify(this.state.analysis),
 			success: (data) => {
+				if(Constants.debug){
+					console.log(data);
+				}
 				this.setState({
 					analysis: data[0],
 					isEditing: false

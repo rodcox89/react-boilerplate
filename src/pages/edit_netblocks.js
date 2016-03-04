@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react'
 import ReactDom from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
@@ -118,7 +120,7 @@ let EditNetblocks = React.createClass({
           window.location.href= "/#/sanity_check";
         }
         else{
-          
+
         }
           }
         })

@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react'
 import ReactDom from 'react-dom'
 import {RouteHandler, Link, Router, Route, IndexRoute } from 'react-router'
@@ -25,9 +27,12 @@ const ReportAdministrator = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/report_state',
+			url: Constants.api_base_url + Constants.api_version + '/report_state',
 			success: (data) => {
 				if(data.length > 0){
+					if(Constants.debug){
+						console.log(data);
+					}
 					this.setState({
 						analyses: data,
 						loaded: true,
