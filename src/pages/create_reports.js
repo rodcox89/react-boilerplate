@@ -126,6 +126,11 @@ const CreateReports = React.createClass({
 						</table>
 					</Card>
 				:null }
+				{ !this.state.has_results ?
+					<div className="container">
+						<p className="error-text">Sorry! There aren't any analyses to be examined</p>
+					</div>
+				:null}
 			</div>
 		)
 	}

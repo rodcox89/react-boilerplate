@@ -86,21 +86,21 @@ const App = React.createClass({
 					<AppBar title="Menu" iconElementRight={<IconButton	onTouchTap={this.handleToggle} ><NavigationClose onRightIconButtonTouchTap={this.handleToggle} /></IconButton>} iconElementLeft={<IconButton></IconButton>} />
 					<List>
 						<ListItem primaryTogglesNestedList={true} primaryText="Scans" nestedItems={[
-							<ListItem key={1} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans Qeued" rightIcon={<ScheduleIcon/>}></ListItem>,
-							<ListItem key={2} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" rightIcon={<HourglassIcon/>}></ListItem>,
+							<ListItem key={1} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans Qeued" onTouchTap={this.handleToggle} rightIcon={<ScheduleIcon/>}></ListItem>,
+							<ListItem key={2} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" onTouchTap={this.handleToggle} rightIcon={<HourglassIcon/>}></ListItem>,
 						]}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/report_administrator" />} linkButton={true} primaryText="Report Administrator" rightIcon={<FingerprintIcon/>}></ListItem>
+						<ListItem containerElement={<Link to="/report_administrator" />} linkButton={true} primaryText="Report Administrator" onTouchTap={this.handleToggle} rightIcon={<FingerprintIcon/>}></ListItem>
 						<Divider/>
 						<ListItem primaryTogglesNestedList={true} primaryText="Report Stages" nestedItems={[
-							<ListItem key={1} containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" rightIcon={<CheckIcon/>}></ListItem>,
-							<ListItem key={2} containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" rightIcon={<FindInPage/>}></ListItem>,
-							<ListItem key={3} containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Finalize" rightIcon={<AssignmentIcon/>}></ListItem>,
+							<ListItem key={1} containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" onTouchTap={this.handleToggle} rightIcon={<CheckIcon/>}></ListItem>,
+							<ListItem key={2} containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" onTouchTap={this.handleToggle} rightIcon={<FindInPage/>}></ListItem>,
+							<ListItem key={3} containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Finalize" onTouchTap={this.handleToggle} rightIcon={<AssignmentIcon/>}></ListItem>,
 						]}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/manage_toes" />} linkButton={true} primaryText="Manage TOEs" rightIcon={<IconAirlineSeatReclineExtra/>}></ListItem>
+						<ListItem containerElement={<Link to="/manage_toes" />} linkButton={true} primaryText="Manage TOEs" onTouchTap={this.handleToggle} rightIcon={<IconAirlineSeatReclineExtra/>}></ListItem>
 						<Divider/>
-						<ListItem containerElement={<Link to="/manage_customers" />} linkButton={true} primaryText="Manage Customers" rightIcon={<IconTagFaces/>}></ListItem>
+						<ListItem containerElement={<Link to="/manage_customers" />} linkButton={true} primaryText="Manage Customers" onTouchTap={this.handleToggle} rightIcon={<IconTagFaces/>}></ListItem>
 					</List>
 				 </LeftNav>
 				{this.props.children}
