@@ -85,11 +85,11 @@ const App = React.createClass({
 				 <LeftNav ref="leftNav" open={this.state.open} onRequestChange={this.handleToggle} menuItems={this.menuItems}>
 					<AppBar title="Menu" iconElementRight={<IconButton	onTouchTap={this.handleToggle} ><NavigationClose onRightIconButtonTouchTap={this.handleToggle} /></IconButton>} iconElementLeft={<IconButton></IconButton>} />
 					<List>
-						<ListItem primaryTogglesNestedList={true} primaryText="Scans" nestedItems={[
+						{/*<ListItem primaryTogglesNestedList={true} primaryText="Scans" nestedItems={[
 							<ListItem key={1} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans Qeued" onTouchTap={this.handleToggle} rightIcon={<ScheduleIcon/>}></ListItem>,
 							<ListItem key={2} containerElement={<Link to="/scans" />} linkButton={true} primaryText="Scans in Progress" onTouchTap={this.handleToggle} rightIcon={<HourglassIcon/>}></ListItem>,
 						]}></ListItem>
-						<Divider/>
+						<Divider/>*/}
 						<ListItem containerElement={<Link to="/report_administrator" />} linkButton={true} primaryText="Report Administrator" onTouchTap={this.handleToggle} rightIcon={<FingerprintIcon/>}></ListItem>
 						<Divider/>
 						<ListItem primaryTogglesNestedList={true} primaryText="Report Stages" nestedItems={[
