@@ -86,7 +86,7 @@ let AddEditToe = React.createClass({
 	componentDidMount() {
 		if(customerId.length > 0){
 			$.ajax({
-				url: 'http://opsapi.riskrecon.com:5010/v1/customer/'+customerId,
+				url: Constants.api_base_url + Constants.api_version + '/customer/' + customerId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -104,7 +104,7 @@ let AddEditToe = React.createClass({
 				}
 			});
 			$.ajax({
-				url: 'http://opsapi.riskrecon.com:5010/v1/customer/relationships/'+customerId,
+				url: Constants.api_base_url + Constants.api_version + '/customer/relationships/' + customerId,
 				type: 'GET',
 				dataType: 'json',
 				success: (data) => {
@@ -162,7 +162,7 @@ let AddEditToe = React.createClass({
 					}
 					//
 					$.ajax({
-						url: 'http://opsapi.riskrecon.com:5010/v1/customer',
+						url: Constants.api_base_url + Constants.api_version + '/customer',
 						type: 'PUT',
 						dataType: 'json',
 						headers: {
@@ -198,7 +198,7 @@ let AddEditToe = React.createClass({
 					}
 					//
 					$.ajax({
-						url: 'http://opsapi.riskrecon.com:5010/v1/customer',
+						url: Constants.api_base_url + Constants.api_version + '/customer',
 						type: 'POST',
 						dataType: 'json',
 						headers: {
@@ -211,7 +211,7 @@ let AddEditToe = React.createClass({
 								customer_id: data.customer_id,
 							});
 							$.ajax({
-								url: 'http://opsapi.riskrecon.com:5010/v1/customer/relationships/'+this.state.customer_id,
+								url: Constants.api_base_url + Constants.api_version + '/customer/relationships/' + this.state.customer_id,
 								type: 'GET',
 								dataType: 'json',
 								success: (data) => {
@@ -237,7 +237,7 @@ let AddEditToe = React.createClass({
 
 	showAddSubscription(){
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/customer/toes',
+			url: Constants.api_base_url + Constants.api_version + '/customer/toes',
 			type: 'GET',
 			dataType: 'json',
 			success: (data) => {
@@ -269,7 +269,7 @@ let AddEditToe = React.createClass({
 				}
 				//
 				$.ajax({
-					url: 'http://opsapi.riskrecon.com:5010/v1/customer/relationships',
+					url: Constants.api_base_url + Constants.api_version + '/customer/relationships',
 					type: 'POST',
 					dataType: 'json',
 					headers: {
@@ -295,7 +295,7 @@ let AddEditToe = React.createClass({
 
 	removeSubscription(toe_id){
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/customer/relationships/'+this.state.customer_id+'/'+toe_id,
+			url: Constants.api_base_url + Constants.api_version + '/customer/relationships/' + this.state.customer_id + '/' + toe_id,
 			type: 'DELETE',
 			dataType: 'json',
 			success: (data) => {
@@ -316,7 +316,7 @@ let AddEditToe = React.createClass({
 			"is_deleted": 'false'
 		}
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/customer/relationships',
+			url: Constants.api_base_url + Constants.api_version + '/customer/relationships',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

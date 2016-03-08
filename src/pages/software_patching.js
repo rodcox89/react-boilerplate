@@ -40,7 +40,7 @@ let SoftwarePatching = React.createClass({
   componentDidMount: function() {
     var self = this;
     $.ajax({
-      url: 'http://opsapi.riskrecon.com:5010/v1/findings/software_patching/'+localStorage.analysis_id,
+      url: Constants.api_base_url + Constants.api_version + '/findings/software_patching/' + localStorage.analysis_id,
       success: (data) => {
         if(data.findings.length === 0){
           no_results = <div className="container"><p className="error-text">Sorry! There are no software patching findings for analysis_id: { localStorage.analysis_id }</p></div>
@@ -72,7 +72,7 @@ let SoftwarePatching = React.createClass({
       e.preventDefault()
       $.ajax({
       type: 'DELETE',
-      url: 'http://opsapi.riskrecon.com:5010/v1/findings',
+      url: Constants.api_base_url + Constants.api_version + '/findings',
       crossDomain: true,
       data: JSON.stringify(f),
       dataType: 'json',
@@ -156,7 +156,7 @@ let SoftwarePatching = React.createClass({
     onSubmit(e) {
       $.ajax({
       type: 'PUT',
-      url: 'http://opsapi.riskrecon.com:5010/v1/analyses/software_patching/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+      url: Constants.api_base_url + Constants.api_version + '/analyses/software_patching/' + localStorage.analysis_id + '/' + localStorage.unique_key,
       crossDomain: true,
       dataType: 'json',
       contentType: 'application/json',

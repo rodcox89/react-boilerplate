@@ -43,7 +43,7 @@ let EditDomains = React.createClass({
   componentDidMount: function() {
 
     $.ajax({
-      url: 'http://opsapi.riskrecon.com:5010/v1/domains/'+localStorage.analysis_id,
+      url: Constants.api_base_url + Constants.api_version + '/domains/' + localStorage.analysis_id,
       success: (data) => {
         if (data.data.length === 0){
           this.setState({
@@ -95,7 +95,7 @@ let EditDomains = React.createClass({
     handleApproval(e){
       $.ajax({
         type: 'PUT',
-        url: 'http://opsapi.riskrecon.com:5010/v1/nodes/domainrecords/'+localStorage.analysis_id+'/'+localStorage.unique_key,
+        url: Constants.api_base_url + Constants.api_version + '/nodes/domainrecords/' + localStorage.analysis_id + '/' + localStorage.unique_key,
         success: (data) => {
           if(e !== 'auto'){
           window.location.href= "/#/sanity_check";

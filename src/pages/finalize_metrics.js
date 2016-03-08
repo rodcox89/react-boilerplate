@@ -40,7 +40,7 @@ const FinalizeMetrics = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/metrics/' + this.state.analysisId,
+			url: Constants.api_base_url + Constants.api_version + '/report/derived/metrics/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					this.setState({
@@ -63,7 +63,7 @@ const FinalizeMetrics = React.createClass({
 		//let metrics = this.state.metrics;
 		//this.setState({[metrics[index]]: metric});
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/metrics',
+			url: Constants.api_base_url + Constants.api_version + '/report/derived/metrics',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {
@@ -80,7 +80,7 @@ const FinalizeMetrics = React.createClass({
 	},
 	doneMetrics(){
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/complete_metrics/'+this.state.analysisId+'/'+this.state.uniqueId,
+			url: Constants.api_base_url + Constants.api_version + '/complete_metrics/' + this.state.analysisId + '/' + this.state.uniqueId,
 			type: 'POST',
 			//dataType: 'json',
 			// headers: {

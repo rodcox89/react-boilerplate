@@ -47,7 +47,7 @@ getInitialState: function(){
 },
 componentDidMount() {
 	$.ajax({
-		url: 'http://opsapi.riskrecon.com:5010/v1/customers',
+		url: Constants.api_base_url + Constants.api_version + '/customers',
 		type: 'GET',
 		dataType: 'json',
 		success: (data) => {

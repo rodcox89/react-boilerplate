@@ -50,7 +50,7 @@ let AdministratorRow = React.createClass({
 		}
 		e.preventDefault()
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/report_state',
+			url: Constants.api_base_url + Constants.api_version + '/report_state',
 			type: 'PUT',
 			dataType: 'json',
 			headers: {

@@ -75,7 +75,7 @@ let Domain = React.createClass({
 
     $.ajax({
     type: 'PUT',
-    url: 'http://opsapi.riskrecon.com:5010/v1/domains',
+    url: Constants.api_base_url + Constants.api_version + '/domains',
     crossDomain: true,
     data: JSON.stringify(newdomain),
     dataType: 'json',

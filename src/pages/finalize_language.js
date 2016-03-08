@@ -40,7 +40,7 @@ const FinalizeLanguage = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/language/' + this.state.analysisId,
+			url: Constants.api_base_url + Constants.api_version + '/report/derived/language/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
 					this.setState({
@@ -80,7 +80,7 @@ const FinalizeLanguage = React.createClass({
 	// },
 	doneLanguage(){
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/complete_ratings/'+this.state.analysisId+'/'+this.state.uniqueId,
+			url: Constants.api_base_url + Constants.api_version + '/complete_ratings/' + this.state.analysisId + '/' + this.state.uniqueId,
 			type: 'POST',
 			//dataType: 'json',
 			// headers: {

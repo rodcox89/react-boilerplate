@@ -53,7 +53,7 @@ let LanguageRow = React.createClass({
 	// saveMetric(e){
 	// 	e.preventDefault()
 	// 	$.ajax({
-	// 		url: 'http://opsapi.riskrecon.com:5010/v1/report/derived/metrics',
+	//			url: Constants.api_base_url + Constants.api_version + '/report/derived/metrics',
 	// 		type: 'PUT',
 	// 		dataType: 'json',
 	// 		headers: {

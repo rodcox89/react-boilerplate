@@ -50,7 +50,7 @@ componentWillMount() {
 },
 componentDidMount() {
   $.ajax({
-    url: 'http://opsapi.riskrecon.com:5010/v1/analyses',
+    url: Constants.api_base_url + Constants.api_version + '/analyses',
     type: 'GET',
     dataType: 'json',
     success: (data) => {
@@ -120,7 +120,7 @@ localStorage.unique_key = this.state.analyses[x].unique_key
 runCounts(e){
   this.setState({loaded: false})
   $.ajax({
-    url: 'http://opsapi.riskrecon.com:5010/v1/netblocks_domainrecords_join/'+e.analysis_id+'/'+e.unique_key,
+    url: Constants.api_base_url + Constants.api_version + '/netblocks_domainrecords_join/' + e.analysis_id + '/' + e.unique_key,
     dataType: 'json',
     type: 'POST',
     success: (data) => {

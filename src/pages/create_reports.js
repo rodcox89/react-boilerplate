@@ -24,7 +24,7 @@ const CreateReports = React.createClass({
 	},
 	componentDidMount: function() {
 		$.ajax({
-			url: 'http://opsapi.riskrecon.com:5010/v1/create_reports',
+			url: Constants.api_base_url + Constants.api_version + '/create_reports',
 			success: (data) => {
 				if(data.length > 0){
 					this.setState({
