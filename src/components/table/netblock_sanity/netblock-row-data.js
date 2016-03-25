@@ -184,85 +184,14 @@ setTarget(positionElement, position, e) {
 },
 
     render: function(){
-      let ipdata
-      var el
-      var input = this.state.isInput
-      if(input){
-        el = <tr className="netblock-row">
-        <td>{this.props.netblock.netrange}</td>
-              <td><DebounceInput minLenth={3} debounceTimeout={200} onChange={event=>this.handleOrgChange(event)} value={this.props.netblock.analyst_edit_registrant_org}/></td>
-              <td><DebounceInput minLenth={3} debounceTimeout={200} onChange={event=>this.handleCityChange(event)} value={this.props.netblock.analyst_edit_registrant_city}/></td>
-              <td><DebounceInput minLenth={3} debounceTimeout={200} onChange={event=>this.handleStateChange(event)} value={this.props.netblock.analyst_edit_registrant_state}/></td>
-              <td><DebounceInput minLenth={3} debounceTimeout={200} onChange={event=>this.handleCountryChange(event)} value={this.props.netblock.analyst_edit_registrant_country} /></td>
-              <td><RaisedButton onClick={this.onSave} primary={true} label="Save"/></td>
-              <td><RaisedButton label="More Info" disabled={false} primary={true} onClick={this.show.bind(this,"pop")}/>
-                  <Popover
-                    open={this.state.activePopover === 'pop'}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={this.state.anchorOrigin}
-                    targetOrigin={this.state.targetOrigin}
-                    onRequestClose={this.closePopover.bind(this, 'pop')} >
-                    <div style={{padding:40}}>
-                    <table>
-                      <tbody>
-                        <tr><td>City</td><td>{this.state.ipdata.city}</td></tr>
-                        <tr><td>ip</td><td>{this.state.ipdata.ip}</td></tr>
-                        <tr><td>hostname</td><td>{this.state.ipdata.hostname}</td></tr>
-                        <tr><td>city</td><td>{this.state.ipdata.city}</td></tr>
-                        <tr><td>region</td><td>{this.state.ipdata.region}</td></tr>
-                        <tr><td>country</td><td>{this.state.ipdata.country}</td></tr>
-                        <tr><td>loc</td><td>{this.state.ipdata.loc}</td></tr>
-                        <tr><td>org</td><td>{this.state.ipdata.org}</td></tr>
-                        <tr><td>postal</td><td>{this.state.ipdata.postal}</td></tr>
-                      </tbody>
-                    </table>
-                    </div>
-                </Popover>
-              </td>
-
-              <td><RaisedButton label="External Resources" primary={true} onClick={this.openNewWindow}></RaisedButton></td>
-            </tr>
-
-      }
-      else {
-        el = <tr className="netblock-row">
-        <td>{this.props.netblock.netrange}</td>
+      return(
+       <tr className="netblock-row">
+          <td>{this.props.netblock.netrange}</td>
           <td>{this.props.netblock.analyst_edit_registrant_org}</td>
           <td>{this.props.netblock.analyst_edit_registrant_city}</td>
           <td>{this.props.netblock.analyst_edit_registrant_state}</td>
           <td>{this.props.netblock.analyst_edit_registrant_country}</td>
-          <td><RaisedButton label="Edit" primary={true} onClick={this.onEdit}/></td>
-          <td><RaisedButton label="More Info" disabled={true} primary={true} onClick={this.show.bind(this,"pop")}/>
-              <Popover
-                open={this.state.activePopover === 'pop'}
-                anchorEl={this.state.anchorEl}
-                anchorOrigin={this.state.anchorOrigin}
-                targetOrigin={this.state.targetOrigin}
-                onRequestClose={this.closePopover.bind(this, 'pop')} >
-                <div style={{padding:40}}>
-                <table>
-                  <tbody>
-                    <tr><td>City</td><td>{this.state.ipdata.city}</td></tr>
-                    <tr><td>ip</td><td>{this.state.ipdata.ip}</td></tr>
-                    <tr><td>hostname</td><td>{this.state.ipdata.hostname}</td></tr>
-                    <tr><td>city</td><td>{this.state.ipdata.city}</td></tr>
-                    <tr><td>region</td><td>{this.state.ipdata.region}</td></tr>
-                    <tr><td>country</td><td>{this.state.ipdata.country}</td></tr>
-                    <tr><td>loc</td><td>{this.state.ipdata.loc}</td></tr>
-                    <tr><td>org</td><td>{this.state.ipdata.org}</td></tr>
-                    <tr><td>postal</td><td>{this.state.ipdata.postal}</td></tr>
-                  </tbody>
-                </table>
-                </div>
-            </Popover>
-          </td>
-          <td><RaisedButton label="External Resources" disabled={true}></RaisedButton></td>
-
         </tr>
-
-      }
-      return(
-        el
     )
 }
 });

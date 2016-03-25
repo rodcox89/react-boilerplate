@@ -33,16 +33,12 @@ render() {
     let includeResult = this.props.searchTerm.length === 0 ? true : false;
     if (!includeResult) {
       domain.domain.includes(searchTerm) ? includeResult = true : false
-      domain.registrant_name.includes(searchTerm) ? includeResult = true : false
       domain.analyst_edit_registrant_org.includes(searchTerm) ? includeResult = true : false
       domain.registrant_email.includes(searchTerm) ? includeResult = true : false
-      domain.admin_name.includes(searchTerm) ? includeResult = true : false
       domain.admin_org.includes(searchTerm) ? includeResult = true : false
       domain.admin_email.includes(searchTerm) ? includeResult = true : false
-      domain.tech_name.includes(searchTerm) ? includeResult = true : false
       domain.tech_org.includes(searchTerm) ? includeResult = true : false
       domain.tech_email.includes(searchTerm) ? includeResult = true : false
-      domain.registrar_abuse_email.includes(searchTerm) ? includeResult = true : false
       }
       if (includeResult) {
     return(

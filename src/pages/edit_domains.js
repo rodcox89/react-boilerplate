@@ -98,7 +98,7 @@ let EditDomains = React.createClass({
         url: Constants.api_base_url + Constants.api_version + '/nodes/domainrecords/' + localStorage.analysis_id + '/' + localStorage.unique_key,
         success: (data) => {
           if(e !== 'auto'){
-          window.location.href= "/#/sanity_check";
+          window.location.href= "/#/nodes";
         }
         else{
 
@@ -124,10 +124,11 @@ let EditDomains = React.createClass({
             <thead>
             <tr>
               <TableHeaderColumn colSpan={3}><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-              <TableHeaderColumn colSpan={6} style={{textAlign: 'right'}}><p>Does the data from this scan look clean enough to use, or should does this scan have significant errors</p></TableHeaderColumn>
-              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
+              <TableHeaderColumn colSpan={6}></TableHeaderColumn>
+              <TableHeaderColumn colSpan={3}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'domain')}>Domain <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_name')}>Registrant Name <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_org')}>Registrant Org <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_email')}>Registrant Email <i className="fa fa-sort" ></i></TableHeaderColumn>

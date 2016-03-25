@@ -33,6 +33,7 @@ render() {
   if (!includeResult) {
 
 
+finding.domain_name.includes(searchTerm) ? includeResult = true : false
 finding.security_criteria.includes(searchTerm) ? includeResult = true : false
 finding.analyst_type.includes(searchTerm) ? includeResult = true : false
 finding.analyst_subtype.includes(searchTerm) ? includeResult = true : false

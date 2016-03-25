@@ -23,17 +23,17 @@ import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
 import LoaderCSS from './../styles/loader.scss'
 
-import TableData from './../components/table/edit_netblocks/netblock-table-data';
+import TableData from './../components/table/domain_sanity/domain-table-data';
 
 const trashStyle = {
   color: Colors.red500,
   // marginRight: 10,
   // marginTop: ,
 }
-let EditNetblocks = React.createClass({
+let DomainSanity = React.createClass({
   getInitialState: function() {
     return {
-      netblocks: [],
+      domains: [],
       reverse: true,
       search_term: "",
       has_results: true,
@@ -43,7 +43,7 @@ let EditNetblocks = React.createClass({
   componentDidMount: function() {
 
     $.ajax({
-      url: Constants.api_base_url + Constants.api_version + '/netblock/' + localStorage.analysis_id,
+      url: Constants.api_base_url + Constants.api_version + '/domains/' + localStorage.analysis_id,
       success: (data) => {
         if (data.data.length === 0){
           this.setState({
@@ -54,35 +54,17 @@ let EditNetblocks = React.createClass({
         }
         else{
           this.setState({
-            netblocks: data.data,
+            domains: data.data,
             loaded: true,
           })
         }
       }})
     },
-    handleCityChange(city, e, index){
-        let netblocks = this.state.netblocks
-        let netblock = this.state.netblocks[index]
-        netblock.analyst_edit_registrant_city = e.target.value
-        this.setState({[netblocks[index]]: netblock})
-    },
-    handleCountryChange(country, e, index){
-        let netblocks = this.state.netblocks
-        let netblock = this.state.netblocks[index]
-        netblock.analyst_edit_registrant_country = e.target.value
-        this.setState({[netblocks[index]]: netblock})
-    },
-    handleStateChange(state, e, index){
-        let netblocks = this.state.netblocks
-        let netblock = this.state.netblocks[index]
-        netblock.analyst_edit_registrant_state = e.target.value
-        this.setState({[netblocks[index]]: netblock})
-    },
     handleOrgChange(org, e, index){
-        let netblocks = this.state.netblocks
-        let netblock = this.state.netblocks[index]
-        netblock.analyst_edit_registrant_org = e.target.value
-        this.setState({[netblocks[index]]: netblock})
+        let domains = this.state.domains
+        let domain = this.state.domains[index]
+        domain.analyst_edit_registrant_org = e.target.value
+        this.setState({[domains[index]]: domain})
     },
     handleSort(e) {
       let reverse = this.state.reverse
@@ -93,9 +75,9 @@ let EditNetblocks = React.createClass({
         reverse = true
       }
       this.setState({reverse: reverse})
-      let netblocks = this.state.netblocks
-      netblocks.sort(this.sort_by(e, reverse, function(a) {return a.toLowerCase()}))
-      this.setState({netblocks: netblocks})
+      let domains = this.state.domains
+      domains.sort(this.sort_by(e, reverse, function(a) {return a.toLowerCase()}))
+      this.setState({domains: domains})
     },
     sort_by(field, reverse, primer) {
 
@@ -111,13 +93,12 @@ let EditNetblocks = React.createClass({
       this.setState({search_term: e.target.value})
     },
     handleApproval(e){
-
       $.ajax({
         type: 'PUT',
-        url: Constants.api_base_url + Constants.api_version + '/nodes/netblocks/' + localStorage.analysis_id + '/' + localStorage.unique_key,
+        url: Constants.api_base_url + Constants.api_version + '/sanity_check/domainrecords/' + localStorage.analysis_id + '/' + localStorage.unique_key,
         success: (data) => {
           if(e !== 'auto'){
-          window.location.href= "/#/nodes";
+          window.location.href= "/#/sanity_check";
         }
         else{
 
@@ -126,7 +107,6 @@ let EditNetblocks = React.createClass({
         })
     },
     handleTrashed(e){
-
     },
     render: function(){
       return(
@@ -139,32 +119,28 @@ let EditNetblocks = React.createClass({
         { this.state.loaded & this.state.has_results ?
         <div>
         <Card>
-          <CardTitle title="Edit Netblocks"/>
+          <CardTitle title="Domain Records Sanity Check"/>
           <table className="table table-bordered" id="mytable" >
             <thead>
             <tr>
               <TableHeaderColumn colSpan={2}><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-              <TableHeaderColumn colSpan={4} style={{textAlign: 'center'}}></TableHeaderColumn>
-              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton> <RaisedButton onClick={this.handleApproval} primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
+              <TableHeaderColumn colSpan={3} style={{textAlign: 'right'}}></TableHeaderColumn>
+              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
-              <TableHeaderColumn onClick={this.handleSort.bind(null,'netrange')}>Netrange <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'domain')}>Domain <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_org')}>Registrant Org <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_city')}>Registrant City <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_state')}>Registrant State <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_country')}>Registrant Country <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_email')}>Registrant Email <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'admin_org')}>Admin Org <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'admin_email')}>Admin Email <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'tech_org')}>Tech Org <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn onClick={this.handleSort.bind(null,'tech_email')}>Tech Email <i className="fa fa-sort" ></i></TableHeaderColumn>
               </tr>
             </thead>
 
               <TableData
-                handleCityChange={this.handleCityChange}
-                handleStateChange={this.handleStateChange}
-                handleCountryChange={this.handleCountryChange}
                 handleOrgChange={this.handleOrgChange}
-                netblocks={this.state.netblocks}
+                domains={this.state.domains}
                 searchTerm={this.state.search_term}/>
           </table>
         </Card>
@@ -172,7 +148,7 @@ let EditNetblocks = React.createClass({
         :null  }
         { !this.state.has_results ?
           <div className="container">
-            <p className="error-text">Sorry! There are no netblocks for analysis_id: { localStorage.analysis_id }</p>
+            <p className="error-text">Sorry! There are no domains for analysis_id: { localStorage.analysis_id }</p>
           </div>
           :null}
 
@@ -183,4 +159,4 @@ let EditNetblocks = React.createClass({
 
 });
 
-module.exports = EditNetblocks
+module.exports = DomainSanity

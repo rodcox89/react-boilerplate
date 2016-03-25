@@ -11,7 +11,7 @@ function debugEnabled() {
 }
 
 module.exports = {
-	api_base_url: 'http://opsapi.riskrecon.com:5010/',
+	api_base_url: 'http://opsapi.riskrecon.com/',
 	api_version: 'v1',
 	debug: debugEnabled()
 }

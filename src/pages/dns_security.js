@@ -187,6 +187,7 @@ let DnsSecurity = React.createClass({
               <table className="table table-bordered" id="mytable" >
                 <thead>
                   <tr className="success" displayBorder={true}>
+                    <TableHeaderColumn onClick={this.handleSort.bind(null,'domain_name')}>Domain Name <i className="fa fa-sort"></i></TableHeaderColumn>
                     <TableHeaderColumn onClick={this.handleSort.bind(null,'security_criteria')}>Security Criteria <i className="fa fa-sort"></i></TableHeaderColumn>
                     <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_type')}>Type <i className="fa fa-sort"></i></TableHeaderColumn>
                     <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_subtype')}>Subtype <i className="fa fa-sort"></i></TableHeaderColumn>

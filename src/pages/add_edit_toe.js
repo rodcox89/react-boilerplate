@@ -712,7 +712,7 @@ let AddEditToe = React.createClass({
 						</TableHeader>
 						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingSubsidiary ?
-								<TableRow>
+								<TableRow selectable={false}>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="subsidiary_name" id="subsidiary_name" placeholder="Subsidiary Name" style={{fontSize:'12px'}} onChange={this.handleTempSubsidiaryName} value={this.state.tempSubsidiaryName} /></TableRowColumn>
 									<TableRowColumn><textarea type="text" name="subsidiary_domains" id="subsidiary_domains" placeholder="Comma seperated list of domains" style={{fontSize:'12px'}} onChange={this.handleTempSubsidiaryDomains} value={this.state.tempSubsidiaryDomains}></textarea></TableRowColumn>
 									<TableRowColumn style={{width:"90px"}}><ContentAddCircle className="add-circle" style={{fill:'#689f38'}} onClick={this.addSubsidiary} /></TableRowColumn>
@@ -823,7 +823,7 @@ let AddEditToe = React.createClass({
 						</TableHeader>
 						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingDataLoss ?
-								<TableRow>
+								<TableRow selectable={false}>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="event_date" id="event_date" placeholder="MM/YYYY" style={this.state.tempEventDateStyle} onChange={this.handleTempEventDate} value={this.state.tempEventDate} /></TableRowColumn>
 									<TableRowColumn><textarea type="text" name="short_desc" id="short_desc" placeholder="Short Desc" style={{fontSize:'12px'}} onChange={this.handleTempShortDesc} value={this.state.tempShortDesc}></textarea></TableRowColumn>
 									<TableRowColumn><textarea type="text" name="long_desc" id="long_desc" placeholder="Long Description" style={{fontSize:'12px'}} onChange={this.handleTempLongDesc} value={this.state.tempLongDesc}></textarea></TableRowColumn>
@@ -888,7 +888,7 @@ let AddEditToe = React.createClass({
 						</TableHeader>
 						<TableBody displayRowCheckbox={false}>
 							{ this.state.addingNetblockIntell ?
-								<TableRow>
+								<TableRow selectable={false}>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="registrant_org" id="registrant_org" placeholder="Registrant Org" style={{fontSize:'12px'}} onChange={this.handleTempRegistrantOrg} value={this.state.tempRegistrantOrg} /></TableRowColumn>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="country" id="country" placeholder="Country" style={{fontSize:'12px'}} onChange={this.handleTempCountry} value={this.state.tempCountry} /></TableRowColumn>
 									<TableRowColumn><DebounceInput debounceTimeout={300} type="text" name="cidr" id="cidr" placeholder="CIDR" style={{fontSize:'12px'}} onChange={this.handleTempCidr} value={this.state.tempCidr} /></TableRowColumn>

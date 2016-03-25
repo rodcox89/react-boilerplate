@@ -32,7 +32,7 @@ let AdministratorRow = React.createClass({
 			key: this.props.key,
 			//index: this.props.index,
 			analysis: this.props.analysis,
-			allowedAnalysisStates: ['Sanity Check', 'Findings', 'Finalize']
+			allowedAnalysisStates: ['Sanity Check', 'Nodes', 'Findings', 'Finalize']
 		}
 	},
 	handleAnalysisStateChange(e){
@@ -114,6 +114,7 @@ let AdministratorRow = React.createClass({
 				<TableRowColumn>
 					<select style={{fontSize:'12px'}} value={this.state.analysis['analysis_state']} disabled="disabled">
 						<option value="Sanity Check">Sanity Check</option>
+						<option value="Nodes">Nodes</option>
 						<option value="Findings">Findings</option>
 						<option value="Finalize">Finalize</option>
 					</select>

@@ -23,14 +23,14 @@ import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
 
 import LoaderCSS from './../styles/loader.scss'
 
-import TableData from './../components/table/edit_netblocks/netblock-table-data';
+import TableData from './../components/table/netblock_sanity/netblock-table-data';
 
 const trashStyle = {
   color: Colors.red500,
   // marginRight: 10,
   // marginTop: ,
 }
-let EditNetblocks = React.createClass({
+let NetblockSanity = React.createClass({
   getInitialState: function() {
     return {
       netblocks: [],
@@ -114,10 +114,10 @@ let EditNetblocks = React.createClass({
 
       $.ajax({
         type: 'PUT',
-        url: Constants.api_base_url + Constants.api_version + '/nodes/netblocks/' + localStorage.analysis_id + '/' + localStorage.unique_key,
+        url: Constants.api_base_url + Constants.api_version + '/sanity_check/netblocks/' + localStorage.analysis_id + '/' + localStorage.unique_key,
         success: (data) => {
           if(e !== 'auto'){
-          window.location.href= "/#/nodes";
+          window.location.href= "/#/sanity_check";
         }
         else{
 
@@ -139,13 +139,13 @@ let EditNetblocks = React.createClass({
         { this.state.loaded & this.state.has_results ?
         <div>
         <Card>
-          <CardTitle title="Edit Netblocks"/>
+          <CardTitle title="Netblock Sanity Check"/>
           <table className="table table-bordered" id="mytable" >
             <thead>
             <tr>
-              <TableHeaderColumn colSpan={2}><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-              <TableHeaderColumn colSpan={4} style={{textAlign: 'center'}}></TableHeaderColumn>
-              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton> <RaisedButton onClick={this.handleApproval} primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
+              <TableHeaderColumn><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
+              <TableHeaderColumn colSpan={3} style={{textAlign: 'center'}}></TableHeaderColumn>
+              <TableHeaderColumn><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton> <RaisedButton onClick={this.handleApproval} primary={true}  ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
               <TableHeaderColumn onClick={this.handleSort.bind(null,'netrange')}>Netrange <i className="fa fa-sort" ></i></TableHeaderColumn>
@@ -153,9 +153,6 @@ let EditNetblocks = React.createClass({
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_city')}>Registrant City <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_state')}>Registrant State <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_country')}>Registrant Country <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
               </tr>
             </thead>
 
@@ -183,4 +180,4 @@ let EditNetblocks = React.createClass({
 
 });
 
-module.exports = EditNetblocks
+module.exports = NetblockSanity

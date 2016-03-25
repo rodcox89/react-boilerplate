@@ -25,7 +25,7 @@ import SoftwarePatchingRowDataSyles from './../components/table/row-data.css'
 
 import SanityCheckCSS from './../styles/pages/sanity_check.scss'
 import LoaderCSS from './../styles/loader.scss'
-let SanityCheck = React.createClass({
+let Nodes = React.createClass({
 getInitialState: function(){
   return {
     fixedHeader: true,
@@ -41,11 +41,10 @@ componentWillMount() {
 },
 componentDidMount() {
   $.ajax({
-    url: Constants.api_base_url + Constants.api_version + '/sanity_check',
+    url: Constants.api_base_url + Constants.api_version + '/nodes',
     type: 'GET',
     dataType: 'json',
     success: (data) => {
-      console.log(data);
       if(data.length === 0){
         this.setState({
           has_results: false,
@@ -126,17 +125,17 @@ render(){
     }
     if (includeResult && analysis.state_netblocks_review_completed != 'true') {
     if (includeResult & analysis.analysis_state_opapp_edit_netblocks_review_complete != '1' || analysis.analysis_state_opapp_edit_domainrecords_review_complete !='1') {
-        if(analysis.analysis_state_opapp_edit_netblocks_sanity_check_review_complete === '1') {
-          netblocks_button = <Link to="/netblock_sanity" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" className="button-node-completed" default={true}></RaisedButton></Link>
+        if(analysis.analysis_state_opapp_edit_netblocks_review_complete === '1') {
+          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" className="button-node-completed" default={true}></RaisedButton></Link>
         }
         else {
-          netblocks_button = <Link to="/netblock_sanity" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
+          netblocks_button = <Link to="/edit_netblocks" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Netblocks" disabled={false} secondary={true}></RaisedButton></Link>
         }
-        if(analysis.analysis_state_opapp_edit_domainrecords_sanity_check_review_complete === '1') {
-          domains_button = <Link to="/domain_sanity" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" className="button-node-completed"  secondary={true}></RaisedButton></Link>
+        if(analysis.analysis_state_opapp_edit_domainrecords_review_complete === '1') {
+          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" className="button-node-completed"  secondary={true}></RaisedButton></Link>
         }
         else {
-          domains_button = <Link to="/domain_sanity" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" disabled={false} secondary={true}></RaisedButton></Link>
+          domains_button = <Link to="/edit_domains" onClick={this.onClick.bind(this, analysis)}><RaisedButton  label="Domains" disabled={false} secondary={true}></RaisedButton></Link>
         }
       }
 
@@ -165,7 +164,7 @@ render(){
     :null}
     { this.state.loaded & this.state.has_results?
     <Card>
-      <CardTitle title="Sanity Check"/>
+      <CardTitle title="Nodes"/>
 
         <table className="table table-bordered" id="mytable">
           <thead>
@@ -204,4 +203,4 @@ render(){
 
 });
 
-module.exports = SanityCheck;
+module.exports = Nodes;

@@ -158,6 +158,7 @@ render(){
 					showRowHover={false}
 					stripedRows={false}
 					displayRowCheckbox={false}
+					selectable={false}
 					>
 					{ tableElements }
 				</TableBody>

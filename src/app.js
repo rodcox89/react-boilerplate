@@ -23,6 +23,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import MyRawTheme from 'styles/theme';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
+import NodeIcon from 'material-ui/lib/svg-icons/content/link'
 import RaisedButton from 'material-ui/lib/raised-button';
 import ScheduleIcon from 'material-ui/lib/svg-icons/action/schedule'
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
@@ -34,6 +35,8 @@ import WebEncryption from 'pages/web_encryption'
 import ThreatIntell from 'pages/threat_intell'
 import Defensibility from 'pages/defensibility'
 import SanityCheck from 'pages/sanity_check'
+import NetblockSanity from 'pages/netblock_sanity'
+import DomainSanity from 'pages/domain_sanity'
 import EditNetblocks from 'pages/edit_netblocks'
 import EditDomains from 'pages/edit_domains'
 import AddEditToe from 'pages/add_edit_toe'
@@ -45,6 +48,7 @@ import ReportAdministrator from 'pages/report_administrator'
 import FinalizeMetrics from 'pages/finalize_metrics'
 import FinalizeRatings from 'pages/finalize_ratings'
 import FinalizeLanguage from 'pages/finalize_language'
+import Nodes from 'pages/nodes'
 
 const App = React.createClass({
 
@@ -94,8 +98,9 @@ const App = React.createClass({
 						<Divider/>
 						<ListItem primaryTogglesNestedList={true} primaryText="Report Stages" nestedItems={[
 							<ListItem key={1} containerElement={<Link to="/sanity_check" />} linkButton={true} primaryText="Sanity Check" onTouchTap={this.handleToggle} rightIcon={<CheckIcon/>}></ListItem>,
-							<ListItem key={2} containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" onTouchTap={this.handleToggle} rightIcon={<FindInPage/>}></ListItem>,
-							<ListItem key={3} containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Finalize" onTouchTap={this.handleToggle} rightIcon={<AssignmentIcon/>}></ListItem>,
+							<ListItem key={2} containerElement={<Link to="/nodes" />} linkButton={true} primaryText="Nodes" onTouchTap={this.handleToggle} rightIcon={<NodeIcon/>}></ListItem>,
+							<ListItem key={3} containerElement={<Link to="/analyses" />} linkButton={true} primaryText="Findings" onTouchTap={this.handleToggle} rightIcon={<FindInPage/>}></ListItem>,
+							<ListItem key={4} containerElement={<Link to="/create_reports" />} linkButton={true} primaryText="Finalize" onTouchTap={this.handleToggle} rightIcon={<AssignmentIcon/>}></ListItem>,
 						]}></ListItem>
 						<Divider/>
 						<ListItem containerElement={<Link to="/manage_toes" />} linkButton={true} primaryText="Manage TOEs" onTouchTap={this.handleToggle} rightIcon={<IconAirlineSeatReclineExtra/>}></ListItem>
@@ -121,6 +126,8 @@ ReactDOM.render((
 			<Route path='defensibility' component={Defensibility}/>
 			<Route path='sanity_check' component={SanityCheck}/>
 			<Route path='edit_netblocks' component={EditNetblocks}/>
+			<Route path='netblock_sanity' component={NetblockSanity}/>
+			<Route path='domain_sanity' component={DomainSanity}/>
 			<Route path='edit_domains' component={EditDomains}/>
 			<Route path='manage_toes' component={ManageToes}/>
 			<Route path='add_edit_toe' component={AddEditToe}/>
@@ -133,6 +140,7 @@ ReactDOM.render((
 			<Route path='finalize_metrics/:uniqueId/:analysisId' component={FinalizeMetrics}/>
 			<Route path='finalize_ratings/:uniqueId/:analysisId' component={FinalizeRatings}/>
 			<Route path='finalize_language/:uniqueId/:analysisId' component={FinalizeLanguage}/>
+			<Route path='nodes' component={Nodes}/>
 	</Route>
 	</Router>),
 document.getElementById('content'));

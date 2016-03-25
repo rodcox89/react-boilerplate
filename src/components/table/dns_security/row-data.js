@@ -1,3 +1,5 @@
+import Constants from 'constants'
+
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import SoftwarePatchingRowDataSyles from './../row-data.css'
@@ -146,6 +148,7 @@ const Row = React.createClass({
     var el
     if (this.state.isInput){
       el = <tr className="finding-row">
+        <td >{this.props.finding.domain_name}</td>
         <td >{this.props.finding.security_criteria}</td>
             <td>{this.props.finding.analyst_type} </td>
             <td>{this.props.finding.analyst_subtype} </td>
@@ -167,6 +170,7 @@ const Row = React.createClass({
     }
     else {
       el = <tr className="finding-row">
+              <td>{this.props.finding.domain_name}</td>
               <td>{this.props.finding.security_criteria}</td>
               <td>{this.props.finding.analyst_type}</td>
               <td>{this.props.finding.analyst_subtype}</td>
