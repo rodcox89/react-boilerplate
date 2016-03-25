@@ -43,6 +43,7 @@ const FinalizeLanguage = React.createClass({
 			url: Constants.api_base_url + Constants.api_version + '/report/derived/language/' + this.state.analysisId,
 			success: (data) => {
 				if(data.length > 0){
+					console.log(data);
 					this.setState({
 						language: data,
 						loaded: true,
@@ -117,16 +118,6 @@ const FinalizeLanguage = React.createClass({
 								<thead>
 									<tr>
 										<TableHeaderColumn>Criteria</TableHeaderColumn>
-										<TableHeaderColumn>Display Name</TableHeaderColumn>
-										<TableHeaderColumn>Data List</TableHeaderColumn>
-										<TableHeaderColumn>Long</TableHeaderColumn>
-										<TableHeaderColumn>Short</TableHeaderColumn>
-										<TableHeaderColumn>Rating</TableHeaderColumn>
-										<TableHeaderColumn>Rating Numeric</TableHeaderColumn>
-										<TableHeaderColumn>Domain</TableHeaderColumn>
-										<TableHeaderColumn>Domain Rating</TableHeaderColumn>
-										<TableHeaderColumn>Domain Rating Numeric</TableHeaderColumn>
-										<TableHeaderColumn>Short Label</TableHeaderColumn>
 									</tr>
 								</thead>
 								<TableBody
