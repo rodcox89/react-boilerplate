@@ -124,21 +124,17 @@ let EditDomains = React.createClass({
             <thead>
             <tr>
               <TableHeaderColumn colSpan={3}><DebounceInput minLenth={3} debounceTimeout={200} hintText="Search Target Name" value={this.state.search_term} onChange={event=>this.handleSearch(event)}/></TableHeaderColumn>
-              <TableHeaderColumn colSpan={6}></TableHeaderColumn>
-              <TableHeaderColumn colSpan={3}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
+              <TableHeaderColumn colSpan={4}></TableHeaderColumn>
+              <TableHeaderColumn colSpan={2}><RaisedButton onClick={this.handleTrashed} secondary={true} ><IconDelete  color={Colors.grey50}/></RaisedButton><RaisedButton primary={true} onClick={this.handleApproval} ><IconVerified  color={Colors.grey50}/></RaisedButton></TableHeaderColumn>
             </tr>
               <tr>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'domain')}>Domain <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_name')}>Registrant Name <i className="fa fa-sort" ></i></TableHeaderColumn>
+                <TableHeaderColumn colSpan={2} onClick={this.handleSort.bind(null,'domain')}>Domain <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_edit_registrant_org')}>Registrant Org <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'registrant_email')}>Registrant Email <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'admin_name')}>Admin Name <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'admin_org')}>Admin Org <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'admin_email')}>Admin Email <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'tech_name')}>Tech Name <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'tech_org')}>Tech Org <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn onClick={this.handleSort.bind(null,'tech_email')}>Tech Email <i className="fa fa-sort" ></i></TableHeaderColumn>
-                <TableHeaderColumn onClick={this.handleSort.bind(null,'registrar_abuse_email')}>Abuse Email <i className="fa fa-sort" ></i></TableHeaderColumn>
                 <TableHeaderColumn>&nbsp;</TableHeaderColumn>
               </tr>
             </thead>

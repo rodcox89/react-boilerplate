@@ -191,15 +191,14 @@ let SoftwarePatching = React.createClass({
         <table className="table table-bordered" id="mytable" >
         <thead>
         <tr className="success">
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'security_criteria')}>Security Criteria <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_display_name_long')}>Name Long <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_data_value')}>Data Value <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'host_name')}>Host <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleNumberSort.bind(null,'ip_addr')}>IP <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_status')}>Status <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleNumberSort.bind(null,'analyst_confidence')}>Confidence <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn onClick={this.handleSort.bind(null,'analyst_comments')}>Comments <i className="fa fa-sort" ></i></TableHeaderColumn>
-        <TableHeaderColumn></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "auto" }}onClick={this.handleSort.bind(null,'security_criteria')}>Security Criteria <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "auto" }}onClick={this.handleSort.bind(null,'host_name')}>Host <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "8%" }}onClick={this.handleSort.bind(null,'analyst_display_name_long')}>Name Long <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "auto" }}onClick={this.handleSort.bind(null,'analyst_data_value')}>Data Value <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "8%" }} onClick={this.handleSort.bind(null,'analyst_status')}>Status <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "8%" }} onClick={this.handleNumberSort.bind(null,'analyst_confidence')}>Confidence <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "8%" }} onClick={this.handleSort.bind(null,'analyst_comments')}>Comments <i className="fa fa-sort" ></i></TableHeaderColumn>
+        <TableHeaderColumn style={{ width: "8%" }}></TableHeaderColumn>
         </tr>
         </thead>
         <TableData

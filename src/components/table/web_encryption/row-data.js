@@ -33,12 +33,8 @@ const Row = React.createClass({
           show: false,
           finding: {
             analysis_id: '',
-            ip_addr: '',
-            analyst_type: '',
-            analyst_subtype: '',
             analyst_display_name_short: '',
             analyst_display_name_long: '',
-            analyst_data_description: '',
             analyst_data_value: '',
             analyst_status: '',
             analyst_confidence: '',
@@ -147,43 +143,35 @@ const Row = React.createClass({
     var el
     if (this.state.isInput){
       el = <tr className="finding-row">
-        <td >{this.props.finding.security_criteria}</td>
-            <td>{this.props.finding.analyst_type} </td>
-            <td>{this.props.finding.analyst_subtype} </td>
-            <td>{this.props.finding.analyst_display_name_long} </td>
-            <td>{this.props.finding.analyst_data_description} </td>
-            <td>{this.props.finding.analyst_data_value}</td>
-            <td>{this.props.finding.ip_addr}</td>
-            <td>{this.props.finding.host_name} </td>
-            <td>
+        <td style={{ "verticalAlign": "middle"}}>{this.props.finding.security_criteria}</td>
+        <td style={{ "width": "auto", "verticalAlign": "middle"}}>{this.props.finding.host_name} </td>
+            <td style={{ "verticalAlign": "middle"}}>{this.props.finding.analyst_display_name_long} </td>
+            <td style={{ "verticalAlign": "middle"}}>{this.props.finding.analyst_data_value}</td>
+            <td style={{ "verticalAlign": "middle"}}>
               <select id="analyst_status" defaultValue={this.props.finding.analyst_status} onChange={this.handleStatusChange}>
                 { items }
               </select>
             </td>
-            <td>
+            <td style={{ "verticalAlign": "middle"}}>
               <select id="analyst_confidence" defaultValue={this.props.finding.analyst_confidence} onChange={this.handleConfidenceChange}>
                 { confidence }
                 </select>
              </td>
-            <td><DebounceInput minLenth={3} debounceTimeout={400} value={this.props.finding.analyst_comments} onChange={event=>this.handleCommentChange(event)}/></td>
-            <td><RaisedButton onClick={this.onSave} label="Save" /></td>
+            <td style={{ "verticalAlign": "middle"}}><DebounceInput minLenth={3} debounceTimeout={400} value={this.props.finding.analyst_comments} onChange={event=>this.handleCommentChange(event)}/></td>
+            <td style={{ "verticalAlign": "middle"}}><RaisedButton onClick={this.onSave} label="Save" /></td>
           </tr>
     }
     else {
       el = <tr className="finding-row">
-              <td>{this.props.finding.security_criteria}</td>
-              <td>{this.props.finding.analyst_type}</td>
-              <td>{this.props.finding.analyst_subtype}</td>
-              <td>{this.props.finding.analyst_display_name_long}</td>
-              <td>{this.props.finding.analyst_data_description}</td>
-              <td>{this.props.finding.analyst_data_value}</td>
-              <td>{this.props.finding.ip_addr}</td>
-              <td>{this.props.finding.host_name}</td>
-              <td>{this.props.finding.analyst_status}</td>
-              <td>{this.props.finding.analyst_confidence}</td>
-              <td>{ this.props.finding.analyst_comments}</td>
+              <td style={{ "verticalAlign": "middle"}}>{this.props.finding.security_criteria}</td>
+              <td style={{ "verticalAlign": "middle"}}>{this.props.finding.host_name}</td>
+              <td style={{ "verticalAlign": "middle"}}>{this.props.finding.analyst_display_name_long}</td>
+              <td style={{ "verticalAlign": "middle"}}>{this.props.finding.analyst_data_value}</td>
+              <td style={{ "verticalAlign": "middle", "textAlign": "center"}}>{this.props.finding.analyst_status}</td>
+              <td style={{ "verticalAlign": "middle", "textAlign": "center"}}>{this.props.finding.analyst_confidence}</td>
+              <td style={{ "verticalAlign": "middle","width": "auto"}}>{ this.props.finding.analyst_comments}</td>
 
-              <td>
+              <td style={{ "textAlign": "center", "verticalAlign":"middle"}}>
                 <i onClick={this.onEdit}  className="fa fa-edit fa-2x finding-action"></i>
                 <i onClick={this.delete}  className="fa fa-trash-o fa-2x finding-action"></i>
               </td>

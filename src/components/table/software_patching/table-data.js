@@ -38,7 +38,6 @@ render() {
     finding.analyst_display_name_long.includes(searchTerm) ? includeResult = true : false
     finding.analyst_status.includes(searchTerm) ? includeResult = true : false
     finding.host_name.includes(searchTerm) ? includeResult = true : false
-    finding.ip_addr.includes(searchTerm) ? includeResult = true : false
     finding.security_criteria.includes(searchTerm) ? includeResult = true : false
     }
     if (includeResult) {

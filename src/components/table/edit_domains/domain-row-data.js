@@ -164,34 +164,26 @@ setTarget(positionElement, position, e) {
       var input = this.state.isInput
       if(input){
         el = <tr className="domain-row">
-              <td>{this.props.domain.domain}</td>
-              <td>{this.props.domain.registrant_name}</td>
+              <td colSpan={2}>{this.props.domain.domain}</td>
               <td><DebounceInput minLenth={3} debounceTimeout={200} onChange={event=>this.handleOrgChange(event)} value={this.props.domain.analyst_edit_registrant_org}/></td>
               <td>{this.props.domain.registrant_email}</td>
-              <td>{this.props.domain.admin_name}</td>
               <td>{this.props.domain.admin_org}</td>
               <td>{this.props.domain.admin_email}</td>
-              <td>{this.props.domain.tech_name}</td>
               <td>{this.props.domain.tech_org}</td>
               <td>{this.props.domain.tech_email}</td>
-              <td>{this.props.domain.registrar_abuse_email}</td>
               <td><RaisedButton onClick={this.onSave} primary={true} label="Save"/></td>
             </tr>
 
       }
       else {
         el = <tr className="domain-row">
-          <td>{this.props.domain.domain}</td>
-          <td>{this.props.domain.registrant_name}</td>
+          <td colSpan={2}>{this.props.domain.domain}</td>
           <td>{this.props.domain.analyst_edit_registrant_org}</td>
           <td>{this.props.domain.registrant_email}</td>
-          <td>{this.props.domain.admin_name}</td>
           <td>{this.props.domain.admin_org}</td>
           <td>{this.props.domain.admin_email}</td>
-          <td>{this.props.domain.tech_name}</td>
           <td>{this.props.domain.tech_org}</td>
           <td>{this.props.domain.tech_email}</td>
-          <td>{this.props.domain.registrar_abuse_email}</td>
           <td><RaisedButton label="Edit" primary={true} onClick={this.onEdit}/></td>
         </tr>
 

@@ -35,8 +35,6 @@ const Row = React.createClass({
           finding: {
             analysis_id: '',
             ip_addr: '',
-            analyst_type: '',
-            analyst_subtype: '',
             analyst_display_name_short: '',
             analyst_display_name_long: '',
             analyst_data_description: '',
@@ -148,10 +146,7 @@ const Row = React.createClass({
     var el
     if (this.state.isInput){
       el = <tr className="finding-row">
-        <td >{this.props.finding.domain_name}</td>
-        <td >{this.props.finding.security_criteria}</td>
-            <td>{this.props.finding.analyst_type} </td>
-            <td>{this.props.finding.analyst_subtype} </td>
+            <td >{this.props.finding.domain_name}</td>
             <td>{this.props.finding.analyst_display_name_long} </td>
             <td>{this.props.finding.analyst_data_value}</td>
             <td>
@@ -167,20 +162,18 @@ const Row = React.createClass({
             <td><DebounceInput minLenth={3} debounceTimeout={400} value={this.props.finding.analyst_comments} onChange={event=>this.handleCommentChange(event)}/></td>
             <td><RaisedButton onClick={this.onSave} label="Save" /></td>
           </tr>
+          
     }
     else {
       el = <tr className="finding-row">
               <td>{this.props.finding.domain_name}</td>
-              <td>{this.props.finding.security_criteria}</td>
-              <td>{this.props.finding.analyst_type}</td>
-              <td>{this.props.finding.analyst_subtype}</td>
               <td>{this.props.finding.analyst_display_name_long}</td>
               <td>{this.props.finding.analyst_data_value}</td>
-              <td>{this.props.finding.analyst_status}</td>
-              <td>{this.props.finding.analyst_confidence}</td>
-              <td>{ this.props.finding.analyst_comments}</td>
+              <td style={{"textAlign": "center"}}>{this.props.finding.analyst_status}</td>
+              <td style={{"textAlign": "center"}}>{this.props.finding.analyst_confidence}</td>
+              <td style={{"textAlign": "center"}}>{ this.props.finding.analyst_comments}</td>
 
-              <td>
+              <td style={{"textAlign": "center"}}>
                 <i onClick={this.onEdit}  className="fa fa-edit fa-2x finding-action"></i>
                 <i onClick={this.delete}  className="fa fa-trash-o fa-2x finding-action"></i>
               </td>

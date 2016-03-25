@@ -35,8 +35,6 @@ render() {
 
 finding.domain_name.includes(searchTerm) ? includeResult = true : false
 finding.security_criteria.includes(searchTerm) ? includeResult = true : false
-finding.analyst_type.includes(searchTerm) ? includeResult = true : false
-finding.analyst_subtype.includes(searchTerm) ? includeResult = true : false
 finding.analyst_display_name_long.includes(searchTerm) ? includeResult = true : false
 finding.analyst_data_value.includes(searchTerm) ? includeResult = true : false
 finding.analyst_status.includes(searchTerm) ? includeResult = true : false
