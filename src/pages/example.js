@@ -24,7 +24,7 @@ let ExampleComponent = React.createClass({
             }, () => {
           })
         }
-      }})
+      })
     },
     render: function(){
       return (
